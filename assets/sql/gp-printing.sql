@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 29 Agu 2019 pada 04.29
+-- Waktu pembuatan: 29 Agu 2019 pada 19.36
 -- Versi server: 10.4.6-MariaDB
 -- Versi PHP: 7.1.31
 
@@ -44,7 +44,8 @@ INSERT INTO `detail_sample` (`id`, `id_sample`, `lokasi`, `desain`) VALUES
 (2, 2, 'BB', 'logo.jpg'),
 (3, 2, 'LKI', 'logo.jpg'),
 (4, 3, 'BD', 'logo.jpg'),
-(5, 3, 'LKA', 'logo.jpg');
+(5, 3, 'LKA', 'logo.jpg'),
+(6, 4, 'BD', 'logo.jpg');
 
 -- --------------------------------------------------------
 
@@ -75,17 +76,20 @@ INSERT INTO `pelanggan` (`id`, `nama`, `alamat`, `no_telepon`) VALUES
 CREATE TABLE `sample` (
   `id` int(11) NOT NULL,
   `id_pelanggan` int(11) NOT NULL,
-  `tgl` date NOT NULL
+  `tgl` date NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 0,
+  `deadline` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `sample`
 --
 
-INSERT INTO `sample` (`id`, `id_pelanggan`, `tgl`) VALUES
-(1, 1, '2019-08-29'),
-(2, 1, '2019-08-29'),
-(3, 1, '2019-08-29');
+INSERT INTO `sample` (`id`, `id_pelanggan`, `tgl`, `status`, `deadline`) VALUES
+(1, 1, '2019-08-29', 0, NULL),
+(2, 1, '2019-08-29', 1, NULL),
+(3, 1, '2019-08-29', 0, NULL),
+(4, 1, '2019-08-29', 2, NULL);
 
 --
 -- Indexes for dumped tables
@@ -117,7 +121,7 @@ ALTER TABLE `sample`
 -- AUTO_INCREMENT untuk tabel `detail_sample`
 --
 ALTER TABLE `detail_sample`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `pelanggan`
@@ -129,7 +133,7 @@ ALTER TABLE `pelanggan`
 -- AUTO_INCREMENT untuk tabel `sample`
 --
 ALTER TABLE `sample`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

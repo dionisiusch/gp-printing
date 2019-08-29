@@ -103,7 +103,6 @@ include('../controller/config/asset.php');
 
 
 <script>
-
 $(document).ready(function(){
 
 var count = 1;
