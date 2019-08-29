@@ -1,23 +1,58 @@
 <?php
 	include('../config/linken.php');
 
-	$currentDir = getcwd();
-    $uploadDirectory = ".../assets/uploads/";
-	$path = $currentDir.$uploadDirectory;
 	
+	$uploadPath = "../../assets/uploads/";
 	$tglSample = $_POST['tglSample'];
+	$idPelanggan = substr($_POST['pelanggan'], 0, strpos($_POST['pelanggan'], '|')-1);
 	$lokasiArray = $_POST['lokasi'];
-	$sampleArray = $_POST['sample'];
-	
-		
-	foreach($lokasiArray as $lokasi){
-		echo $lokasi."--";
-	}
-	foreach($sampleArray as $sample){
-		echo $path.$sample."--";
-		$fileName = $_FILES['sample']['name'];
-		echo $fileName;
-		move_uploaded_file($sample, $path);
+	$i = 1; 
+	//insert db sample
+	$queryInsertSample = "INSERT INTO sample (id_pelanggan,tgl) values($idPelanggan,'$tglSample')";
+	$resultInsertSample = mysqli_query($link,$queryInsertSample) or die(mysqli_error($link));
+	$lastIdInsertSample = mysqli_insert_id($link);	
+	if(!$resultInsertSample){
+			echo "<script>alert('Error Insert Sample!');
+				window.location.replace('../../view/sample.php');
+			";
 		}
+		
+	//upload ke ../assets/uploads
+    foreach ($lokasiArray as $file)
+            {
+
+                    $file_name = $_FILES['sample']['name'][$i];
+                    $file_size =$_FILES['sample']['size'][$i];
+                    $file_tmp =$_FILES['sample']['tmp_name'][$i];
+
+
+                    $file = $uploadPath.$file_name;  
+                                        
+					if(move_uploaded_file($file_tmp,$file)){
+						InsertDetailSample($lokasiArray[$i],$file_name);
+					}else{
+						echo 'fail upload!';
+					};     
+
+                   
+               $i++;
+            }
+	
+	
+	//insert db detail sample
+	function InsertDetailSample($paramLokasi,$paramSample){
+		global $link, $lastIdInsertSample;
+		$queryInsertDetailSample = "INSERT INTO detail_sample (id_sample,lokasi,desain) values('$lastIdInsertSample','$paramLokasi','$paramSample')";
+		$resultInsertDetailSample = mysqli_query($link,$queryInsertDetailSample) or die(mysqli_error($link));
+		if(!$resultInsertDetailSample){
+			echo "<script>alert('Error Insert Detail Sample!');
+				window.location.replace('../../view/sample.php');
+			";
+		}
+		
+	}
+	
+	header('Location: ../../view/sample.php');
+	
 	
 ?>

@@ -20,6 +20,13 @@ include('../controller/config/asset.php');
 
 <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Tambah Sample</button>
 
+<?php
+	include '../controller/sample/sample_show.php';
+?>
+
+
+
+
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -33,7 +40,7 @@ include('../controller/config/asset.php');
       <div class="modal-body">
       
 <div class="table-responsive ">
-<form action="controller/sample/sample_add.php" method="POST">
+<form action="controller/sample/sample_add.php" method="POST" enctype="multipart/form-data">
      <table class="table table-bordered">
         <tr>
          <td align="right"><b>Pelanggan : </b></td>
@@ -135,6 +142,7 @@ $(function() {
  $(document).on('click', '.remove', function(){
  var delete_row = $(this).data("row");
  $('#' + delete_row).remove();
+ count--;
   });
 });
 
