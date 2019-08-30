@@ -1,6 +1,7 @@
 <?php
 include('controller/config/linken.php');
 include('view/header.php');
+//test openg
 ?>
 <!DOCTYPE html>
 <html>
