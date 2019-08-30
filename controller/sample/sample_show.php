@@ -11,8 +11,7 @@
 						<th class='col-md-1'>Status</th>
                         </tr>";
 	while($row = mysqli_fetch_assoc($resultGetSample)){
-                            ?>
-							
+                            ?>					
 	<script>
 		function AjaxGetDetailSample(id){
 
