@@ -10,8 +10,11 @@
                         <th class='col-md-1'>Tanggal</th>
 						<th class='col-md-1'>Status</th>
                         </tr>";
+
 	while($row = mysqli_fetch_assoc($resultGetSample)){
-                            ?>					
+//test    
+	?>
+							
 	<script>
 		function AjaxGetDetailSample(id){
 
