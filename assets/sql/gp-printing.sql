@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 29 Agu 2019 pada 19.36
+-- Waktu pembuatan: 31 Agu 2019 pada 12.04
 -- Versi server: 10.4.6-MariaDB
 -- Versi PHP: 7.1.31
 
@@ -45,7 +45,9 @@ INSERT INTO `detail_sample` (`id`, `id_sample`, `lokasi`, `desain`) VALUES
 (3, 2, 'LKI', 'logo.jpg'),
 (4, 3, 'BD', 'logo.jpg'),
 (5, 3, 'LKA', 'logo.jpg'),
-(6, 4, 'BD', 'logo.jpg');
+(6, 4, 'BD', 'logo.jpg'),
+(7, 5, 'BB', 'logo.jpg'),
+(8, 6, 'BD', 'logo.jpg');
 
 -- --------------------------------------------------------
 
@@ -70,6 +72,31 @@ INSERT INTO `pelanggan` (`id`, `nama`, `alamat`, `no_telepon`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `pengerjaan`
+--
+
+CREATE TABLE `pengerjaan` (
+  `id` int(11) NOT NULL,
+  `id_sample` int(11) NOT NULL,
+  `tipe` int(11) NOT NULL,
+  `tgl_mulai` date NOT NULL,
+  `tgl_selesai` date NOT NULL,
+  `status` int(11) NOT NULL,
+  `qty_akhir` int(11) NOT NULL,
+  `qty_awal` int(11) NOT NULL,
+  `keterangan` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `pengerjaan`
+--
+
+INSERT INTO `pengerjaan` (`id`, `id_sample`, `tipe`, `tgl_mulai`, `tgl_selesai`, `status`, `qty_akhir`, `qty_awal`, `keterangan`) VALUES
+(6, 6, 0, '2019-08-31', '2019-08-07', 1, 20, 20, 'awdawd');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `sample`
 --
 
@@ -86,10 +113,7 @@ CREATE TABLE `sample` (
 --
 
 INSERT INTO `sample` (`id`, `id_pelanggan`, `tgl`, `status`, `deadline`) VALUES
-(1, 1, '2019-08-29', 0, NULL),
-(2, 1, '2019-08-29', 1, NULL),
-(3, 1, '2019-08-29', 0, NULL),
-(4, 1, '2019-08-29', 2, NULL);
+(6, 1, '2019-08-31', 2, NULL);
 
 --
 -- Indexes for dumped tables
@@ -108,6 +132,12 @@ ALTER TABLE `pelanggan`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeks untuk tabel `pengerjaan`
+--
+ALTER TABLE `pengerjaan`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `sample`
 --
 ALTER TABLE `sample`
@@ -121,7 +151,7 @@ ALTER TABLE `sample`
 -- AUTO_INCREMENT untuk tabel `detail_sample`
 --
 ALTER TABLE `detail_sample`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `pelanggan`
@@ -130,10 +160,16 @@ ALTER TABLE `pelanggan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT untuk tabel `pengerjaan`
+--
+ALTER TABLE `pengerjaan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT untuk tabel `sample`
 --
 ALTER TABLE `sample`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
