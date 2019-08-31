@@ -5,9 +5,11 @@ include('../config/linken.php');
 $id = $_POST['id'];
 $data = array();
 $result = '';
-$querySample = $link->query("SELECT sample.id,sample.deadline,sample.status,pelanggan.nama,sample.tgl from sample join pelanggan on sample.id_pelanggan = pelanggan.id where sample.id = '$id'");
+$idPengerjaan = 0;
+$querySample = $link->query("SELECT pengerjaan.id,pengerjaan.status,pengerjaan.qty_awal,pengerjaan.qty_akhir,pelanggan.nama,pengerjaan.tgl_mulai,pengerjaan.tgl_selesai,pengerjaan.tipe from pengerjaan join sample on pengerjaan.id_sample = sample.id join pelanggan on sample.id_pelanggan = pelanggan.id where pengerjaan.id_sample = '$id'");
 while ($row = $querySample->fetch_assoc()) {
-    $result.= '
+  $idPengerjaan = $row["id"];
+  $result.= '
 	
 	<div class="modal-dialog">
 
@@ -27,38 +29,58 @@ while ($row = $querySample->fetch_assoc()) {
 
            <td>'.$row['nama'].'</td>
          </tr>
-		<tr>
-         <td align="right"><b>Id : </b></td>
-		 
-
-           <td>'.$row['id'].'</td>
-         </tr>
-		
 	   <tr>
-         <td align="right"><b>Tanggal : </b></td>
+         <td align="right"><b>Tanggal Mulai : </b></td>
 
-           <td>'.$row['tgl'].'</td>
+           <td>'.$row['tgl_mulai'].'</td>
+         </tr>
+		 <tr>
+         <td align="right"><b>Tanggal Selesai : </b></td>
+
+           <td>'.$row['tgl_selesai'].'</td>
          </tr>
 		  <tr>
          <td align="right"><b>Status : </b></td>
 			
-         <td><select id="status"class="form-control">';
+         <td><select id="status" class="form-control">';
 		 
 		 if($row['status']==0){
-			$result.='<option selected="selected" value="0">Idle</option>
-			<option value="1">On-Going</option>
+			$result.='<option selected="selected" value="0">On-Going</option>
+			<option value="1">Done</option>
 			';
 		 }else if($row['status']==1){
-			$result.='<option value="0">Idle</option>
-			<option selected="selected" value="1">On-Going</option>
+			$result.='<option value="0">On-Going</option>
+			<option selected="selected" value="1">Done</option>
 			';
 		 }
 		$result.='
         </select>
 		</td>
-		<td><button onclick="ChangeStatus()" class="btn btn-warning">Ubah</button>
+		<td><button onclick="ChangeStatusPengerjaan()" class="btn btn-warning">Ubah</button>
 		</td>
 		 </tr>
+		   <tr>
+         <td align="right"><b>Qty : </b></td>
+
+           <td>'.$row['qty_awal'].'</td>
+         </tr>
+
+         <tr>
+         <td align="right"><b>Jenis Pengerjaan : </b></td>
+
+           <td>';
+           
+           if($row['tipe']==0){
+            $result.='Pengerjaan Sendiri (7x24jam)
+            ';
+           }else if($row['status']==1){
+            $result.='Pengerjaan Makloon (3x24jam)
+            ';
+           };
+           
+          $result.= '</td>
+         </tr>
+		 
        </table> <table class="table table-bordered hovertable" id="crud_table">
      <tr>
       <th width="40%">Lokasi</th>
@@ -94,20 +116,22 @@ $result.='
   
  echo $result;
 ?>
-<input type='hidden' id='id' value='<?php echo $id;?>'>
+<input type='hidden' id='idPengerjaan' value='<?php echo $idPengerjaan;?>'>
+
 <script>
-function ChangeStatus(){
-	var id = $("#id").val();
+
+function ChangeStatusPengerjaan(){
+	var id = $("#idPengerjaan").val();
 	var status = $("#status").val();
 	var data = "id=" + id + "&status="+ status;
 	
 
 	 $.ajax({
             type: 'POST',
-            url: 'controller/sample/sample_changeStatus.php',
+            url: 'controller/pengerjaan/pengerjaan_changeStatus.php',
             data: data,
             success: function(data) {
-                var jsonResult = JSON.parse(data);
+                var jsonResult = JSON.parse(data)
 				var text = jsonResult.text;
 				var validator = jsonResult.validator;
 				if(validator==1){

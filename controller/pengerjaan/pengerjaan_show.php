@@ -2,25 +2,25 @@
 	include('../controller/config/linken.php');
 	include('../controller/config/asset.php');
 	
-	$queryGetSample = "SELECT sample.id,sample.deadline,pelanggan.nama,sample.status,sample.tgl FROM sample join pelanggan on sample.id_pelanggan = pelanggan.id where status != 2 ORDER BY sample.id ASC";
-	$resultGetSample = mysqli_query($link,$queryGetSample) or die(mysqli_error($link));
+	$queryGetPengerjaan = "SELECT pengerjaan.id,pengerjaan.tgl_mulai,pengerjaan.tgl_selesai,pelanggan.nama,pengerjaan.status FROM pengerjaan join sample on pengerjaan.id_sample = sample.id join pelanggan on sample.id_pelanggan = pelanggan.id ORDER BY pengerjaan.id ASC";
+	$resultGetPengerjaan = mysqli_query($link,$queryGetPengerjaan) or die(mysqli_error($link));
 	 echo "<table class='table table-hover'><tr>
                         <th class='col-md-1'>Id</th>
                         <th class='col-md-1'>Pelanggan</th>
-                        <th class='col-md-1'>Tanggal</th>
-						<th class='col-md-1'>Status</th>
-                        </tr>";
+                        <th class='col-md-1'>Tgl Pengerjaan</th>
+						<th class='col-md-1'>Tgl Selesai</th>
+                        <th class='col-md-1'>Status</th>
+						</tr>";
 
-	while($row = mysqli_fetch_assoc($resultGetSample)){
-//test    
+	while($row = mysqli_fetch_assoc($resultGetPengerjaan)){
 	?>
 							
 	<script>
-		function AjaxGetDetailSample(id){
+		function AjaxGetDetailPengerjaan(id){
 
         $.ajax({
             type: 'POST',
-            url: 'controller/sample/sample_getDetailSample.php',
+            url: 'controller/pengerjaan/pengerjaan_getDetailPengerjaan.php',
             data: "id=" + id,
             success: function(data) {
                  $('#myModal2').html(data);
@@ -34,21 +34,17 @@
 	function test(){
 		 $("#myModal2").modal("hide");
 	};
-
-
-	 
 	
 	</script>
-                            <tr onclick='AjaxGetDetailSample(<?php echo $row['id']?>)'>
+                            <tr onclick='AjaxGetDetailPengerjaan(<?php echo $row["id"];?>)'>
 								<td><?php echo $row['id']?></td>
                                 <td><?php echo $row['nama']?></td>
-                                <td><?php echo $row['tgl']?></td>
-								<td><?php if($row['status']==1){
+                                <td><?php echo $row['tgl_mulai']?></td>
+                                <td><?php echo $row['tgl_selesai']?></td>
+								<td><?php if($row['status']==0){
 									echo "<span style='color:blue'>On-Going</span>";
-									}else if($row['status']==2){
+									}else if($row['status']==1){
 										echo "<span style='color:green'>Done</span>";
-									}else{
-										echo "<span style='color:red'>Idle</span>";
 									}
 										
 								;?></td>
