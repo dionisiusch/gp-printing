@@ -59,7 +59,20 @@ while ($row = $querySample->fetch_assoc()) {
 		<td><button onclick="ChangeStatus()" class="btn btn-warning">Ubah</button>
 		</td>
 		 </tr>
-       </table> <table class="table table-bordered hovertable" id="crud_table">
+       </table>';
+$queryBiaya = $link->query("SELECT biaya FROM sample WHERE id='$id'");
+while ($rowBiaya = $queryBiaya->fetch_assoc()) {
+
+$result.='
+<table class="table table-bordered hovertable">
+    <tr>
+      <th width="40%">Perkiraan Biaya per Sample</th>
+      <th width="60%"><input type="number" name"perkiraanBiaya" id="perkiraanBiaya" value="'.$rowBiaya['biaya'].'" readonly></th>
+      </tr>
+     </table>';
+}
+       $result.='
+       <table class="table table-bordered hovertable" id="crud_table">
      <tr>
       <th width="40%">Lokasi</th>
       <th width="60%">Desain</th>
@@ -80,19 +93,9 @@ while ($row = $query->fetch_assoc()) {
 ';
 }
 //return json data
-$queryBiaya = $link->query("SELECT biaya FROM sample WHERE id='$id'");
-while ($rowBiaya = $queryBiaya->fetch_assoc()) {
 
-$result.='
-<table class="table table-bordered hovertable">
-    <tr>
-      <th width="40%">Perkiraan Biaya per Sample</th>
-      <th width="60%"><input type="number" name"perkiraanBiaya" id="perkiraanBiaya" value="'.$rowBiaya['biaya'].'" readonly></th>
-      ';
-}
     $result.= '
-     </tr>
-     </table>
+     
     </table>
   
       </div>

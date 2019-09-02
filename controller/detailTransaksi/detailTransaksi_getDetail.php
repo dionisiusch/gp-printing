@@ -5,10 +5,10 @@ include('../config/linken.php');
 $id = $_POST['id'];
 $data = array();
 $result = '';
-$idRevisi = 0;
-$queryGetRevisi = $link->query("SELECT revisi.id,revisi.status,revisi.qty_awal,revisi.qty_akhir,pelanggan.nama,revisi.tgl_mulai,revisi.tgl_selesai,revisi.tipe from revisi join sample on revisi.id_sample = sample.id join pelanggan on sample.id_pelanggan = pelanggan.id where revisi.id = '$id'");
-while ($row = $queryGetRevisi->fetch_assoc()) {
-  $idRevisi = $row["id"];
+$idTransaksi = 0;
+$queryTransaksi = $link->query("SELECT pengerjaan.id_sample,pengerjaan.id,pengerjaan.tgl_mulai,pengerjaan.tgl_selesai_sendiri,pelanggan.nama,pengerjaan.status FROM revisi join pengerjaan on revisi.id_pengerjaan = pengerjaan.id join sample on pengerjaan.id_sample = sample.id join pelanggan on sample.id_pelanggan = pelanggan.id WHERE pengerjaan.status=2 ORDER BY pengerjaan.id ASC");
+while ($row = $queryTransaksi->fetch_assoc()) {
+  $idPengerjaan = $row["id"];
   $result.= '
 	
 	<div class="modal-dialog">
@@ -36,7 +36,7 @@ while ($row = $queryGetRevisi->fetch_assoc()) {
 		 <tr>
          <td align="right"><b>Tanggal Selesai : </b></td>
 
-           <td>'.$row['tgl_selesai'].'</td>
+           <td>'.$row['tgl_selesai_sendiri'].'</td>
          </tr>
 		  <tr>
          <td align="right"><b>Status : </b></td>
@@ -44,25 +44,18 @@ while ($row = $queryGetRevisi->fetch_assoc()) {
          <td><select id="status" class="form-control">';
 		 
 		 if($row['status']==0){
-			$result.='<option selected="selected" value="0">Idle</option>
-			<option value="1">On-Going</option>
-            <option value="2">Done</option>
+			$result.='<option selected="selected" value="0">On-Going</option>
+			<option value="1">Done</option>
 			';
-         }else if($row['status']==1){
-			$result.='<option value="0">Idle</option>
-			<option selected="selected" value="1">On-Going</option>
-            <option value="2">Done</option>
-			';     
-		 }else if($row['status']==2){
-			$result.='<option value="0">Idle</option>
-			<option value="1">On-Going</option>
-            <option selected="selected" value="2">Done</option>
+		 }else if($row['status']==1){
+			$result.='<option value="0">On-Going</option>
+			<option selected="selected" value="1">Done</option>
 			';
 		 }
 		$result.='
         </select>
 		</td>
-		<td><button onclick="ChangeStatusRevisi()" class="btn btn-warning">Ubah</button>
+		<td><button onclick="ChangeStatusPengerjaan()" class="btn btn-warning">Ubah</button>
 		</td>
 		 </tr>
 		   <tr>
@@ -72,15 +65,15 @@ while ($row = $queryGetRevisi->fetch_assoc()) {
          </tr>
 
          <tr>
-         <td align="right"><b>Jenis Revisi : </b></td>
+         <td align="right"><b>Jenis Pengerjaan : </b></td>
 
            <td>';
            
            if($row['tipe']==0){
-            $result.='Revisi Sendiri (7x24jam)
+            $result.='Pengerjaan Sendiri (7x24jam)
             ';
            }else if($row['status']==1){
-            $result.='Revisi Makloon (3x24jam)
+            $result.='Pengerjaan Makloon (3x24jam)
             ';
            };
            
@@ -121,18 +114,19 @@ $result.='
   
  echo $result;
 ?>
-<input type='hidden' id='idRevisi' value='<?php echo $idRevisi;?>'>
+<input type='hidden' id='idPengerjaan' value='<?php echo $idPengerjaan;?>'>
 
 <script>
 
-function ChangeStatusRevisi(){
-	var id = $("#idRevisi").val();
+function ChangeStatusPengerjaan(){
+	var id = $("#idPengerjaan").val();
 	var status = $("#status").val();
 	var data = "id=" + id + "&status="+ status;
 	
+
 	 $.ajax({
             type: 'POST',
-            url: 'controller/revisi/revisi_changeStatus.php',
+            url: 'controller/pengerjaan/pengerjaan_changeStatus.php',
             data: data,
             success: function(data) {
                 var jsonResult = JSON.parse(data)
@@ -141,25 +135,12 @@ function ChangeStatusRevisi(){
 				if(validator==1){
 					 $('#myModal3').html(text);
 					 $("#myModal3").modal("show");
+				}else{
+					alert(text);
+					window.location.replace(window.location.href+'?reload');
 				}
             }
-        });
-                $.ajax({
-                type: 'POST',
-                url: 'controller/revisi/revisi_changeStatusDone.php',
-                data: data,
-                success: function(data) {
-                    var jsonResult = JSON.parse(data)
-				    var text = jsonResult.text;
-				    var validator = jsonResult.validator;
-				    if(validator==2){
-					   $('#myModal4').html(text);
-					   $("#myModal4").modal("show");
-				    }
-                }
-            });    
-		
-
+        });		
 }
 </script>
 

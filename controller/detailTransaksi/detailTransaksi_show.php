@@ -2,8 +2,8 @@
 	include('../controller/config/linken.php');
 	include('../controller/config/asset.php');
 	
-	$queryGetPengerjaan = "SELECT pengerjaan.id_sample,pengerjaan.id,pengerjaan.tgl_mulai,pengerjaan.tgl_selesai_sendiri,pelanggan.nama,pengerjaan.status FROM pengerjaan join sample on pengerjaan.id_sample = sample.id join pelanggan on sample.id_pelanggan = pelanggan.id ORDER BY pengerjaan.id ASC";
-	$resultGetPengerjaan = mysqli_query($link,$queryGetPengerjaan) or die(mysqli_error($link));
+	$queryGetTransaksi = "SELECT pengerjaan.id_sample,pengerjaan.id,pengerjaan.tgl_mulai,pengerjaan.tgl_selesai_sendiri,pelanggan.nama,pengerjaan.status FROM revisi join pengerjaan on revisi.id_pengerjaan = pengerjaan.id join sample on pengerjaan.id_sample = sample.id join pelanggan on sample.id_pelanggan = pelanggan.id ORDER BY pengerjaan.id ASC";
+	$resultGetTransaksi = mysqli_query($link,$queryGetTransaksi) or die(mysqli_error($link));
 	 echo "<table class='table table-hover'><tr>
                         <th class='col-md-1'>Id</th>
                         <th class='col-md-1'>Pelanggan</th>
@@ -12,7 +12,7 @@
                         <th class='col-md-1'>Status</th>
 						</tr>";
 
-	while($row = mysqli_fetch_assoc($resultGetPengerjaan)){
+	while($row = mysqli_fetch_assoc($resultGetTransaksi)){
 	?>
 							
 	<script>
@@ -20,7 +20,7 @@
 
         $.ajax({
             type: 'POST',
-            url: 'controller/pengerjaan/pengerjaan_getDetailPengerjaan.php',
+            url: 'controller/detailTransaksi/detailTransaksi_getDetail.php',
             data: "id=" + id,
             success: function(data) {
                  $('#myModal2').html(data);
@@ -36,20 +36,11 @@
 	};
 	
 	</script>
-                            <tr onclick='AjaxGetDetailPengerjaan(<?php echo $row["id_sample"];?>)'>
+                            <tr onclick='AjaxGetDetailTransaksi(<?php echo $row["id"];?>)'>
 								<td><?php echo $row['id']?></td>
                                 <td><?php echo $row['nama']?></td>
                                 <td><?php echo $row['tgl_mulai']?></td>
                                 <td><?php echo $row['tgl_selesai_sendiri']?></td>
-								<td><?php if($row['status']==0){
-									echo "<span style='color:blue'>On-Going</span>";
-									}else if($row['status']==1){
-										echo "<span style='color:green'>Done</span>";
-									}else if($row['status']==2){
-										echo "<span style='color:red'>Revisi</span>";
-									}
-										
-								;?></td>
 								
                             </tr>
                             

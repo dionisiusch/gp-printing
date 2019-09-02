@@ -58,7 +58,13 @@ include('../controller/config/asset.php');
            <td><input type="date" name="tglSample"  class="form-control"  autocomplete="off" value="<?php echo $currentDateTime?>"/></td>
          </tr>
        </table>
-
+<table class="table table-bordered hovertable">
+    <tr>
+      <th width="40%">Perkiraan Biaya per Sample</th>
+      <th width="60%"><input type="number" name="perkiraanBiaya" id="perkiraanBiaya"></th>
+     </tr>
+     </table>
+ 
     <table class="table table-bordered hovertable" id="crud_table">
      <tr>
       <th width="40%">Lokasi</th>
@@ -77,13 +83,7 @@ include('../controller/config/asset.php');
         </select>
       </td>
       <td><input type="file" name="sample[1]" class="form-control"/></td>
-    <table class="table table-bordered hovertable">
-    <tr>
-      <th width="40%">Perkiraan Biaya per Sample</th>
-      <th width="60%"><input type="number" name="perkiraanBiaya" id="perkiraanBiaya"></th>
-     </tr>
-     </table>
- 
+    
 
      </tr>
 
