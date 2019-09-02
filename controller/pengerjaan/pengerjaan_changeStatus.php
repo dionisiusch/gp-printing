@@ -4,6 +4,7 @@ include('../config/linken.php');
 
 $id = $_POST['id'];
 $status = $_POST['status'];
+$jenisPengerjaan = $_POST["jenisPengerjaan"];
 $result = '';
 $resultArr  = array();
 
@@ -22,15 +23,31 @@ if($status==1){
 		</div>
 		 <div class="modal-body">
       
-<div class="table-responsive ">
-<form id="formChangeStatus" action="controller/pengerjaan/pengerjaan_insertDetailPengerjaan.php" method="POST">	 
-<table class="table table-bordered">
+		<div class="table-responsive ">
+		<form id="formChangeStatus" action="controller/pengerjaan/pengerjaan_insertDetailPengerjaan.php" method="POST">	 
+		<table class="table table-bordered">
         
 		<tr>
-         <td align="right"><b>Qty Diselesaikan : </b></td>
+         <td align="right"><b>Qty Akhir: </b></td>
            <td>
-           <input name="id" type="hidden" value="'.$id.'">
-           <input name="qtyAkhir" type="number" id="qtyAkhir" placeholder="Qty Diselesaikan">
+		   <input name="id" type="hidden" value="'.$id.'">
+		   <input name="jenisPengerjaan" type="hidden" value="'.$jenisPengerjaan.'">
+		   ';
+		
+		   if($jenisPengerjaan==0){
+			$result.= ' <input name="qtyAkhirSendiri" type="number" id="qtyAkhirSendiri" placeholder="Qty Akhir Sendiri">';
+		   }
+		   else if($jenisPengerjaan==1){
+			$result.= '<input name="qtyAkhirMakloon" type="number" id="qtyAkhirMakloon" placeholder="Qty Akhir Makloon">';
+
+		   }else{
+		   $result.= '
+		   <input name="qtyAkhirSendiri" type="number" id="qtyAkhirSendiri" placeholder="Qty Akhir Sendiri">
+		   </td></tr><tr><td></td><td>
+		   <input name="qtyAkhirMakloon" type="number" id="qtyAkhirMakloon" placeholder="Qty Akhir Makloon">
+		 ';
+		}
+		$result.='  
 		   </td>
          </tr>
 		<tr>
@@ -49,8 +66,11 @@ if($status==1){
 	$resultArr['text'] = $result;
 	$resultArr['validator'] = $status;
 }
+else{
 
+};
 echo json_encode($resultArr); 
+
 
 
 
