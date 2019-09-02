@@ -2,7 +2,7 @@
 	include('../controller/config/linken.php');
 	include('../controller/config/asset.php');
 	
-	$queryGetSample = "SELECT sample.id,sample.deadline,pelanggan.nama,sample.status,sample.tgl FROM sample join pelanggan on sample.id_pelanggan = pelanggan.id where status != 2 ORDER BY sample.id ASC";
+	$queryGetSample = "SELECT sample.id,pelanggan.nama,sample.status,sample.tgl FROM sample join pelanggan on sample.id_pelanggan = pelanggan.id where status != 2 ORDER BY sample.id ASC";
 	$resultGetSample = mysqli_query($link,$queryGetSample) or die(mysqli_error($link));
 	 echo "<table class='table table-hover'><tr>
                         <th class='col-md-1'>Id</th>
@@ -39,7 +39,7 @@
 	 
 	
 	</script>
-                            <tr onclick='AjaxGetDetailSample(<?php echo $row['id']?>)'>
+                            <tr onclick='AjaxGetDetailSample(<?php echo $row["id"]?>)'>
 								<td><?php echo $row['id']?></td>
                                 <td><?php echo $row['nama']?></td>
                                 <td><?php echo $row['tgl']?></td>
