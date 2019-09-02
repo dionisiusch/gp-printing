@@ -6,7 +6,7 @@ $id = $_POST['id'];
 $data = array();
 $result = '';
 $idPengerjaan = 0;
-$querySample = $link->query("SELECT pengerjaan.id,pengerjaan.status,pengerjaan.qty_awal,pengerjaan.qty_akhir,pelanggan.nama,pengerjaan.tgl_mulai,pengerjaan.tgl_selesai_sendiri,pengerjaan.tipe from pengerjaan join sample on pengerjaan.id_sample = sample.id join pelanggan on sample.id_pelanggan = pelanggan.id where pengerjaan.id_sample = '$id'");
+$querySample = $link->query("SELECT pengerjaan.id,pengerjaan.status,pengerjaan.qty_awal,pengerjaan.qty_akhir_sendiri,pengerjaan.qty_akhir_makloon,pelanggan.nama,pengerjaan.tgl_mulai,pengerjaan.tgl_selesai_sendiri,pengerjaan.tipe,pengerjaan.keterangan from pengerjaan join sample on pengerjaan.id_sample = sample.id join pelanggan on sample.id_pelanggan = pelanggan.id where pengerjaan.id_sample = '$id'");
 while ($row = $querySample->fetch_assoc()) {
   $idPengerjaan = $row["id"];
   $result.= '
@@ -24,8 +24,6 @@ while ($row = $querySample->fetch_assoc()) {
         
 		<tr>
          <td align="right"><b>Pelanggan : </b></td>
-		 
-
            <td>'.$row['nama'].'</td>
          </tr>
 	   <tr>
@@ -42,49 +40,100 @@ while ($row = $querySample->fetch_assoc()) {
          <td align="right"><b>Status : </b></td>
 			
          <td><select id="status" class="form-control">';
+
 		 
 		 if($row['status']==0){
 			$result.='<option selected="selected" value="0">On-Going</option>
-			<option value="1">Done</option>
-			';
-		 }else if($row['status']==1){
-			$result.='<option value="0">On-Going</option>
-			<option selected="selected" value="1">Done</option>
-			';
+      <option value="1">Done</option>
+      </select>
+      </td>
+      <td><button onclick="ChangeStatusPengerjaan()" class="btn btn-warning">Ubah</button>
+      </td>
+      </tr>
+      <tr>
+        <td align="right"><b>Qty : </b></td>
+
+          <td>'.$row['qty_awal'].'</td>
+        </tr>
+
+        <tr>
+        <td align="right"><b>Jenis Pengerjaan : </b></td>
+         <input type="hidden" id="jenisPengerjaan" value="'.$row['tipe'].'">
+          <td>';
+          
+          if($row['tipe']==0){
+           $result.='Pengerjaan Sendiri (7x24jam)
+           ';
+          }else if($row['tipe']==1){
+           $result.='Pengerjaan Makloon (3x24jam)
+           ';
+          }
+          else if($row['tipe']==2){
+           $result.='Pengerjaan Makloon <br>& Pengerjaan Sendiri
+           ';
+          };
+          
+         $result.= '</td>
+        </tr>
+    
+      </table> <table class="table table-bordered hovertable" id="crud_table">
+    <tr>
+     <th width="40%">Lokasi</th>
+     <th width="60%">Desain</th>
+    </tr>';
+     }
+     else if($row['status']==1){
+			$result.='
+        <option selected="selected" value="1">Done</option>
+        </select>
+        </td>
+        </tr>
+        <tr>
+        <td align="right"><b>Jenis Pengerjaan : </b></td>
+         <input type="hidden" id="jenisPengerjaan" value="'.$row['tipe'].'">
+          <td>';
+          
+          if($row['tipe']==0){
+           $result.='Pengerjaan Sendiri (7x24jam)
+           ';
+          }else if($row['tipe']==1){
+           $result.='Pengerjaan Makloon (3x24jam)
+           ';
+          }
+          else if($row['tipe']==2){
+           $result.='Pengerjaan Makloon <br>& Pengerjaan Sendiri
+           ';
+          };
+          
+         $result.= '</td>
+        </tr>
+        <tr>
+        <td align="right"><b>Qty Awal : </b></td>
+          <td>'.$row['qty_awal'].'</td>
+        </tr>
+
+        <tr>
+        <td align="right"><b>Qty Akhir Sendiri : </b></td>
+          <td>'.$row['qty_akhir_sendiri'].'</td>
+        </tr>
+
+        <tr>
+        <td align="right"><b>Qty Akhir Makloon : </b></td>
+          <td>'.$row['qty_akhir_makloon'].'</td>
+        </tr>
+        <tr>
+        <td align="right"><b>Keterangan : </b></td>
+          <td>'.$row['keterangan'].'</td>
+        </tr>
+    
+      </table> <table class="table table-bordered hovertable" id="crud_table">
+    <tr>
+     <th width="40%">Lokasi</th>
+     <th width="60%">Desain</th>
+    </tr>';
 		 }
 		$result.='
-        </select>
-		</td>
-		<td><button onclick="ChangeStatusPengerjaan()" class="btn btn-warning">Ubah</button>
-		</td>
-		 </tr>
-		   <tr>
-         <td align="right"><b>Qty : </b></td>
-
-           <td>'.$row['qty_awal'].'</td>
-         </tr>
-
-         <tr>
-         <td align="right"><b>Jenis Pengerjaan : </b></td>
-
-           <td>';
-           
-           if($row['tipe']==0){
-            $result.='Pengerjaan Sendiri (7x24jam)
-            ';
-           }else if($row['status']==1){
-            $result.='Pengerjaan Makloon (3x24jam)
-            ';
-           };
-           
-          $result.= '</td>
-         </tr>
-		 
-       </table> <table class="table table-bordered hovertable" id="crud_table">
-     <tr>
-      <th width="40%">Lokasi</th>
-      <th width="60%">Desain</th>
-     </tr>';
+		';
 }
 
 
@@ -121,7 +170,8 @@ $result.='
 function ChangeStatusPengerjaan(){
 	var id = $("#idPengerjaan").val();
 	var status = $("#status").val();
-	var data = "id=" + id + "&status="+ status;
+  var jenisPengerjaan = $("#jenisPengerjaan").val();
+	var data = "id=" + id + "&status="+ status+ "&jenisPengerjaan="+ jenisPengerjaan;
 	
 
 	 $.ajax({
