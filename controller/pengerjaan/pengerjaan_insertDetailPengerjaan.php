@@ -2,7 +2,7 @@
 include('../config/linken.php');
 
 $id = $_POST["id"];
-$qtyAkhir = $_POST["qtyAkhir"];
+$jenisPengerjaan = $_POST["jenisPengerjaan"];
 $keterangan = $_POST["keterangan"];
 $idSample = 0;
 $queryGetQtyAwal = "SELECT qty_awal from pengerjaan WHERE id='$id' LIMIT 1";
@@ -29,7 +29,19 @@ if($qtySisa>$tenpersen){
     
 }else{
     //update db pengerjaan
-$queryUpdatePengerjaan = "UPDATE pengerjaan set status=1,qty_akhir=$qtyAkhir,keterangan='$keterangan' where id='$id'";
+//update db pengerjaan
+if($jenisPengerjaan==0){
+    $qtyAkhirSendiri = $_POST["qtyAkhirSendiri"];
+    $qtyAkhirMakloon = 0;
+}
+else if($jenisPengerjaan==1){
+    $qtyAkhirMakloon = $_POST["qtyAkhirMakloon"];
+    $qtyAkhirSendiri = 0;
+}else{
+    $qtyAkhirSendiri = $_POST["qtyAkhirSendiri"];
+    $qtyAkhirMakloon = $_POST["qtyAkhirMakloon"];
+}
+$queryUpdatePengerjaan = "UPDATE pengerjaan set status=1,qty_akhir_sendiri=$qtyAkhirSendiri,qty_akhir_makloon=$qtyAkhirMakloon,keterangan='$keterangan' where id='$id'";
 $resultUpdatePengerjaan = mysqli_query($link,$queryUpdatePengerjaan) or die(mysqli_error($link));
 if(!$resultUpdatePengerjaan){
         echo "<script>alert('Error Update Pengerjaan!');
