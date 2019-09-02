@@ -3,7 +3,6 @@ include('../config/linken.php');
 
 //get search term
 $id = $_POST['id'];
-echo $id;
 $data = array();
 $result = '';
 $idPengerjaan = 0;
