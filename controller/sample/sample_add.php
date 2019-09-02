@@ -3,12 +3,13 @@
 
 	
 	$uploadPath = "../../assets/uploads/";
+    $biaya=$_POST['perkiraanBiaya'];
 	$tglSample = $_POST['tglSample'];
 	$idPelanggan = substr($_POST['pelanggan'], 0, strpos($_POST['pelanggan'], '|')-1);
 	$lokasiArray = $_POST['lokasi'];
 	$i = 1; 
 	//insert db sample
-	$queryInsertSample = "INSERT INTO sample (id_pelanggan,tgl) values($idPelanggan,'$tglSample')";
+	$queryInsertSample = "INSERT INTO sample (id_pelanggan,tgl,biaya) values($idPelanggan,'$tglSample',$biaya)";
 	$resultInsertSample = mysqli_query($link,$queryInsertSample) or die(mysqli_error($link));
 	$lastIdInsertSample = mysqli_insert_id($link);	
 	if(!$resultInsertSample){

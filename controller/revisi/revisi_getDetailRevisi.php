@@ -5,13 +5,14 @@ include('../config/linken.php');
 $id = $_POST['id'];
 $data = array();
 $result = '';
-$idPengerjaan = 0;
-$querySample = $link->query("SELECT pengerjaan.id,pengerjaan.status,pengerjaan.qty_awal,pengerjaan.qty_akhir,pelanggan.nama,pengerjaan.tgl_mulai,pengerjaan.tgl_selesai_sendiri,pengerjaan.tipe from pengerjaan join sample on pengerjaan.id_sample = sample.id join pelanggan on sample.id_pelanggan = pelanggan.id where pengerjaan.id_sample = '$id'");
+$idRevisi = 0;
+$querySample = $link->query("SELECT revisi.id,revisi.status,revisi.qty_awal,revisi.qty_akhir,pelanggan.nama,revisi.tgl_mulai,revisi.tgl_selesai,revisi.tipe from revisi join sample on revisi.id_sample = sample.id join pelanggan on sample.id_pelanggan = pelanggan.id where revisi.id_sample = '$id'");
 while ($row = $querySample->fetch_assoc()) {
-  $idPengerjaan = $row["id"];
+  $idRevisi = $row["id"];
   $result.= '
 	
 	<div class="modal-dialog">
+
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
@@ -36,7 +37,7 @@ while ($row = $querySample->fetch_assoc()) {
 		 <tr>
          <td align="right"><b>Tanggal Selesai : </b></td>
 
-           <td>'.$row['tgl_selesai_sendiri'].'</td>
+           <td>'.$row['tgl_selesai'].'</td>
          </tr>
 		  <tr>
          <td align="right"><b>Status : </b></td>
@@ -55,7 +56,7 @@ while ($row = $querySample->fetch_assoc()) {
 		$result.='
         </select>
 		</td>
-		<td><button onclick="ChangeStatusPengerjaan()" class="btn btn-warning">Ubah</button>
+		<td><button onclick="ChangeStatusRevisi()" class="btn btn-warning">Ubah</button>
 		</td>
 		 </tr>
 		   <tr>
@@ -65,15 +66,15 @@ while ($row = $querySample->fetch_assoc()) {
          </tr>
 
          <tr>
-         <td align="right"><b>Jenis Pengerjaan : </b></td>
+         <td align="right"><b>Jenis Revisi : </b></td>
 
            <td>';
            
            if($row['tipe']==0){
-            $result.='Pengerjaan Sendiri (7x24jam)
+            $result.='Revisi Sendiri (7x24jam)
             ';
            }else if($row['status']==1){
-            $result.='Pengerjaan Makloon (3x24jam)
+            $result.='Revisi Makloon (3x24jam)
             ';
            };
            
@@ -97,7 +98,8 @@ while ($row = $query->fetch_assoc()) {
         '.$row['lokasi'].'
       </td>
       <td><a target="_blank" href="assets/uploads/'.$row['desain'].'"><img style="width:50px" src="assets/uploads/'.$row['desain'].'"></a></td>
-     </tr>';
+     </tr>
+';
 }
 //return json data
 $result.='
@@ -114,19 +116,19 @@ $result.='
   
  echo $result;
 ?>
-<input type='hidden' id='idPengerjaan' value='<?php echo $idPengerjaan;?>'>
+<input type='hidden' id='idRevisi' value='<?php echo $idRevisi;?>'>
 
 <script>
 
-function ChangeStatusPengerjaan(){
-	var id = $("#idPengerjaan").val();
+function ChangeStatusRevisi(){
+	var id = $("#idRevisi").val();
 	var status = $("#status").val();
 	var data = "id=" + id + "&status="+ status;
 	
 
 	 $.ajax({
             type: 'POST',
-            url: 'controller/pengerjaan/pengerjaan_changeStatus.php',
+            url: 'controller/revisi/revisi_changeStatus.php',
             data: data,
             success: function(data) {
                 var jsonResult = JSON.parse(data)

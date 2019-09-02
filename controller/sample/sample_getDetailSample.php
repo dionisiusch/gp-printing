@@ -80,7 +80,19 @@ while ($row = $query->fetch_assoc()) {
 ';
 }
 //return json data
+$queryBiaya = $link->query("SELECT biaya FROM sample WHERE id='$id'");
+while ($rowBiaya = $queryBiaya->fetch_assoc()) {
+
 $result.='
+<table class="table table-bordered hovertable">
+    <tr>
+      <th width="40%">Perkiraan Biaya per Sample</th>
+      <th width="60%"><input type="number" name"perkiraanBiaya" id="perkiraanBiaya" value="'.$rowBiaya['biaya'].'" readonly></th>
+      ';
+}
+    $result.= '
+     </tr>
+     </table>
     </table>
   
       </div>
