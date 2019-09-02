@@ -5,7 +5,7 @@ include('../config/linken.php');
 $id = $_POST['id'];
 $data = array();
 $result = '';
-$querySample = $link->query("SELECT sample.id,sample.deadline,sample.status,pelanggan.nama,sample.tgl from sample join pelanggan on sample.id_pelanggan = pelanggan.id where sample.id = '$id'");
+$querySample = $link->query("SELECT sample.id,sample.status,pelanggan.nama,sample.tgl from sample join pelanggan on sample.id_pelanggan = pelanggan.id where sample.id = '$id'");
 while ($row = $querySample->fetch_assoc()) {
     $result.= '
 	
