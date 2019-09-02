@@ -24,6 +24,7 @@ include($path.'/controller/config/asset.php');
 			<li><a href="view/sample.php"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;Sample</a></li>
 			<li><a href="view/pengerjaan.php"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;Pengerjaan</a></li>
             <li><a href="view/revisi.php"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;Revisi</a></li>
+            <li><a href="view/detailTransaksi.php"><span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;Detail Transaksi</a></li>
             <!-- <li><a href="vendors.php"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;Data Vendor</a></li>
 			<li><a href="penjualan.php"><span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;Penjualan Sparepart</a></li>
 			<li><a href="service.php"><span class="glyphicon glyphicon-wrench"></span>&nbsp;&nbsp;Service</a>

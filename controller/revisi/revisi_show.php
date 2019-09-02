@@ -42,9 +42,13 @@
                                 <td><?php echo $row['tgl_mulai']?></td>
                                 <td><?php echo $row['tgl_selesai']?></td>
 								<td><?php if($row['status']==0){
-									echo "<span style='color:blue'>On-Going</span>";
+									echo "<span style='color:red'>Idle</span>";
 									}else if($row['status']==1){
+										echo "<span style='color:blue'>On-Going</span>";
+									}else if($row['status']==2){
 										echo "<span style='color:green'>Done</span>";
+									}else if($row['status']==3){
+										echo "<span style='color:red'>Not Suitable</span>";
 									}
 										
 								;?></td>
@@ -63,5 +67,8 @@
 	
 	</div>
 	<div id="myModal3" class="modal fade" role="dialog">
+	
+	</div>
+	<div id="myModal4" class="modal fade" role="dialog">
 	
 	</div>
