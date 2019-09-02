@@ -1,11 +1,14 @@
 <?php
 include('../config/linken.php');
 
-
 $id = $_POST['id'];
 $status = $_POST['status'];
 $result = '';
 $resultArr  = array();
+//$query = $link->query("SELECT qty_awal FROM detail_sample WHERE id_sample='$id'");
+//while ($row = $query->fetch_assoc()) {
+//    $qtyAwal=$row['qty_awal'];
+//}
 
 
 if($status==1){
@@ -23,33 +26,41 @@ if($status==1){
 		 <div class="modal-body">
       
 <div class="table-responsive ">
-<form id="formChangeStatus" action="controller/pengerjaan/pengerjaan_insertPengerjaan.php" method="POST">	 
-<table class="table table-bordered">
+<form id="formChangeStatus" action="controller/pengerjaan/pengerjaan_insertPengerjaan.php" method="POST">
+<table class="table table-bordered" >
         
 		<tr>
          <td align="right"><b>Jenis Pengerjaan : </b></td>
-		 
 
-           <td><select name="jenisPengerjaan" id="jenisPengerjaan" class="form-control">
+           <td><select name="jenisPengerjaan" id="jenisPengerjaan" class="form-control" onChange="showHide()">
 				<option value="0">Pengerjaan Sendiri (7x24jam)</option>
 				<option value="1">Pengerjaan Makloon (3x24jam)</option>
+                <option value="2">Pengerjaan Sendiri & Makloon</option>
 		   </select>
+           <input type="hidden" name="idSample" id="idSample" value="'.$id.'">
 		   </td>
          </tr>
-		<tr>
-         <td align="right"><b>Qty : </b></td>
-		 
-			<input type="hidden" name="idSample" value="'.$id.'">
-           <td><input name="qty" type="number" id="qty" placeholder="Qty"></td>
+		<tr name="qtySendiri_show" id="qtySendiri_show">
+         <td align="right"><b>Qty Sendiri: </b></td>
+           <td><input name="qtySendiri" type="number" id="qtySendiri" placeholder="Qty"></td>
          </tr>
-	   <tr>
-         <td align="right"><b>Tgl Selesai : </b></td>
+	   <tr name="tglSendiri_show" id="tglSendiri_show">
+         <td align="right"><b>Tgl Selesai Sendiri : </b></td>
+           <td><input name="tglSelesaiSendiri" type="text" id="tglSelesaiSendiri" value=""></td>
+         </tr>
 
-           <td><input name="tglSelesai" type="text" id="tglSelesai" value=""></td>
+        <tr name="qtyMakloon_show" id="qtyMakloon_show">
+         <td align="right"><b>Qty Makloon: </b></td>
+           <td><input name="qtyMakloon" type="number" id="qtyMakloon" placeholder="Qty"></td>
          </tr>
-		  
+	   <tr name="tglMakloon_show" id="tglMakloon_show">
+         <td align="right"><b>Tgl Selesai Makloon : </b></td>
+           <td><input name="tglSelesaiMakloon" type="text" id="tglSelesaiMakloon" value=""></td>
+         </tr>
+         
 	</table>
-<table class="table table-bordered hovertable" id="crud_table">
+
+<table class="table table-bordered hovertable" id="crud_table2"></table>
      <tr>
       <td><input type="submit" id="saveDetailChangeStatus" style="margin-left:250" class="btn btn-warning" value="Simpan"></td>
 	 </tr>
@@ -59,17 +70,12 @@ if($status==1){
 	 
 <script>
 
-function GetTglSelesai(){
-	 var tipe = $("#jenisPengerjaan").val();
+function GetTglSelesaiSendiri(){
 	 var date = new Date();
-	 if(tipe==0){
-		 date.setDate(date.getDate() + 7);
-	 }else{
-		 date.setDate(date.getDate() + 3);
-	 }
-        var month = "" + date.getMonth();
-        var day = "" + date.getDate();
-        var year = date.getFullYear();
+     date.setDate(date.getDate() + 7);
+     var month = "" + date.getMonth();
+     var day = "" + date.getDate();
+     var year = date.getFullYear();
 
     if(month.length < 2){
 		month = "0" + month;
@@ -78,17 +84,66 @@ function GetTglSelesai(){
 		day = "0" + day;
 	}
     var newDate = year+"-"+month+"-"+day;
-	 $("#tglSelesai").val(newDate);
+	 $("#tglSelesaiSendiri").val(newDate);
+}
+function GetTglSelesaiMakloon(){
+	 var date = new Date();
+     date.setDate(date.getDate() + 3);
+     var month = "" + date.getMonth();
+     var day = "" + date.getDate();
+     var year = date.getFullYear();
+
+    if(month.length < 2){
+		month = "0" + month;
+	}
+    if(day.length < 2){
+		day = "0" + day;
+	}
+    var newDate = year+"-"+month+"-"+day;
+	 $("#tglSelesaiMakloon").val(newDate);
+}
+function showRow(rowId) {
+    document.getElementById(rowId).style.display = "";
+}
+function hideRow(rowId) {
+    document.getElementById(rowId).style.display = "none";
+};
+
+function showHide(){
+ var type = $("#jenisPengerjaan").val();
+  if(type==0){
+    $("#qtySendiri_show").show();
+    $("#tglSendiri_show").show();
+    $("#qtyMakloon_show").hide();
+    $("#tglMakloon_show").hide();
+  }else if(type==1){
+    $("#qtySendiri_show").hide();
+    $("#tglSendiri_show").hide();
+    $("#qtyMakloon_show").show();
+    $("#tglMakloon_show").show();
+  }else{
+    $("#qtySendiri_show").show();
+    $("#tglSendiri_show").show();
+    $("#qtyMakloon_show").show();
+    $("#tglMakloon_show").show();
+  }
+
 }
 
-$( "#jenisPengerjaan" ).change(function() {
-  GetTglSelesai();
+$( "#qtySendiri" ).keyup(function() {
+  GetTglSelesaiSendiri();
+ });
+$( "#qtyMakloon" ).keyup(function() {
+  GetTglSelesaiMakloon();
 });
 	 
 $( document ).ready(function() {
-    GetTglSelesai();
-	
-	});
+    $("#qtySendiri_show").show();
+    $("#tglSendiri_show").show();
+    $("#qtyMakloon_show").hide();
+    $("#tglMakloon_show").hide();
+
+});
 </script>
 	  ';
 	$resultArr['text'] = $result;
