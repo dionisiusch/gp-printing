@@ -6,8 +6,8 @@ $id = $_POST['id'];
 $data = array();
 $result = '';
 $idRevisi = 0;
-$querySample = $link->query("SELECT revisi.id,revisi.status,revisi.qty_awal,revisi.qty_akhir,pelanggan.nama,revisi.tgl_mulai,revisi.tgl_selesai,revisi.tipe from revisi join sample on revisi.id_sample = sample.id join pelanggan on sample.id_pelanggan = pelanggan.id where revisi.id_sample = '$id'");
-while ($row = $querySample->fetch_assoc()) {
+$queryGetRevisi = $link->query("SELECT revisi.id,revisi.status,revisi.qty_awal,revisi.qty_akhir,pelanggan.nama,revisi.tgl_mulai,revisi.tgl_selesai,revisi.tipe from revisi join sample on revisi.id_sample = sample.id join pelanggan on sample.id_pelanggan = pelanggan.id where revisi.id_sample = '$id'");
+while ($row = $queryGetRevisi->fetch_assoc()) {
   $idRevisi = $row["id"];
   $result.= '
 	
