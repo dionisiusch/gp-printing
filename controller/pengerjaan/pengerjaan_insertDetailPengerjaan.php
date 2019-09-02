@@ -14,7 +14,10 @@ while ($rowQty = $resultGetQtyAwal->fetch_assoc()) {
 }
 $tenpersen = ceil($qtyAwal*0.1);
 
-
+if($qtyAkhir<$tenpersen){
+    $queryInsertRevisi = "INSERT INTO revisi(id_sample,id_pengerjaan,tipe,qty_awal) SELECT id_sample,id,tipe,qty_awal FROM pengerjaan where id='$id'";
+    $resulInsertRevisi= mysqli_query($link,$queryInsertRevisi) or die(mysqli_error($link));   
+}
 //update db pengerjaan
 if($jenisPengerjaan==0){
     $qtyAkhirSendiri = $_POST["qtyAkhirSendiri"];
@@ -36,11 +39,6 @@ if(!$resultUpdatePengerjaan){
         </script>";
     }
 
-if($qtyAkhir<$tenpersen){
-    $queryInsertRevisi = "INSERT INTO revisi(id_sample,id_pengerjaan,tipe,qty_awal) SELECT id_sample,id,tipe,qty_awal FROM pengerjaan where id='$id'";
-    $resulInsertRevisi= mysqli_query($link,$queryInsertRevisi) or die(mysqli_error($link));   
-}
-
 //update status pengerjaan to done
 $query = $link->query("SELECT id_sample from pengerjaan where id='$id'");
 while ($row = $query->fetch_assoc()) {
@@ -48,5 +46,5 @@ while ($row = $query->fetch_assoc()) {
 }
 $queryUpdateStatusSample = "UPDATE sample set status=2 where id = '$idSample'";
 $resultUpdateStatusSample = mysqli_query($link,$queryUpdateStatusSample) or die(mysqli_error($link));
-    header("Location: ../../view/pengerjaan.php");
+    header("Location: ../../view/pengerjaan.php"); 
 ?>
