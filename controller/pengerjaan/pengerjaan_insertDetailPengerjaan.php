@@ -26,6 +26,7 @@ while ($row = $resultGetQtyAwal->fetch_assoc()) {
     $qtyAwal = $row["qty_awal"];
 }
 $tenpersen = ceil($qtyAwal*0.1);
+$qtySisa = $qtyAwal-$qtyAkhir;
 $thresholdRevisi = $qtyAwal-$tenpersen;
  
 if($qtyAkhir<$thresholdRevisi){
