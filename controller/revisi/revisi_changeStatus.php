@@ -3,6 +3,11 @@ include('../config/linken.php');
 
 $id = $_POST['id'];
 $status = $_POST['status'];
+$queryGetQtyAwal = "SELECT qty_awal from revisi WHERE id='$id' LIMIT 1";
+$resultGetQtyAwal = mysqli_query($link,$queryGetQtyAwal) or die(mysqli_error($link));
+while ($row = $resultGetQtyAwal->fetch_assoc()) {
+    $qtyAwal = $row["qty_awal"];
+}
 $result = '';
 $resultArr  = array();
 //$query = $link->query("SELECT qty_awal FROM detail_sample WHERE id_sample='$id'");
@@ -32,7 +37,7 @@ if($status==1){
         
 		<tr>
          <td align="right"><b>Qty: </b></td>
-           <td><input name="qty" type="number" id="qty" placeholder="Qty"></td>
+           <td><input name="qty" type="number" id="qty" value="'.$qtyAwal.'" ></td>
          </tr>
 	   <tr>
          <td align="right"><b>Tgl Selesai: </b></td>
@@ -74,6 +79,7 @@ $( "#qty" ).keyup(function() {
  });
 	 
 $( document ).ready(function() {
+    GetTglSelesai();
 });
 </script>
 	  ';

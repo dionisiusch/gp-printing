@@ -123,6 +123,7 @@ $result.='
 ?>
 <input type='hidden' id='idRevisi' value='<?php echo $idRevisi;?>'>
 
+
 <script>
 
 function ChangeStatusRevisi(){
