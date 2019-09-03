@@ -13,7 +13,7 @@ while ($row = $resultGetQtyAwal->fetch_assoc()) {
 $tenpersen = ceil($qtyAwal*0.1);
 $qtySisa=$qtyAwal-$qtyAkhir;
 if($qtySisa>$tenpersen){
-    $queryInsertRevisi = "INSERT INTO revisi(id_sample,id_pengerjaan,tipe,qty_awal) SELECT id_sample,id,tipe,$qtySisa FROM revisi where id='$id'";
+    $queryInsertRevisi = "INSERT INTO revisi(id_sample,id_pengerjaan,tipe,qty_awal) SELECT id_sample,id_pengerjaan,tipe,$qtySisa FROM revisi where id='$id'";
     $resulInsertRevisi= mysqli_query($link,$queryInsertRevisi) or die(mysqli_error($link));
     $queryUpdatePengerjaanRevisi = "UPDATE revisi set status=3,qty_akhir=$qtyAkhir,keterangan='$keterangan' where id='$id'";
     $resultUpdatePengerjaanRevisi = mysqli_query($link,$queryUpdatePengerjaanRevisi) or die(mysqli_error($link));
@@ -22,7 +22,7 @@ if($qtySisa>$tenpersen){
             window.location.replace('../../view/sample.php');
         </script>";
     }
-        header("Location: ../../view/pengerjaan.php");
+        header("Location: ../../view/revisi.php");
 }else{
 
 //update db revisi
@@ -46,6 +46,8 @@ $resultUpdateStatusSample = mysqli_query($link,$queryUpdateStatusSample) or die(
 //update all revisi db status   
 $queryAllUpdateRevisi = "UPDATE revisi set status=2 where id_sample=$idSample && id_pengerjaan=$idPengerjaan";
 $resultAllUpdateRevisi = mysqli_query($link,$queryAllUpdateRevisi) or die(mysqli_error($link));
+$queryUpdateStatusSample = "UPDATE sample set status=2 where id = '$idSample'";
+$resultUpdateStatusSample = mysqli_query($link,$queryUpdateStatusSample) or die(mysqli_error($link));
     header("Location: ../../view/pengerjaan.php");
 }
 ?>

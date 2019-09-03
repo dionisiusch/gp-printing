@@ -107,9 +107,22 @@ while ($row = $querySample->fetch_assoc()) {
         <tr>
         <td align="right"><b>Qty Awal : </b></td>
           <td>'.$row['qty_awal'].'</td>
+        </tr>';
+         if($row['tipe']==0){
+           $result.=' <tr>
+        <td align="right"><b>Qty Akhir Sendiri : </b></td>
+          <td>'.$row['qty_akhir_sendiri'].'</td>
         </tr>
-
-        <tr>
+           ';
+          }else if($row['tipe']==1){
+           $result.='        <tr>
+        <td align="right"><b>Qty Akhir Makloon : </b></td>
+          <td>'.$row['qty_akhir_makloon'].'</td>
+        </tr>
+           ';
+          }
+          else if($row['tipe']==2){
+           $result.='        <tr>
         <td align="right"><b>Qty Akhir Sendiri : </b></td>
           <td>'.$row['qty_akhir_sendiri'].'</td>
         </tr>
@@ -118,16 +131,54 @@ while ($row = $querySample->fetch_assoc()) {
         <td align="right"><b>Qty Akhir Makloon : </b></td>
           <td>'.$row['qty_akhir_makloon'].'</td>
         </tr>
-        <tr>
+           ';
+          };
+        
+
+
+        $result.='<tr>
         <td align="right"><b>Keterangan : </b></td>
           <td>'.$row['keterangan'].'</td>
         </tr>
-    
-      </table> <table class="table table-bordered hovertable" id="crud_table">
+        
+        ';
+         $count = 1;
+    $queryShowRevisi = $link->query("SELECT tgl_mulai,tgl_selesai,qty_akhir,qty_awal FROM revisi WHERE id_sample='$id'");
+while ($rowRevisi = $queryShowRevisi->fetch_assoc()) {
+	$result.= '
+    <div class="table-responsive ">
+     <table class="table table-bordered" >
+     <h3>Revisi '.$count.'</h3>
+      <tr>
+         <td align="right" width="40%"><b>Tanggal Mulai : </b></td>
+           <td>'.$rowRevisi['tgl_mulai'].'</td>
+      </tr>
+      <tr>
+         <td align="right" width="40%"><b>Tanggal Selesai : </b></td>
+           <td>'.$rowRevisi['tgl_selesai'].'</td>
+      </tr>
+      <tr>
+         <td align="right" width="40%"><b>Qty Awal : </b></td>
+           <td>'.$rowRevisi['qty_awal'].'</td>
+      </tr>
+      <tr>
+         <td align="right" width="40%"><b>Qty Akhir : </b></td>
+           <td>'.$rowRevisi['qty_akhir'].'</td>
+      </tr>
+      <tr>
+        <td align="right" width="40%"><b>Keterangan : </b></td>
+          <td>'.$row['keterangan'].'</td>
+        </tr>
+      </table></div>';
+    $count++;
+}
+     $result.=' </table> <table class="table table-bordered hovertable" id="crud_table">
     <tr>
      <th width="40%">Lokasi</th>
      <th width="60%">Desain</th>
     </tr>';
+         
+         
 		 }
 		$result.='
 		';
