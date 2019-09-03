@@ -39,15 +39,13 @@ while ($row = $querySample->fetch_assoc()) {
 		  <tr>
          <td align="right"><b>Status : </b></td>
 			
-         <td><select id="status" class="form-control">';
+         <td>';
 
 		 
 		 if($row['status']==0){
-			$result.='<option selected="selected" value="0">On-Going</option>
-      <option value="1">Done</option>
-      </select>
+			$result.='On-Going
       </td>
-      <td><button onclick="ChangeStatusPengerjaan()" class="btn btn-warning">Ubah</button>
+      <td><button onclick="ChangeStatusPengerjaan()" class="btn btn-warning">Done</button>
       </td>
       </tr>
       <tr>
@@ -84,8 +82,7 @@ while ($row = $querySample->fetch_assoc()) {
      }
      else if($row['status']==1){
 			$result.='
-        <option selected="selected" value="1">Done</option>
-        </select>
+       Done
         </td>
         </tr>
         <tr>
@@ -169,7 +166,7 @@ $result.='
 
 function ChangeStatusPengerjaan(){
 	var id = $("#idPengerjaan").val();
-	var status = $("#status").val();
+	var status = 1;
   var jenisPengerjaan = $("#jenisPengerjaan").val();
 	var data = "id=" + id + "&status="+ status+ "&jenisPengerjaan="+ jenisPengerjaan;
 	

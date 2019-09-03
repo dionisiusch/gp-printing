@@ -42,22 +42,21 @@ while ($row = $querySample->fetch_assoc()) {
 		  <tr>
          <td align="right"><b>Status : </b></td>
 			
-         <td><select id="status"class="form-control">';
+         <td>';
 		 
 		 if($row['status']==0){
-			$result.='<option selected="selected" value="0">Idle</option>
-			<option value="1">On-Going</option>
+      $result.='Idle
+      </td>
+      <td><button onclick="ChangeStatus()" class="btn btn-warning">Kerjakan</button>
+      </td>
 			';
 		 }else if($row['status']==1){
-			$result.='<option value="0">Idle</option>
-			<option selected="selected" value="1">On-Going</option>
+			$result.='On-Going</td>
 			';
 		 }
 		$result.='
-        </select>
-		</td>
-		<td><button onclick="ChangeStatus()" class="btn btn-warning">Ubah</button>
-		</td>
+       
+		
 		 </tr>
        </table>';
 $queryBiaya = $link->query("SELECT biaya FROM sample WHERE id='$id'");
@@ -113,7 +112,7 @@ while ($row = $query->fetch_assoc()) {
 <script>
 function ChangeStatus(){
 	var id = $("#id").val();
-	var status = $("#status").val();
+	var status = 1;
 	var data = "id=" + id + "&status="+ status;
 	
 
