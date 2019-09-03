@@ -26,9 +26,9 @@ while ($row = $resultGetQtyAwal->fetch_assoc()) {
     $qtyAwal = $row["qty_awal"];
 }
 $tenpersen = ceil($qtyAwal*0.1);
-$qtySisa=$qtyAwal-$qtyAkhir;
-
-if($qtySisa>$tenpersen){
+$thresholdRevisi = $qtyAwal-$tenpersen;
+ 
+if($qtyAkhir<$thresholdRevisi){
     //insert db to revisi
     $queryInsertRevisi = "INSERT INTO revisi(id_sample,id_pengerjaan,tipe,qty_awal) SELECT id_sample,id,tipe,$qtySisa FROM pengerjaan where id='$id'";
     $resulInsertRevisi= mysqli_query($link,$queryInsertRevisi) or die(mysqli_error($link));
