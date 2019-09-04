@@ -99,7 +99,7 @@ function ChangeStatusRevisiDone(id,status){
                                 <?php }else if($row['status']==1){ ?>
                                 <button onclick="ChangeStatusRevisiDone(<?php echo $row["id"];?>,<?php echo $row["status"];?>)" class="btn btn-warning">Done</button>
                                 <?php }?>
-                                <button onclick="ChangeStatus()" class="btn btn-danger">Delete</button></td>
+                                <a class='btn btn-danger' href='controller/revisi/revisi_delete.php?id="<?php echo $row["id"];?>"'>Hapus</a></td>
                             </tr>
 	
 	

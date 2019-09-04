@@ -29,6 +29,11 @@ while ($row = $resultGetQtyAwal->fetch_assoc()) {
     $qtyAwal = $row["qty_awal"];
 }
 $tenpersen = ceil($qtyAwal*0.1);
+if($qtyAwal>$qtyAkhir){
+    echo "<script>alert('Qty Tidak Boleh Lebih dari Qty Akhir');
+            window.location.replace('../../view/pengerjaan.php');
+        </script>";
+}
 $qtySisa = $qtyAwal-$qtyAkhir;
 $thresholdRevisi = $qtyAwal-$tenpersen;
  
