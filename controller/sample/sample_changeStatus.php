@@ -46,7 +46,7 @@ if($status==1){
          </tr>
 	   <tr name="tglSendiri_show" id="tglSendiri_show">
          <td align="right"><b>Tgl Selesai Sendiri : </b></td>
-           <td><input name="tglSelesaiSendiri" type="text" id="tglSelesaiSendiri" value=""></td>
+           <td><input name="tglSelesaiSendiri" type="date" id="tglSelesaiSendiri" value=""></td>
          </tr>
 
         <tr name="qtyMakloon_show" id="qtyMakloon_show">
@@ -55,7 +55,7 @@ if($status==1){
          </tr>
 	   <tr name="tglMakloon_show" id="tglMakloon_show">
          <td align="right"><b>Tgl Selesai Makloon : </b></td>
-           <td><input name="tglSelesaiMakloon" type="text" id="tglSelesaiMakloon" value=""></td>
+           <td><input name="tglSelesaiMakloon" type="date" id="tglSelesaiMakloon" value=""></td>
          </tr>
          
 	</table>
@@ -73,7 +73,8 @@ if($status==1){
 function GetTglSelesaiSendiri(){
 	 var date = new Date();
      date.setDate(date.getDate() + 7);
-     var month = "" + date.getMonth();
+     date.setMonth(date.getMonth() + 1); 
+     var month = "" + date.getMonth() ;
      var day = "" + date.getDate();
      var year = date.getFullYear();
 
@@ -89,6 +90,7 @@ function GetTglSelesaiSendiri(){
 function GetTglSelesaiMakloon(){
 	 var date = new Date();
      date.setDate(date.getDate() + 3);
+     date.setMonth(date.getMonth() + 1); 
      var month = "" + date.getMonth();
      var day = "" + date.getDate();
      var year = date.getFullYear();
