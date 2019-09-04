@@ -2,7 +2,7 @@
 	include('../controller/config/linken.php');
 	include('../controller/config/asset.php');
 	
-	$queryGetPengerjaan = "SELECT pengerjaan.id_sample,pengerjaan.id,pengerjaan.tgl_mulai,pengerjaan.tgl_selesai_sendiri,pengerjaan.tgl_selesai_makloon,pelanggan.nama,pengerjaan.status FROM pengerjaan join sample on pengerjaan.id_sample = sample.id join pelanggan on sample.id_pelanggan = pelanggan.id ORDER BY pengerjaan.id ASC";
+	$queryGetPengerjaan = "SELECT pengerjaan.id_sample,pengerjaan.id,pengerjaan.tipe,pengerjaan.tgl_mulai,pengerjaan.tgl_selesai_sendiri,pengerjaan.tgl_selesai_makloon,pelanggan.nama,pengerjaan.status FROM pengerjaan join sample on pengerjaan.id_sample = sample.id join pelanggan on sample.id_pelanggan = pelanggan.id ORDER BY pengerjaan.id ASC";
 	$resultGetPengerjaan = mysqli_query($link,$queryGetPengerjaan) or die(mysqli_error($link));
 	 echo "<table class='table table-hover'><tr>
                         <th class='col-md-1'>Id</th>
@@ -11,6 +11,7 @@
 						<th class='col-md-1'>Tgl Selesai Sendiri</th>
                         <th class='col-md-1'>Tgl Selesai Makloon</th>
                         <th class='col-md-1'>Status</th>
+                        <th class='col-md-1'>Action</th>
 						</tr>";
 
 	while($row = mysqli_fetch_assoc($resultGetPengerjaan)){
@@ -43,6 +44,31 @@
 		 $("#myModal2").modal("hide");
 	};
 	
+    function ChangeStatusPengerjaan(id,jenisPengerjaan){
+	var status = 1;
+	var data = "id=" + id + "&status="+ status+ "&jenisPengerjaan="+ jenisPengerjaan;
+	
+
+	 $.ajax({
+            type: 'POST',
+            url: 'controller/pengerjaan/pengerjaan_changeStatus.php',
+            data: data,
+            success: function(data) {
+                var jsonResult = JSON.parse(data)
+				var text = jsonResult.text;
+				var validator = jsonResult.validator;
+				if(validator==1){
+					 $('#myModal3').html(text);
+					 $("#myModal3").modal("show");
+				}else{
+					alert(text);
+					window.location.replace(window.location.href+'?reload');
+				}
+            }
+        });		
+}
+    
+        
 	</script>
                             <tr onclick='AjaxGetDetailPengerjaan(<?php echo $row["id_sample"];?>)'>
 								<td><?php echo $row['id']?></td>
@@ -58,10 +84,13 @@
 										echo "<span style='color:red'>Revisi</span>";
 									}
 										
-								;?></td>
-								
-                            </tr>
-                            
+								;?></td><td>
+                                <?php 
+                                if($row['status']==0){ ?>
+                                <button onclick="ChangeStatusPengerjaan(<?php echo $row["id"];?>,<?php echo $row["tipe"];?>)" class="btn btn-warning">Done</button>   
+                                <?php }; ?>
+                                <button onclick="ChangeStatus()" class="btn btn-danger">Delete</button></td>
+                            </tr> 
 	
 	
 	
@@ -70,6 +99,10 @@
 	echo "</table>"
 	
 	?>
+<script>
+
+</script>
+
 	<div id="myModal2" class="modal fade" role="dialog">
 	
 	</div>

@@ -10,6 +10,7 @@
                         <th class='col-md-1'>Tgl Revisi</th>
 						<th class='col-md-1'>Tgl Selesai</th>
                         <th class='col-md-1'>Status</th>
+                        <th class='col-md-1'>Action</th>
 						</tr>";
 
 	while($row = mysqli_fetch_assoc($resultGetRevisi)){
@@ -38,6 +39,42 @@
 	function test(){
 		 $("#myModal2").modal("hide");
 	};
+        
+    function ChangeStatusRevisiKerjakan(id,status){
+	var data = "id=" + id + "&status="+ status;
+	
+	 $.ajax({
+            type: 'POST',
+            url: 'controller/revisi/revisi_changeStatus.php',
+            data: data,
+            success: function(data) {
+                var jsonResult = JSON.parse(data)
+				var text = jsonResult.text;
+				var validator = jsonResult.validator;				
+					 $('#myModal3').html(text);
+					 $("#myModal3").modal("show");
+				
+            }
+        });
+    
+}
+function ChangeStatusRevisiDone(id,status){
+	var data = "id=" + id + "&status="+ status;	
+	 $.ajax({
+            type: 'POST',
+            url: 'controller/revisi/revisi_changeStatusDone.php',
+            data: data,
+            success: function(data) {
+                var jsonResult = JSON.parse(data)
+				var text = jsonResult.text;
+				var validator = jsonResult.validator;
+					 $('#myModal3').html(text);
+					 $("#myModal3").modal("show");
+            }
+        });		
+
+}
+    
 	
 	</script>
                             <tr onclick='AjaxGetDetailRevisi(<?php echo $row["id"];?>)'>
@@ -55,10 +92,15 @@
 										echo "<span style='color:red'>Not Suitable</span>";
 									}
 										
-								;?></td>
-								
+								;?></td><td>
+                                <?php 
+                                if($row['status']==0){ ?>
+                                <button onclick="ChangeStatusRevisiKerjakan(<?php echo $row["id"];?>,<?php echo $row["status"];?>)" class="btn btn-primary">Kerjakan</button>    
+                                <?php }else if($row['status']==1){ ?>
+                                <button onclick="ChangeStatusRevisiDone(<?php echo $row["id"];?>,<?php echo $row["status"];?>)" class="btn btn-warning">Done</button>
+                                <?php }?>
+                                <button onclick="ChangeStatus()" class="btn btn-danger">Delete</button></td>
                             </tr>
-                            
 	
 	
 	
@@ -67,6 +109,7 @@
 	echo "</table>"
 	
 	?>
+
 	<div id="myModal2" class="modal fade" role="dialog">
 	
 	</div>

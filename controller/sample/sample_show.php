@@ -9,6 +9,7 @@
                         <th class='col-md-1'>Pelanggan</th>
                         <th class='col-md-1'>Tanggal</th>
 						<th class='col-md-1'>Status</th>
+                        <th class='col-md-1'>Action</th>
                         </tr>";
 
 	while($row = mysqli_fetch_assoc($resultGetSample)){
@@ -34,7 +35,32 @@
 	function test(){
 		 $("#myModal2").modal("hide");
 	};
+        
+    function ChangeStatus(id){
+	var status = 1;
+	var data = "id=" + id + "&status="+ status;
+	
 
+	 $.ajax({
+            type: 'POST',
+            url: 'controller/sample/sample_changeStatus.php',
+            data: data,
+            success: function(data) {
+                var jsonResult = JSON.parse(data);
+				var text = jsonResult.text;
+				var validator = jsonResult.validator;
+				if(validator==1){
+                    
+					 $('#myModal3').html(text);
+					 $("#myModal3").modal("show");
+				}else{
+					alert(text);
+					window.location.replace(window.location.href+'?reload');
+				}
+            }
+        });		
+}
+    
 
 	 
 	
@@ -51,8 +77,12 @@
 										echo "<span style='color:red'>Idle</span>";
 									}
 										
-								;?></td>
-								
+								;?></td><td>
+                                <?php 
+                                if($row['status']==0){ ?>
+                                <button onclick="ChangeStatus(<?php echo $row["id"]?>)" class="btn btn-primary">Kerjakan</button>   
+                                <?php }; ?>
+                                <button onclick="ChangeStatus()" class="btn btn-danger">Delete</button></td>
                             </tr>
                             
 	
@@ -63,6 +93,9 @@
 	echo "</table>"
 	
 	?>
+<script>
+</script>
+
 	<div id="myModal2" class="modal fade" role="dialog">
 	
 	</div>
