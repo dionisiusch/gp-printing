@@ -41,30 +41,35 @@ while ($row = $queryGetRevisi->fetch_assoc()) {
 		  <tr>
          <td align="right"><b>Status : </b></td>
 			
-         <td><select id="status" class="form-control">';
+         <td>';
 		 
 		 if($row['status']==0){
-			$result.='<option selected="selected" value="0">Idle</option>
-			<option value="1">On-Going</option>
-            <option value="2">Done</option>
+			$result.='<span style="color:red">Idle</span>
 			';
          }else if($row['status']==1){
-			$result.='<option value="0">Idle</option>
-			<option selected="selected" value="1">On-Going</option>
-            <option value="2">Done</option>
+			$result.='<span style="color:blue">On-Going</span>
 			';     
 		 }else if($row['status']==2){
-			$result.='<option value="0">Idle</option>
-			<option value="1">On-Going</option>
-            <option selected="selected" value="2">Done</option>
+			$result.='<span style="color:green">Done</span>
+			';
+		 }else if($row['status']==3){
+			$result.='<span style="color:red">Not Suitable</span>
 			';
 		 }
 		$result.='
-        </select>
+
 		</td>
-		<td><button onclick="ChangeStatusRevisi()" class="btn btn-warning">Ubah</button>
-		</td>
-		 </tr>
+        
+		 </tr>';
+		 
+		 if($row['status']==0){
+			$result.='<tr><td align="right"><b>Action : </b></td><td><button onclick="ChangeStatusRevisiKerjakan()" class="btn btn-primary">Kerjakan</button></td></tr>
+			';
+         }else if($row['status']==1){
+			$result.='<tr><td align="right"><b>Action : </b></td><td><button onclick="ChangeStatusRevisiDone()" class="btn btn-warning">Done</button></td></tr>
+			';     
+		 }
+		$result.='
 		   <tr>
          <td align="right"><b>Qty : </b></td>
 
@@ -126,7 +131,7 @@ $result.='
 
 <script>
 
-function ChangeStatusRevisi(){
+function ChangeStatusRevisiKerjakan(){
 	var id = $("#idRevisi").val();
 	var status = $("#status").val();
 	var data = "id=" + id + "&status="+ status;
@@ -138,28 +143,31 @@ function ChangeStatusRevisi(){
             success: function(data) {
                 var jsonResult = JSON.parse(data)
 				var text = jsonResult.text;
-				var validator = jsonResult.validator;
-				if(validator==1){
+				var validator = jsonResult.validator;				
 					 $('#myModal3').html(text);
 					 $("#myModal3").modal("show");
-				}
+				
             }
         });
-                $.ajax({
-                type: 'POST',
-                url: 'controller/revisi/revisi_changeStatusDone.php',
-                data: data,
-                success: function(data) {
-                    var jsonResult = JSON.parse(data)
-				    var text = jsonResult.text;
-				    var validator = jsonResult.validator;
-				    if(validator==2){
-					   $('#myModal4').html(text);
-					   $("#myModal4").modal("show");
-				    }
-                }
-            });    
-		
+    
+}
+function ChangeStatusRevisiDone(){
+	var id = $("#idRevisi").val();
+	var status = $("#status").val();
+	var data = "id=" + id + "&status="+ status;
+	
+	 $.ajax({
+            type: 'POST',
+            url: 'controller/revisi/revisi_changeStatusDone.php',
+            data: data,
+            success: function(data) {
+                var jsonResult = JSON.parse(data)
+				var text = jsonResult.text;
+				var validator = jsonResult.validator;
+					 $('#myModal3').html(text);
+					 $("#myModal3").modal("show");
+            }
+        });		
 
 }
 </script>

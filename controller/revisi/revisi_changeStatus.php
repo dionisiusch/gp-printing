@@ -16,7 +16,7 @@ $resultArr  = array();
 //}
 
 
-if($status==1){
+
 	$statusStr = 'On-Going';
 	$result.= '
 	<div class="modal-dialog">
@@ -85,13 +85,7 @@ $( document ).ready(function() {
 	  ';
 	$resultArr['text'] = $result;
 	$resultArr['validator'] = $status;
-}else {
-	$statusStr = 'Idle';
-	$resultArr['text'] = $statusStr;
-	$resultArr['validator'] = $status;
-	$query = $link->query("UPDATE sample set status='$status' where id='$id'");
-	
-}
+
 
 echo json_encode($resultArr); 
 
