@@ -47,8 +47,7 @@ while ($row = $querySample->fetch_assoc()) {
 		 if($row['status']==0){
       $result.='Idle
       </td>
-      <td><button onclick="ChangeStatus()" class="btn btn-warning">Kerjakan</button>
-      </td>
+
 			';
 		 }else if($row['status']==1){
 			$result.='On-Going</td>

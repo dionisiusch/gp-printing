@@ -62,13 +62,7 @@ while ($row = $queryGetRevisi->fetch_assoc()) {
         
 		 </tr>';
 		 
-		 if($row['status']==0){
-			$result.='<tr><td align="right"><b>Action : </b></td><td><button onclick="ChangeStatusRevisiKerjakan()" class="btn btn-primary">Kerjakan</button></td></tr>
-			';
-         }else if($row['status']==1){
-			$result.='<tr><td align="right"><b>Action : </b></td><td><button onclick="ChangeStatusRevisiDone()" class="btn btn-warning">Done</button></td></tr>
-			';     
-		 }
+		
 		$result.='
 		   <tr>
          <td align="right"><b>Qty : </b></td>

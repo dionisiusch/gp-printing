@@ -45,8 +45,6 @@ while ($row = $querySample->fetch_assoc()) {
 		 if($row['status']==0){
 			$result.='On-Going
       </td>
-      <td><button onclick="ChangeStatusPengerjaan()" class="btn btn-warning">Done</button>
-      </td>
       </tr>
       <tr>
         <td align="right"><b>Qty : </b></td>
