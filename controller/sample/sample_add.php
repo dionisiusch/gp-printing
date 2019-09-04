@@ -6,6 +6,7 @@
     $biaya=$_POST['perkiraanBiaya'];
 	$tglSample = $_POST['tglSample'];
 	$idPelanggan = substr($_POST['pelanggan'], 0, strpos($_POST['pelanggan'], '|')-1);
+    $idPelanggan = intval($idPelanggan);
 	$lokasiArray = $_POST['lokasi'];
 	$i = 1; 
 	//insert db sample
