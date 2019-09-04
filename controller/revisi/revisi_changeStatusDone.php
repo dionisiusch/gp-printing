@@ -8,7 +8,6 @@ $result = '';
 $resultArr  = array();
 
 
-if($status==2){
 	$statusStr = 'Done';
 	$result.= '
 	<div class="modal-dialog">
@@ -48,7 +47,7 @@ if($status==2){
 	  ';
 	$resultArr['text'] = $result;
 	$resultArr['validator'] = $status;
-}
+
 
 echo json_encode($resultArr); 
 
