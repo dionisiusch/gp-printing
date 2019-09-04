@@ -9,7 +9,6 @@ include('../controller/config/asset.php');
 <div class="modal-body">
   <?php
     $currentDateTime = date('Y-m-d');
-  
 ?>  
 
    <br />
