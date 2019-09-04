@@ -82,7 +82,7 @@
                                 if($row['status']==0){ ?>
                                 <button onclick="ChangeStatus(<?php echo $row["id"]?>)" class="btn btn-primary">Kerjakan</button>   
                                 <?php }; ?>
-                                <button onclick="ChangeStatus()" class="btn btn-danger">Delete</button></td>
+                                <a class='btn btn-danger' href='controller/sample/sample_delete.php?id="<?php echo $row["id"];?>"'>Hapus</a></td>
                             </tr>
                             
 	

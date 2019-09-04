@@ -11,6 +11,11 @@ while ($row = $resultGetQtyAwal->fetch_assoc()) {
     $qtyAwal = $row["qty_awal"];
 }
 $tenpersen = ceil($qtyAwal*0.1);
+if($qtyAwal>$qtyAkhir){
+    echo "<script>alert('Qty Tidak Boleh Lebih dari Qty Akhir');
+            window.location.replace('../../view/revisi.php');
+        </script>";
+}
 $qtySisa=$qtyAwal-$qtyAkhir;
 if($qtySisa>$tenpersen){
     $queryInsertRevisi = "INSERT INTO revisi(id_sample,id_pengerjaan,tipe,qty_awal) SELECT id_sample,id_pengerjaan,tipe,$qtySisa FROM revisi where id='$id'";
