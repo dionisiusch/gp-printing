@@ -21,6 +21,7 @@ include($path.'/controller/config/asset.php');
 		<div class="row"></div>
 		<ul class="nav nav-pills nav-stacked">
 			<li class="active"><a href="index.php"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Dashboard</a></li>
+            <li><a href="view/obat.php"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;Obat</a></li>
 			<li><a href="view/sample.php"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;Sample</a></li>
 			<li><a href="view/pengerjaan.php"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;Pengerjaan</a></li>
             <li><a href="view/revisi.php"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;Revisi</a></li>
