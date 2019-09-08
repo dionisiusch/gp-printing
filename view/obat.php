@@ -50,17 +50,17 @@ include('../controller/config/asset.php');
 	   <tr>
          <td align="right"><b>qty(Kilo) : </b></td>
 
-           <td><input type="text" id="kilo" name="kilo"  class="form-control"></td>
+           <td><input type="text" id="kilo" name="kilo"  class="form-control"  required placeholder='Kg'></td>
          </tr>
 	   <tr>
          <td align="right"><b>Harga Beli : </b></td>
 
-           <td><input type="text" id="hargaBeli" name="hargaBeli"  class="form-control"></td>
+           <td><input type="text" id="hargaBeli" name="hargaBeli"  class="form-control"  required placeholder='Harga Beli'></td>
          </tr>
          	   <tr>
          <td align="right"><b>Harga Jual : </b></td>
 
-           <td><input type="text" id="hargaJual" name="hargaJual"  class="form-control" /></td>
+           <td><input type="text" id="hargaJual" name="hargaJual"  class="form-control"  required placeholder='Harga Jual'/></td>
          </tr>
        </table>
 
