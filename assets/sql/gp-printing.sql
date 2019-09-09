@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 08, 2019 at 07:44 PM
+-- Generation Time: Sep 09, 2019 at 05:59 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.8
 
@@ -21,6 +21,20 @@ SET time_zone = "+00:00";
 --
 -- Database: `gp-printing`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `deposited_gudang`
+--
+
+CREATE TABLE `deposited_gudang` (
+  `id` int(11) NOT NULL,
+  `id_pengerjaan` int(11) NOT NULL,
+  `id_revisi` int(11) NOT NULL,
+  `qty_setor` int(11) NOT NULL,
+  `tgl_setor` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -50,6 +64,29 @@ INSERT INTO `detail_sample` (`id`, `id_sample`, `lokasi`, `desain`) VALUES
 (8, 6, 'BD', 'logo.jpg'),
 (9, 13, 'BD', 'logo.jpg'),
 (10, 14, 'BD', 'logo.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `gudang`
+--
+
+CREATE TABLE `gudang` (
+  `id` int(11) NOT NULL,
+  `id_pengerjaan` int(11) NOT NULL,
+  `qty_total` int(11) NOT NULL,
+  `qty_sementara` int(11) NOT NULL,
+  `tgl_pengambilan` date NOT NULL,
+  `keterangan` text NOT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `gudang`
+--
+
+INSERT INTO `gudang` (`id`, `id_pengerjaan`, `qty_total`, `qty_sementara`, `tgl_pengambilan`, `keterangan`, `status`) VALUES
+(1, 53, 200, 200, '2019-09-09', 'masbnfkqwi', 1);
 
 -- --------------------------------------------------------
 
@@ -200,6 +237,12 @@ ALTER TABLE `detail_sample`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `gudang`
+--
+ALTER TABLE `gudang`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `obat`
 --
 ALTER TABLE `obat`
@@ -238,6 +281,12 @@ ALTER TABLE `sample`
 --
 ALTER TABLE `detail_sample`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `gudang`
+--
+ALTER TABLE `gudang`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `obat`
