@@ -3,18 +3,26 @@ include('../config/linken.php');
 
 $id = $_POST['id'];
 $status = $_POST['status'];
+$nomorPO = $_POST['nomorPO'];
 $result = '';
 $resultArr  = array();
-//$query = $link->query("SELECT qty_awal FROM detail_sample WHERE id_sample='$id'");
-//while ($row = $query->fetch_assoc()) {
-//    $qtyAwal=$row['qty_awal'];
-//}
-
 
 if($status==1){
-	$statusStr = 'On-Going';
+	$query = $link->query("UPDATE sample set status=1 where id='$id'");
+  $resultArr['text'] = "On-Going";
+	$resultArr['validator'] = $status;
+}
+
+if($status==2){
+	$query = $link->query("UPDATE sample set status=2,tgl_selesai = now() where id='$id'");
+  $resultArr['text'] = "Done";
+	$resultArr['validator'] = $status;
+}
+
+if($status==3){
+	$statusStr = 'Production';
 	$result.= '
-	<div class="modal-dialog">
+	<div class="modal-dialog" style="width:800">
 
     <!-- Modal content-->
     <div class="modal-content">
@@ -38,6 +46,7 @@ if($status==1){
                 <option value="2">Pengerjaan Sendiri & Makloon</option>
 		   </select>
            <input type="hidden" name="idSample" id="idSample" value="'.$id.'">
+           <input type="hidden" name="nomorPO" id="nomorPO" value="'.$nomorPO.'">
 		   </td>
          </tr>
 		<tr name="qtySendiri_show" id="qtySendiri_show">
@@ -58,14 +67,72 @@ if($status==1){
            <td><input name="tglSelesaiMakloon" type="date" id="tglSelesaiMakloon" value=""></td>
          </tr>
          
-	</table>
+  </table>
+  <table class="table table-bordered" >
+  <tr id="biayaMakloon">
+  <td align="right"><b>Biaya Produksi Makloon : </b></td>
 
-<table class="table table-bordered hovertable" id="crud_table2"></table>
+    <td><input type="number" name="biayaMakloon"  class="form-control">
+</td>
+
+<tr>  
+		<tr id="jumlahOrang">
+         <td align="right"><b>Jumlah Orang : </b></td>
+
+           <td><input type="number" name="jumlahOrang"  class="form-control">
+       </td>
+       
+		<tr id="meja">
+    <td align="right"><b>Meja : </b></td>
+
+      <td><input type="number" name="meja"  class="form-control">
+  </td>
+         </tr>
+         
+		<tr id="jamKerja" >
+    <td align="right"><b>Jam Kerja : </b></td>
+
+      <td><input type="number" name="jamKerja" class="form-control">
+  </td>
+  </tr>
+	
+  </table>
+
+  <table class="table table-bordered" id="tableObat">
+        
+  <tr>
+       <td align="center" style="width:50%"><b>Obat </b></td>
+       <td align="center"><b>Qty (gram) </b></td>
+   </tr>
+   ';
+
+  //get detail obat
+  $queryObat = $link->query("SELECT obat.nama_obat,sample_obat.qty FROM sample_obat join obat on sample_obat.id_obat = obat.id WHERE id_sample='$id'");
+  $num_row = mysqli_num_rows( $queryObat );
+  $result .= '<input type="hidden" id="num_row" value="'.$num_row.'">';
+  $i = 1;
+  while ($row = $queryObat->fetch_assoc()) {
+    $result .= '<input type="hidden" id="qtyAkhirObatHidden'.$i.'" value="'.$row['qty'].'">';
+    $result.= '
+     <tr >
+      <td align="center">
+        '.$row['nama_obat'].'
+      </td>
+      <td align="center"><input type="number" name="qtyAkhirObat['.$i.']" id="qtyAkhirObat'.$i.'" value='.$row['qty'].' class="form-control"></td>
+     </tr>
+';
+$i++;
+}
+
+$result.='
+
+</table>
+
      <tr>
       <td><input type="submit" id="saveDetailChangeStatus" style="margin-left:250" class="btn btn-warning" value="Simpan"></td>
 	 </tr>
 	 </form>
-	<br><br><br><br><br><br>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br>
 	</div>
 	 
 <script>
@@ -118,44 +185,65 @@ function showHide(){
     $("#tglSendiri_show").show();
     $("#qtyMakloon_show").hide();
     $("#tglMakloon_show").hide();
+    $("#jumlahOrang").show();
+    $("#meja").show();
+    $("#jamKerja").show();
+    $("#tableObat").show();
+    $("#biayaMakloon").hide();
   }else if(type==1){
     $("#qtySendiri_show").hide();
     $("#tglSendiri_show").hide();
     $("#qtyMakloon_show").show();
     $("#tglMakloon_show").show();
+    $("#jumlahOrang").hide();
+    $("#meja").hide();
+    $("#jamKerja").hide();
+    $("#tableObat").hide();
+    $("#biayaMakloon").show();
   }else{
     $("#qtySendiri_show").show();
     $("#tglSendiri_show").show();
     $("#qtyMakloon_show").show();
     $("#tglMakloon_show").show();
+    $("#jumlahOrang").show();
+    $("#meja").show();
+    $("#jamKerja").show();
+    $("#tableObat").show();
+    $("#biayaMakloon").show();
   }
 
 }
 
-$( "#qtySendiri" ).keyup(function() {
-  GetTglSelesaiSendiri();
- });
-$( "#qtyMakloon" ).keyup(function() {
-  GetTglSelesaiMakloon();
-});
-	 
+
 $( document ).ready(function() {
     $("#qtySendiri_show").show();
     $("#tglSendiri_show").show();
     $("#qtyMakloon_show").hide();
     $("#tglMakloon_show").hide();
+    $("#biayaMakloon").hide();
+    GetTglSelesaiSendiri();
+    GetTglSelesaiMakloon();
+    
+    $("#qtySendiri_show").keyup(function(){
+        var qty = parseInt($("#qtySendiri").val());
+        var num_row = parseInt($("#num_row").val());
+        var i = 1;
+       
+        for (i = 1; i <= num_row; i++) {
+          var stringHidden = "#qtyAkhirObatHidden"+i;
+          var string = "#qtyAkhirObat"+i;
+          var qtyObat = parseInt($(stringHidden).val());
+          var result = qty * qtyObat;
+          $(string).val(result);
+        }
+        
+    });
 
 });
 </script>
 	  ';
 	$resultArr['text'] = $result;
 	$resultArr['validator'] = $status;
-}else {
-	$statusStr = 'Idle';
-	$resultArr['text'] = $statusStr;
-	$resultArr['validator'] = $status;
-	$query = $link->query("UPDATE sample set status='$status' where id='$id'");
-	
 }
 
 echo json_encode($resultArr); 

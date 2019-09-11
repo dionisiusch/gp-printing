@@ -15,6 +15,8 @@
 	<script type="text/javascript" src="assets/js/bootstrap.js"></script>
 	
 	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
 	';
 
 

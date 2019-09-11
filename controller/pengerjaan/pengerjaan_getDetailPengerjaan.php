@@ -6,9 +6,9 @@ $id = $_POST['id'];
 $data = array();
 $result = '';
 $idPengerjaan = 0;
-$querySample = $link->query("SELECT pengerjaan.id,pengerjaan.status,pengerjaan.qty_awal,pengerjaan.qty_akhir_sendiri,pengerjaan.qty_akhir_makloon,pelanggan.nama,pengerjaan.tgl_mulai,pengerjaan.tgl_selesai_sendiri,pengerjaan.tipe,pengerjaan.keterangan from pengerjaan join sample on pengerjaan.id_sample = sample.id join pelanggan on sample.id_pelanggan = pelanggan.id where pengerjaan.id_sample = '$id'");
+$querySample = $link->query("SELECT * from pengerjaan join sample on pengerjaan.id_sample = sample.id where pengerjaan.id_sample = '$id'");
 while ($row = $querySample->fetch_assoc()) {
-  $idPengerjaan = $row["id"];
+  // $idPengerjaan = $row["id"];
   $result.= '
 	
 	<div class="modal-dialog">
@@ -23,10 +23,15 @@ while ($row = $querySample->fetch_assoc()) {
      <table class="table table-bordered">
         
 		<tr>
-         <td align="right"><b>Pelanggan : </b></td>
-           <td>'.$row['nama'].'</td>
+         <td align="right"><b>Artikel : </b></td>
+           <td>'.$row['artikel'].'</td>
          </tr>
-	   <tr>
+     <tr>
+     <tr>
+     <td align="right"><b>Nomor PO : </b></td>
+       <td>'.$row['nomor_po'].'</td>
+     </tr>
+ <tr>
          <td align="right"><b>Tanggal Mulai : </b></td>
 
            <td>'.$row['tgl_mulai'].'</td>
@@ -74,7 +79,7 @@ while ($row = $querySample->fetch_assoc()) {
     
       </table> <table class="table table-bordered hovertable" id="crud_table">
     <tr>
-     <th width="40%">Lokasi</th>
+     <th width="40%">Posisi</th>
      <th width="60%">Desain</th>
     </tr>';
      }
@@ -140,94 +145,20 @@ while ($row = $querySample->fetch_assoc()) {
         </tr>
         
         ';
-         $count = 1;
-    $queryShowRevisi = $link->query("SELECT tgl_mulai,tgl_selesai,qty_akhir,qty_awal FROM revisi WHERE id_sample='$id'");
-while ($rowRevisi = $queryShowRevisi->fetch_assoc()) {
-	$result.= '
-    <div class="table-responsive ">
-     <table class="table table-bordered" >
-     <h3>Revisi '.$count.'</h3>
-      <tr>
-         <td align="right" width="40%"><b>Tanggal Mulai : </b></td>
-           <td>'.$rowRevisi['tgl_mulai'].'</td>
-      </tr>
-      <tr>
-         <td align="right" width="40%"><b>Tanggal Selesai : </b></td>
-           <td>'.$rowRevisi['tgl_selesai'].'</td>
-      </tr>
-      <tr>
-         <td align="right" width="40%"><b>Qty Awal : </b></td>
-           <td>'.$rowRevisi['qty_awal'].'</td>
-      </tr>
-      <tr>
-         <td align="right" width="40%"><b>Qty Akhir : </b></td>
-           <td>'.$rowRevisi['qty_akhir'].'</td>
-      </tr>
-      <tr>
-        <td align="right" width="40%"><b>Keterangan : </b></td>
-          <td>'.$row['keterangan'].'</td>
-        </tr>
-      </table></div>';
-    $count++;
 }
      $result.=' </table> <table class="table table-bordered hovertable" id="crud_table">
     <tr>
-     <th width="40%">Lokasi</th>
+     <th width="40%">Posisi</th>
      <th width="60%">Desain</th>
     </tr>';
-         
-         
-		 }else if($row['status']==2){
-		$result.='Revisi
-              </td>
-        </tr>   
-		';
-                  $count = 1;
-    $queryShowRevisi = $link->query("SELECT tgl_mulai,tgl_selesai,qty_akhir,qty_awal FROM revisi WHERE id_sample='$id'");
-while ($rowRevisi = $queryShowRevisi->fetch_assoc()) {
-	$result.= '
-    <div class="table-responsive ">
-     <table class="table table-bordered" >
-     <h3>Revisi '.$count.'</h3>
-      <tr>
-         <td align="right" width="40%"><b>Tanggal Mulai : </b></td>
-           <td>'.$rowRevisi['tgl_mulai'].'</td>
-      </tr>
-      <tr>
-         <td align="right" width="40%"><b>Tanggal Selesai : </b></td>
-           <td>'.$rowRevisi['tgl_selesai'].'</td>
-      </tr>
-      <tr>
-         <td align="right" width="40%"><b>Qty Awal : </b></td>
-           <td>'.$rowRevisi['qty_awal'].'</td>
-      </tr>
-      <tr>
-         <td align="right" width="40%"><b>Qty Akhir : </b></td>
-           <td>'.$rowRevisi['qty_akhir'].'</td>
-      </tr>
-      <tr>
-        <td align="right" width="40%"><b>Keterangan : </b></td>
-          <td>'.$row['keterangan'].'</td>
-        </tr>
-      </table></div>';
-    $count++;
-}
-     $result.=' </table> <table class="table table-bordered hovertable" id="crud_table">
-    <tr>
-     <th width="40%">Lokasi</th>
-     <th width="60%">Desain</th>
-    </tr>';
-     }
 }
 
-
-
-$query = $link->query("SELECT lokasi,desain FROM detail_sample WHERE id_sample='$id'");
+$query = $link->query("SELECT posisi,desain FROM detail_sample WHERE id_sample='$id'");
 while ($row = $query->fetch_assoc()) {
 	$result.= '
      <tr >
       <td>
-        '.$row['lokasi'].'
+        '.$row['posisi'].'
       </td>
       <td><a target="_blank" href="assets/uploads/'.$row['desain'].'"><img style="width:50px" src="assets/uploads/'.$row['desain'].'"></a></td>
      </tr>';
