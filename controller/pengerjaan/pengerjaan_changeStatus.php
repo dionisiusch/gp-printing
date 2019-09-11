@@ -28,7 +28,7 @@ if($status==1){
 		<table class="table table-bordered">
         
 		<tr>
-         <td align="right"><b>Qty Akhir: </b></td>
+         <td align="right"><b>Qty Diselesaikan: </b></td>
            <td>
 		   <input name="id" type="hidden" value="'.$id.'">
 		   <input name="jenisPengerjaan" type="hidden" value="'.$jenisPengerjaan.'">
