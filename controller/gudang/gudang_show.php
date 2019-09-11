@@ -2,12 +2,12 @@
 	include('../controller/config/linken.php');
 	include('../controller/config/asset.php');
 	
-	$queryGetGudang = "SELECT gudang.id,pelanggan.nama,gudang.id_pengerjaan,gudang.tgl_pengambilan,gudang.status from gudang join pengerjaan on gudang.id_pengerjaan=pengerjaan.id join sample on pengerjaan.id_sample = sample.id join pelanggan on sample.id_pelanggan = pelanggan.id ORDER BY gudang.id ASC";
+	$queryGetGudang = "SELECT gudang.id,sample.artikel,gudang.id_pengerjaan,gudang.tgl_pengambilan,gudang.status from gudang join pengerjaan on gudang.id_pengerjaan=pengerjaan.id join sample on pengerjaan.id_sample = sample.id ORDER BY gudang.id ASC";
 	$resultGetGudang = mysqli_query($link,$queryGetGudang) or die(mysqli_error($link));
 	 echo "<table class='table table-hover'><tr>
                         <th class='col-md-1'>Id</th>
                         <th class='col-md-1'>Id Pengerjaan</th>
-                        <th class='col-md-1'>Nama Pelanggan</th>
+                        <th class='col-md-1'>Artikel</th>
                         <th class='col-md-1'>Tanggal Pengambilan</th>
                         <th class='col-md-1'>Status</th>
                         <th class='col-md-1'>Action</th>
@@ -73,7 +73,7 @@
                             <tr onclick='AjaxGetDetailGudang(<?php echo $row["id"]?>)'>
 								<td><?php echo $row['id']?></td>
                                 <td><?php echo $row['id_pengerjaan']?></td>
-                                <td><?php echo $row['nama']?></td>
+                                <td><?php echo $row['artikel']?></td>
                                 <td><?php echo $row['tgl_pengambilan']?></td>
                                 <td><?php if($row['status']==0){
 									echo "<span style='color:blue'>On-Storage</span>";

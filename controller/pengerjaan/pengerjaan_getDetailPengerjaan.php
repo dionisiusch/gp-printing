@@ -6,9 +6,9 @@ $id = $_POST['id'];
 $data = array();
 $result = '';
 $idPengerjaan = 0;
-$querySample = $link->query("SELECT * from pengerjaan join sample on pengerjaan.id_sample = sample.id where pengerjaan.id_sample = '$id'");
+$querySample = $link->query("SELECT pengerjaan.id,sample.artikel,pengerjaan.nomor_po,pengerjaan.qty_awal,pengerjaan.tipe,pengerjaan.tgl_mulai,pengerjaan.qty_sendiri,pengerjaan.tgl_selesai_sendiri,pengerjaan.qty_makloon,pengerjaan.tgl_selesai_makloon,pengerjaan.status,pengerjaan.keterangan,pengerjaan.qty_akhir_makloon,pengerjaan.qty_akhir_sendiri,pengerjaan.jumlah_orang,pengerjaan.jam_kerja,pengerjaan.biaya_makloon,pengerjaan.meja from pengerjaan join sample on pengerjaan.id_sample = sample.id where pengerjaan.id_sample = '$id'");
 while ($row = $querySample->fetch_assoc()) {
-  // $idPengerjaan = $row["id"];
+  $idPengerjaan = $row["id"];
   $result.= '
 	
 	<div class="modal-dialog">
