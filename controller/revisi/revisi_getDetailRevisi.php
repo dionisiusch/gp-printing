@@ -6,7 +6,7 @@ $id = $_POST['id'];
 $data = array();
 $result = '';
 $idRevisi = 0;
-$queryGetRevisi = $link->query("SELECT revisi.id,revisi.status,revisi.qty_awal,revisi.qty_akhir,pelanggan.nama,revisi.tgl_mulai,revisi.tgl_selesai,revisi.tipe from revisi join sample on revisi.id_sample = sample.id join pelanggan on sample.id_pelanggan = pelanggan.id where revisi.id = '$id'");
+$queryGetRevisi = $link->query("SELECT revisi.id,revisi.status,revisi.qty_awal,revisi.qty_akhir,sample.artikel,revisi.tgl_mulai,revisi.tgl_deadline,revisi.tgl_selesai,revisi.tipe from revisi join sample on revisi.id_sample = sample.id where revisi.id = '$id'");
 while ($row = $queryGetRevisi->fetch_assoc()) {
   $idRevisi = $row["id"];
   $result.= '
@@ -26,7 +26,7 @@ while ($row = $queryGetRevisi->fetch_assoc()) {
          <td align="right"><b>Pelanggan : </b></td>
 		 
 
-           <td>'.$row['nama'].'</td>
+           <td>'.$row['artikel'].'</td>
          </tr>
 	   <tr>
          <td align="right"><b>Tanggal Mulai : </b></td>
@@ -34,6 +34,12 @@ while ($row = $queryGetRevisi->fetch_assoc()) {
            <td>'.$row['tgl_mulai'].'</td>
          </tr>
 		 <tr>
+        <tr>
+         <td align="right"><b>Tanggal Deadline : </b></td>
+
+           <td>'.$row['tgl_deadline'].'</td>
+         </tr>
+		 <tr> 
          <td align="right"><b>Tanggal Selesai : </b></td>
 
            <td>'.$row['tgl_selesai'].'</td>
@@ -95,12 +101,12 @@ while ($row = $queryGetRevisi->fetch_assoc()) {
 
 
 
-$query = $link->query("SELECT lokasi,desain FROM detail_sample WHERE id_sample='$id'");
+$query = $link->query("SELECT posisi,desain FROM detail_sample WHERE id_sample='$id'");
 while ($row = $query->fetch_assoc()) {
 	$result.= '
      <tr >
       <td>
-        '.$row['lokasi'].'
+        '.$row['posisi'].'
       </td>
       <td><a target="_blank" href="assets/uploads/'.$row['desain'].'"><img style="width:50px" src="assets/uploads/'.$row['desain'].'"></a></td>
      </tr>';

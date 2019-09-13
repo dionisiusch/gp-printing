@@ -5,7 +5,7 @@ include('../config/linken.php');
 $id = $_POST['id'];
 $data = array();
 $result = '';
-$queryGudang = $link->query("SELECT gudang.id,pelanggan.nama,gudang.id_pengerjaan,gudang.qty_total,gudang.qty_sementara,gudang.tgl_pengambilan,gudang.status,gudang.keterangan from gudang join pengerjaan on gudang.id_pengerjaan=pengerjaan.id join sample on pengerjaan.id_sample = sample.id join pelanggan on sample.id_pelanggan = pelanggan.id where gudang.id=$id");
+$queryGudang = $link->query("SELECT gudang.id,sample.artikel,gudang.id_pengerjaan,gudang.qty_total,gudang.qty_sementara,gudang.tgl_pengambilan,gudang.status,gudang.keterangan from gudang join pengerjaan on gudang.id_pengerjaan=pengerjaan.id join sample on pengerjaan.id_sample = sample.id where gudang.id=$id");
 while ($row = $queryGudang->fetch_assoc()) {
     if($row['tgl_pengambilan']=='0000-00-00'){
         $row['tgl_pengambilan']=null;
@@ -42,7 +42,7 @@ while ($row = $queryGudang->fetch_assoc()) {
          <td align="right"><b>Nama Pelanggan : </b></td>
 		 
 
-           <td>'.$row['nama'].'</td>
+           <td>'.$row['artikel'].'</td>
          </tr>
 	   <tr>
          <td align="right"><b>Qty Total : </b></td>
