@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 11 Sep 2019 pada 18.13
--- Versi server: 10.4.6-MariaDB
--- Versi PHP: 7.1.31
+-- Generation Time: Sep 13, 2019 at 04:54 PM
+-- Server version: 10.4.6-MariaDB
+-- PHP Version: 7.3.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,21 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `deposited_gudang`
---
-
-CREATE TABLE `deposited_gudang` (
-  `id` int(11) NOT NULL,
-  `id_pengerjaan` int(11) NOT NULL,
-  `id_revisi` int(11) NOT NULL,
-  `qty_setor` int(11) NOT NULL,
-  `tgl_setor` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `detail_sample`
+-- Table structure for table `detail_sample`
 --
 
 CREATE TABLE `detail_sample` (
@@ -50,16 +36,17 @@ CREATE TABLE `detail_sample` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `detail_sample`
+-- Dumping data for table `detail_sample`
 --
 
 INSERT INTO `detail_sample` (`id`, `id_sample`, `posisi`, `desain`) VALUES
-(13, 63, 'Transfer Keseluruhan', 'logo.jpg');
+(13, 63, 'Transfer Keseluruhan', 'logo.jpg'),
+(14, 67, '', 'logo.jpg');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `gudang`
+-- Table structure for table `gudang`
 --
 
 CREATE TABLE `gudang` (
@@ -73,16 +60,17 @@ CREATE TABLE `gudang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `gudang`
+-- Dumping data for table `gudang`
 --
 
 INSERT INTO `gudang` (`id`, `id_pengerjaan`, `qty_total`, `qty_sementara`, `tgl_pengambilan`, `keterangan`, `status`) VALUES
-(1, 53, 200, 200, '2019-09-09', 'masbnfkqwi', 1);
+(1, 53, 200, 200, '2019-09-09', 'masbnfkqwi', 1),
+(9, 61, 1000, 803, '0000-00-00', '', 0);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `obat`
+-- Table structure for table `obat`
 --
 
 CREATE TABLE `obat` (
@@ -94,7 +82,7 @@ CREATE TABLE `obat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `obat`
+-- Dumping data for table `obat`
 --
 
 INSERT INTO `obat` (`id`, `nama_obat`, `kilo`, `harga_beli`, `harga_jual`) VALUES
@@ -106,12 +94,13 @@ INSERT INTO `obat` (`id`, `nama_obat`, `kilo`, `harga_beli`, `harga_jual`) VALUE
 (9, 'parabelum', '3.000', 40000, 50000),
 (10, 'parabelum', '2.000', 40000, 50000),
 (11, 'parabelum', '2.500', 40000, 37000),
-(12, 'PARABELUM', '2.500', 30000, 37000);
+(12, 'PARABELUM', '2.500', 30000, 37000),
+(13, 'OBAT MERAH', '90.000', 50000, 70000);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pelanggan`
+-- Table structure for table `pelanggan`
 --
 
 CREATE TABLE `pelanggan` (
@@ -122,7 +111,7 @@ CREATE TABLE `pelanggan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `pelanggan`
+-- Dumping data for table `pelanggan`
 --
 
 INSERT INTO `pelanggan` (`id`, `nama`, `alamat`, `no_telepon`) VALUES
@@ -132,7 +121,7 @@ INSERT INTO `pelanggan` (`id`, `nama`, `alamat`, `no_telepon`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pengerjaan`
+-- Table structure for table `pengerjaan`
 --
 
 CREATE TABLE `pengerjaan` (
@@ -157,7 +146,7 @@ CREATE TABLE `pengerjaan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `pengerjaan`
+-- Dumping data for table `pengerjaan`
 --
 
 INSERT INTO `pengerjaan` (`id`, `id_sample`, `nomor_po`, `tipe`, `tgl_mulai`, `qty_sendiri`, `tgl_selesai_sendiri`, `qty_makloon`, `tgl_selesai_makloon`, `status`, `qty_awal`, `keterangan`, `qty_akhir_makloon`, `qty_akhir_sendiri`, `jumlah_orang`, `jam_kerja`, `biaya_makloon`, `meja`) VALUES
@@ -166,12 +155,27 @@ INSERT INTO `pengerjaan` (`id`, `id_sample`, `nomor_po`, `tipe`, `tgl_mulai`, `q
 (55, 52, '', 0, '2019-09-04', 100, '2019-08-11', 0, '0000-00-00', 1, 100, '', 0, 100, 0, 0, 0, 0),
 (56, 53, '', 0, '2019-09-04', 1000, '2019-08-11', 0, '0000-00-00', 1, 1000, '', 0, 0, 0, 0, 0, 0),
 (58, 63, '1116027', 1, '2019-09-11', 0, '0000-00-00', 2, '2019-09-14', 0, 2, '', 0, 0, 0, 0, 12, 0),
-(59, 65, '1116011', 0, '2019-09-11', 2, '2019-09-18', 0, '0000-00-00', 0, 2, '', 0, 0, 12, 12, 0, 12);
+(59, 65, '1116011', 0, '2019-09-11', 2, '2019-09-18', 0, '0000-00-00', 1, 2, '', 0, 2, 12, 12, 0, 12),
+(60, 67, '1412456', 0, '2019-09-13', 100, '2019-09-20', 0, '0000-00-00', 2, 100, '', 0, 146, 12, 12, 0, 13),
+(61, 69, '9898283', 0, '2019-09-13', 1000, '2019-09-20', 0, '0000-00-00', 0, 1000, '', 0, 450, 15, 250, 0, 15);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `posisi`
+-- Table structure for table `pengerjaan_to_gudang`
+--
+
+CREATE TABLE `pengerjaan_to_gudang` (
+  `id` int(11) NOT NULL,
+  `id_pengerjaan` int(11) NOT NULL,
+  `qty_naik` int(11) NOT NULL,
+  `tgl_naik` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `posisi`
 --
 
 CREATE TABLE `posisi` (
@@ -181,7 +185,7 @@ CREATE TABLE `posisi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `posisi`
+-- Dumping data for table `posisi`
 --
 
 INSERT INTO `posisi` (`id`, `posisi`, `tipe`) VALUES
@@ -191,15 +195,17 @@ INSERT INTO `posisi` (`id`, `posisi`, `tipe`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `revisi`
+-- Table structure for table `revisi`
 --
 
 CREATE TABLE `revisi` (
   `id` int(11) NOT NULL,
   `id_sample` int(11) NOT NULL,
   `id_pengerjaan` int(11) NOT NULL,
+  `nomor_po` varchar(255) NOT NULL,
   `tipe` int(11) NOT NULL,
   `tgl_mulai` date NOT NULL,
+  `tgl_deadline` date NOT NULL,
   `tgl_selesai` date NOT NULL,
   `status` int(11) NOT NULL,
   `qty_akhir` int(11) NOT NULL,
@@ -208,19 +214,37 @@ CREATE TABLE `revisi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `revisi`
+-- Dumping data for table `revisi`
 --
 
-INSERT INTO `revisi` (`id`, `id_sample`, `id_pengerjaan`, `tipe`, `tgl_mulai`, `tgl_selesai`, `status`, `qty_akhir`, `qty_awal`, `keterangan`) VALUES
-(30, 48, 51, 0, '2019-09-04', '2019-08-06', 2, 6, 6, ''),
-(31, 50, 52, 0, '2019-09-04', '2019-08-06', 2, 10, 4, ''),
-(32, 49, 54, 0, '2019-09-04', '2019-08-06', 2, 175, 175, ''),
-(33, 53, 56, 0, '2019-09-04', '2019-08-06', 2, 950, 950, '');
+INSERT INTO `revisi` (`id`, `id_sample`, `id_pengerjaan`, `nomor_po`, `tipe`, `tgl_mulai`, `tgl_deadline`, `tgl_selesai`, `status`, `qty_akhir`, `qty_awal`, `keterangan`) VALUES
+(55, 69, 61, '9898283', 0, '2019-09-13', '2019-09-15', '0000-00-00', 1, 252, 250, ''),
+(56, 69, 61, '9898283', 0, '2019-09-13', '2019-09-15', '0000-00-00', 1, 100, 500, '');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `sample`
+-- Table structure for table `revisi_to_gudang`
+--
+
+CREATE TABLE `revisi_to_gudang` (
+  `id` int(11) NOT NULL,
+  `id_revisi` int(11) NOT NULL,
+  `qty_naik` int(11) NOT NULL,
+  `tgl_naik` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `revisi_to_gudang`
+--
+
+INSERT INTO `revisi_to_gudang` (`id`, `id_revisi`, `qty_naik`, `tgl_naik`) VALUES
+(1, 61, 100, '2019-09-13');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sample`
 --
 
 CREATE TABLE `sample` (
@@ -234,18 +258,21 @@ CREATE TABLE `sample` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `sample`
+-- Dumping data for table `sample`
 --
 
 INSERT INTO `sample` (`id`, `artikel`, `nomor_po`, `tgl`, `tgl_selesai`, `status`, `biaya`) VALUES
 (51, 'Dion Ganteng Artikel', '1116027', '2019-09-10', '2019-09-10', 3, 2),
-(65, 'dion ahai', '1116011', '2019-09-11', '2019-09-11', 3, 2),
-(66, 'www', 'www', '2019-09-11', '2019-09-11', 2, 2);
+(65, 'dion ahai', '1116011', '2019-09-11', '2019-09-11', 2, 2),
+(66, 'www', 'www', '2019-09-11', '2019-09-11', 2, 2),
+(67, 'frd', '1412456', '2019-09-13', '2019-09-13', 3, 50000),
+(68, 'qwerqw', '12534', '2019-09-13', NULL, 1, 1222222),
+(69, 'FREEDOM', '09898283', '2019-09-13', '2019-09-13', 3, 70000);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `sample_obat`
+-- Table structure for table `sample_obat`
 --
 
 CREATE TABLE `sample_obat` (
@@ -256,7 +283,7 @@ CREATE TABLE `sample_obat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `sample_obat`
+-- Dumping data for table `sample_obat`
 --
 
 INSERT INTO `sample_obat` (`id`, `id_sample`, `qty`, `id_obat`) VALUES
@@ -265,111 +292,137 @@ INSERT INTO `sample_obat` (`id`, `id_sample`, `qty`, `id_obat`) VALUES
 (12, 64, 3, 7),
 (13, 65, 2, 7),
 (14, 65, 23, 8),
-(15, 66, 2, 7);
+(15, 66, 2, 7),
+(16, 68, 2000, 13),
+(17, 69, 2000, 13);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `detail_sample`
+-- Indexes for table `detail_sample`
 --
 ALTER TABLE `detail_sample`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `gudang`
+-- Indexes for table `gudang`
 --
 ALTER TABLE `gudang`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `obat`
+-- Indexes for table `obat`
 --
 ALTER TABLE `obat`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `pelanggan`
+-- Indexes for table `pelanggan`
 --
 ALTER TABLE `pelanggan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `pengerjaan`
+-- Indexes for table `pengerjaan`
 --
 ALTER TABLE `pengerjaan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `revisi`
+-- Indexes for table `pengerjaan_to_gudang`
+--
+ALTER TABLE `pengerjaan_to_gudang`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `revisi`
 --
 ALTER TABLE `revisi`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `sample`
+-- Indexes for table `revisi_to_gudang`
+--
+ALTER TABLE `revisi_to_gudang`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `sample`
 --
 ALTER TABLE `sample`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `sample_obat`
+-- Indexes for table `sample_obat`
 --
 ALTER TABLE `sample_obat`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `detail_sample`
+-- AUTO_INCREMENT for table `detail_sample`
 --
 ALTER TABLE `detail_sample`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `gudang`
+--
+ALTER TABLE `gudang`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `obat`
+--
+ALTER TABLE `obat`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT untuk tabel `gudang`
---
-ALTER TABLE `gudang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT untuk tabel `obat`
---
-ALTER TABLE `obat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
---
--- AUTO_INCREMENT untuk tabel `pelanggan`
+-- AUTO_INCREMENT for table `pelanggan`
 --
 ALTER TABLE `pelanggan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT untuk tabel `pengerjaan`
+-- AUTO_INCREMENT for table `pengerjaan`
 --
 ALTER TABLE `pengerjaan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
--- AUTO_INCREMENT untuk tabel `revisi`
+-- AUTO_INCREMENT for table `pengerjaan_to_gudang`
+--
+ALTER TABLE `pengerjaan_to_gudang`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `revisi`
 --
 ALTER TABLE `revisi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
--- AUTO_INCREMENT untuk tabel `sample`
+-- AUTO_INCREMENT for table `revisi_to_gudang`
+--
+ALTER TABLE `revisi_to_gudang`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `sample`
 --
 ALTER TABLE `sample`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
--- AUTO_INCREMENT untuk tabel `sample_obat`
+-- AUTO_INCREMENT for table `sample_obat`
 --
 ALTER TABLE `sample_obat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
