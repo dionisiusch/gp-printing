@@ -48,8 +48,7 @@
                 var jsonResult = JSON.parse(data);
 				var text = jsonResult.text;
 				var validator = jsonResult.validator;
-				if(validator==3){
-                    
+				if(validator==3||validator==1){
 					 $('#myModal3').html(text);
 					 $("#myModal3").modal("show");
 				}
