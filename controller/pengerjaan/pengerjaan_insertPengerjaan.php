@@ -5,6 +5,7 @@ $idSample = $_POST["idSample"];
 $jenisPengerjaan = $_POST["jenisPengerjaan"];
 $nomorPO = $_POST["nomorPO"];
 $tglMulai = date('Y-m-d');
+$tglNaikBahan = $_POST["tglNaikBahan"];
 
 if($jenisPengerjaan==0){
     $tglSelesaiSendiri = $_POST["tglSelesaiSendiri"];
@@ -37,14 +38,9 @@ if($jenisPengerjaan==2){
     $biayaMakloon = $_POST["biayaMakloon"];
 
 }
-// $selectQtyAwal = "SELECT qty_awal from pengerjaan WHERE id='$id' LIMIT 1";
-// $resultQtyAwal = mysqli_query($link,$selectQtyAwal) or die(mysqli_error($link));
-// while ($rowQty = $resultQtyAwal->fetch_assoc()) {
-//     $qtyAwal = $row["qty_awal"];
-// }
 
 //insert db pengerjaan
-$queryInsertPengerjaan = "INSERT INTO pengerjaan (id_sample,tipe,tgl_mulai,tgl_selesai_sendiri,qty_sendiri,tgl_selesai_makloon,qty_makloon,qty_awal,status,jumlah_orang,jam_kerja,meja,biaya_makloon,nomor_po) values($idSample,$jenisPengerjaan,'$tglMulai','$tglSelesaiSendiri',$qtySendiri,'$tglSelesaiMakloon',$qtyMakloon,($qtyMakloon+$qtySendiri),0,$jumlahOrang,$jamKerja,$meja,$biayaMakloon,$nomorPO)";
+$queryInsertPengerjaan = "INSERT INTO pengerjaan (id_sample,tipe,tgl_mulai,tgl_selesai_sendiri,qty_sendiri,tgl_selesai_makloon,qty_makloon,qty_awal,status,jumlah_orang,jam_kerja,meja,biaya_makloon,nomor_po,tgl_naik_barang) values($idSample,$jenisPengerjaan,'$tglMulai','$tglSelesaiSendiri',$qtySendiri,'$tglSelesaiMakloon',$qtyMakloon,($qtyMakloon+$qtySendiri),0,$jumlahOrang,$jamKerja,$meja,$biayaMakloon,'$nomorPO','$tglNaikBahan')";
 $resultInsertPengerjaan = mysqli_query($link,$queryInsertPengerjaan) or die(mysqli_error($link));
 if(!$resultInsertPengerjaan){
         echo "<script>alert('Error Insert Pengerjaan!');

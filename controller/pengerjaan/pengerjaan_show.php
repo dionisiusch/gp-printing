@@ -89,7 +89,7 @@
 								;?></td><td>
                                 <?php 
                                 if($row['status']==0){ ?>
-                                <button onclick="ChangeStatusPengerjaan(<?php echo $row["id"];?>,<?php echo $row["tipe"];?>)" class="btn btn-warning">Done</button>   
+                                <button onclick="ChangeStatusPengerjaan(<?php echo $row["id"];?>,<?php echo $row["tipe"];?>)" class="btn btn-warning">Terima</button>   
                                 <?php }; ?>
                                 <a class='btn btn-danger' href='controller/pengerjaan/pengerjaan_delete.php?id="<?php echo $row["id"];?>"'>Hapus</a></td>
                             </tr> 

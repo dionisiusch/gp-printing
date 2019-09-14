@@ -8,7 +8,38 @@ $result = '';
 $resultArr  = array();
 
 if($status==1){
-	$query = $link->query("UPDATE sample set status=1 where id='$id'");
+  $result.= '
+	<div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+		
+		<button class="btn-danger" style="float:right" data-dismiss="modal" aria-label="close">&times;</button>
+		<h4><b>Detail Pengerjaan</b></h4>
+		</div>
+		 <div class="modal-body">
+      
+<div class="table-responsive ">
+<form id="formInsertTglNaikBahan" action="controller/sample/sample_insertTglNaikBahan.php" method="POST">
+<table class="table table-bordered" >
+        
+		<tr>
+         <td align="right"><b>Tgl Naik Bahan : </b></td>
+           <td>
+           <input name="tglSelesaiSendiri" type="date" id="tglSelesaiSendiri" value="">
+           <input type="hidden" name="idSample" id="idSample" value="'.$id.'">
+		   </td>
+         </tr>   
+  </table>
+  <tr>
+  <td><input type="submit" style="margin-left:250" class="btn btn-warning" value="Simpan"></td>
+</tr>
+</form>
+<br><br><br><br><br><br><br><br><br><br><br><br><br>
+</div>
+  
+  ';
   $resultArr['text'] = "On-Going";
 	$resultArr['validator'] = $status;
 }
@@ -65,6 +96,10 @@ if($status==3){
 	   <tr name="tglMakloon_show" id="tglMakloon_show">
          <td align="right"><b>Tgl Selesai Makloon : </b></td>
            <td><input name="tglSelesaiMakloon" type="date" id="tglSelesaiMakloon" value=""></td>
+         </tr>
+         <tr name="tglNaikBahan" id="tglNaikBahan">
+         <td align="right"><b>Tgl Naik Bahan : </b></td>
+           <td><input name="tglNaikBahan" type="date" id="tglNaikBahan" value=""></td>
          </tr>
          
   </table>
@@ -242,9 +277,10 @@ $( document ).ready(function() {
 });
 </script>
 	  ';
-	$resultArr['text'] = $result;
-	$resultArr['validator'] = $status;
+	
 }
+$resultArr['text'] = $result;
+$resultArr['validator'] = $status;
 
 echo json_encode($resultArr); 
 
