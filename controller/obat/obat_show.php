@@ -4,9 +4,10 @@
 	
 	$queryGetObat = "SELECT * from Obat";
 	$resultGetObat = mysqli_query($link,$queryGetObat) or die(mysqli_error($link));
-	 echo "<table class='table table-hover'><tr>
-                        <th class='col-md-1'>Id</th>
-                        <th class='col-md-1'>Nama Obat</th>
+	 echo "<table class='table table-hover' style='width:100%'><tr>
+                        <th class='col-md-1' style='width:2%'>Id</th>
+                        <th class='col-md-1' style='width:50%'>Nama Obat</th>
+                        <th class='col-md-1' style='width:5%'>Action</th>
                         </tr>";
 
 	while($row = mysqli_fetch_assoc($resultGetObat)){

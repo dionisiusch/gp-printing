@@ -2,12 +2,13 @@
 	include('../controller/config/linken.php');
 	include('../controller/config/asset.php');
 	
-	$queryGetRevisi = "SELECT revisi.id,revisi.tgl_mulai,revisi.tgl_selesai,pelanggan.nama,revisi.status FROM revisi join sample on revisi.id_sample = sample.id join pelanggan on sample.id_pelanggan = pelanggan.id ORDER BY revisi.id ASC";
+	$queryGetRevisi = "SELECT revisi.id,revisi.tgl_mulai,revisi.tgl_deadline,revisi.tgl_selesai,sample.artikel,revisi.status FROM revisi join sample on revisi.id_sample = sample.id  ORDER BY revisi.id ASC";
 	$resultGetRevisi = mysqli_query($link,$queryGetRevisi) or die(mysqli_error($link));
 	 echo "<table class='table table-hover'><tr>
-                        <th class='col-md-1'>Id</th>
+                        <th class='col-md-1' style='width:2%'>Id</th>
                         <th class='col-md-1'>Pelanggan</th>
                         <th class='col-md-1'>Tgl Revisi</th>
+                        <th class='col-md-1'>Tgl Deadline</th>
 						<th class='col-md-1'>Tgl Selesai</th>
                         <th class='col-md-1'>Status</th>
                         <th class='col-md-1'>Action</th>
@@ -79,8 +80,9 @@ function ChangeStatusRevisiDone(id,status){
 	</script>
                             <tr onclick='AjaxGetDetailRevisi(<?php echo $row["id"];?>)'>
 								<td><?php echo $row['id']?></td>
-                                <td><?php echo $row['nama']?></td>
+                                <td><?php echo $row['artikel']?></td>
                                 <td><?php echo $row['tgl_mulai']?></td>
+                                <td><?php echo $row['tgl_deadline']?></td>
                                 <td><?php echo $row['tgl_selesai']?></td>
 								<td><?php if($row['status']==0){
 									echo "<span style='color:red'>Idle</span>";
