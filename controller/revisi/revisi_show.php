@@ -7,7 +7,7 @@
 	 echo "<table class='table table-hover'><tr>
                         <th class='col-md-1' style='width:2%'>Id</th>
                         <th class='col-md-1'>Pelanggan</th>
-                        <th class='col-md-1'>Tgl Revisi</th>
+                        <th class='col-md-1'>Tgl Perbaikan</th>
                         <th class='col-md-1'>Tgl Deadline</th>
 						<th class='col-md-1'>Tgl Selesai</th>
                         <th class='col-md-1'>Status</th>

@@ -25,7 +25,7 @@ if($qtyAwalPengerjaan<=$qtyAkhir){
     $resultGetGudang = mysqli_query($link,$queryGetGudang) or die(mysqli_error($link));
     $countrow =  mysqli_num_rows($resultGetGudang);
 
-    $queryInsertToGudang = "INSERT INTO revisi_to_gudang(id_revisi,qty_naik,tgl_naik) SELECT id_pengerjaan,$qtyAkhir,'$currentDateTime' FROM revisi where id='$id'";
+    $queryInsertToGudang = "INSERT INTO revisi_gudang(id_revisi,qty_naik,tgl_naik) SELECT id_pengerjaan,$qtyAkhir,'$currentDateTime' FROM revisi where id='$id'";
     $resulInsertToGudang= mysqli_query($link,$queryInsertToGudang) or die(mysqli_error($link));
     if($countrow>0){
         $queryUpdateGudang = "UPDATE gudang SET qty_sementara=qty_sementara+$qtyAkhir where id_pengerjaan=$idPengerjaan";
@@ -58,7 +58,7 @@ if($qtyAwalPengerjaan<=$qtyAkhir){
     $resultGetGudang = mysqli_query($link,$queryGetGudang) or die(mysqli_error($link));
     $countrow =  mysqli_num_rows($resultGetGudang);
 
-    $queryInsertToGudang = "INSERT INTO revisi_to_gudang(id_revisi,qty_naik,tgl_naik) SELECT id_pengerjaan,$qtyAkhir,'$currentDateTime' FROM revisi where id='$id'";
+    $queryInsertToGudang = "INSERT INTO revisi_gudang(id_revisi,qty_naik,tgl_naik) SELECT id_pengerjaan,$qtyAkhir,'$currentDateTime' FROM revisi where id='$id'";
     $resulInsertToGudang= mysqli_query($link,$queryInsertToGudang) or die(mysqli_error($link));
     if($countrow>0){
         $queryUpdateGudang = "UPDATE gudang SET qty_sementara=qty_sementara+$qtyAkhir where id_pengerjaan=$idPengerjaan";
@@ -88,7 +88,7 @@ if($qtyAwalPengerjaan<=$qtyAkhir){
         header("Location: ../../view/revisi.php");
 }else{
   
-$queryInsertToGudang = "INSERT INTO revisi_to_gudang(id_revisi,qty_naik,tgl_naik) SELECT id_pengerjaan,$qtyAkhir,'$currentDateTime' FROM revisi where id='$id'";
+$queryInsertToGudang = "INSERT INTO revisi_gudang(id_revisi,qty_naik,tgl_naik) SELECT id_pengerjaan,$qtyAkhir,'$currentDateTime' FROM revisi where id='$id'";
 $resulInsertToGudang= mysqli_query($link,$queryInsertToGudang) or die(mysqli_error($link));
 $queryGetGudang = "SELECT * from gudang WHERE id_pengerjaan='$idPengerjaan'";    
 $resultGetGudang = mysqli_query($link,$queryGetGudang) or die(mysqli_error($link));

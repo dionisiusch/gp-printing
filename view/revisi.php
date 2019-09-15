@@ -4,7 +4,7 @@ include('../controller/config/asset.php');
 ?>
 <base href="http://localhost/gp-printing/" />
 <div class="modal-header">
-    <h4 class="modal-title">Revisi</h4>
+    <h4 class="modal-title">Perbaikan</h4>
 </div>
 <div class="modal-body">
   <?php
@@ -17,7 +17,7 @@ include('../controller/config/asset.php');
    <br />
 
    <br>
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Tambah Revisi</button>
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Tambah Perbaikan</button>
 <a class="btn btn-default btn-lg" href='view/revisi_pickDate.php'><span class="glyphicon glyphicon-print"></span>&nbsp;&nbsp; Print</a>
         
    <br>
@@ -34,7 +34,7 @@ include('../controller/config/asset.php');
     <div class="modal-content">
       <div class="modal-header">
         <button class="btn-danger" style='float:right' data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Tambah Revisi</h4>
+        <h4 class="modal-title">Tambah Perbaikan</h4>
       </div>
       <div class="modal-body">
       
@@ -42,7 +42,7 @@ include('../controller/config/asset.php');
     <table class="table table-bordered hovertable">
     <select name="basedOn" id="selectOn" class="form-control">
           <option value="1">Pengerjaan</option>
-          <option value="2">Revisi</option>
+          <option value="2">Perbaikan</option>
     </select>
     </table>    
     
@@ -90,7 +90,7 @@ include('../controller/config/asset.php');
 <form action="controller/revisi/revisi_addRevisi.php" method="POST" enctype="multipart/form-data">
      <table class="table table-bordered">
         <tr>
-         <td align="right" style="width:40%"><b>Revisi: </b></td>
+         <td align="right" style="width:40%"><b>Perbaikan: </b></td>
 		 
 
            <td><select style="width:100%" name="InputRevisi" id="InputRevisi" class="form-control">
