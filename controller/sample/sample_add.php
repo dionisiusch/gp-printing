@@ -57,21 +57,23 @@
 		}
 		
 	}
-
 	//find id obat
+
+	$queryInsertSampleObat='';
+
 	foreach($obatArray as $obat){
-		$queryGetIdObat = "SELECT id from obat where nama_obat = '$obat'";	
+		$queryGetIdObat = "SELECT id,kilo from obat where nama_obat = '$obat'";	
 		$resultGetIdObat = $link->query($queryGetIdObat);
 		while ($row = $resultGetIdObat->fetch_assoc()) {
-	//insert to sample_obat
-		$qtyObat = $qtyObatArray[$j];	
-		$queryInsertSampleObat = "INSERT INTO sample_obat (id_obat,id_sample,qty) values (".$row['id'].",'$lastIdInsertSample',$qtyObat)";
-		$resultInsertSampleObat = mysqli_query($link,$queryInsertSampleObat) or die(mysqli_error($link));			
+			$qtyObat = $qtyObatArray[$j];	
+			$queryInsertSampleObat .= "INSERT INTO sample_obat (id_obat,id_sample,qty) values (".$row['id'].",'$lastIdInsertSample',$qtyObat);";
+			
 		}
 		$j++;
 	}
+		mysqli_multi_query($link,$queryInsertSampleObat);
+		header('Location: ../../view/sample.php');
 	
-	header('Location: ../../view/sample.php');
 	
 	
 ?>

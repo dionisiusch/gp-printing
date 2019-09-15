@@ -6,6 +6,8 @@ $jenisPengerjaan = $_POST["jenisPengerjaan"];
 $nomorPO = $_POST["nomorPO"];
 $tglMulai = date('Y-m-d');
 $tglNaikBahan = $_POST["tglNaikBahan"];
+$qtyAkhirObatArray = $_POST["qtyAkhirObat"];
+$idObatArray = $_POST["idObat"];
 
 if($jenisPengerjaan==0){
     $tglSelesaiSendiri = $_POST["tglSelesaiSendiri"];
@@ -39,6 +41,36 @@ if($jenisPengerjaan==2){
 
 }
 
+//cek qty obat
+$k =1;
+$error = false;
+$obatErr ='';
+$multiquery ='';
+foreach($idObatArray as $idObat){
+    $queryGetDetailObat = "SELECT * from obat where id = '$idObat'";	
+    $resultGetDetailObat = $link->query($queryGetDetailObat);
+    while ($row = $resultGetDetailObat->fetch_assoc()) {
+        if(($row["kilo"]*1000)<$qtyAkhirObatArray[$k]){
+            $error = true;
+            $obatErr .= $row['nama_obat'].",";
+            echo $gram = $qtyAkhirObatArray[$k]/1000;
+        }else{
+           echo $gram = $qtyAkhirObatArray[$k]/1000;
+            $multiquery.= "UPDATE obat set kilo=kilo-$gram where id=$idObat";
+        }
+        $k++;
+    }
+}
+if($error==true){
+    echo '<script> if (confirm("Stock '.$obatErr.' ,tidak Cukup!") == true) {
+        window.location.replace("../../view/sample.php");
+    } else {
+        window.location.replace("../../view/sample.php");
+    }</script>';    
+}else{
+    $query = $link->query("UPDATE sample set status=1,tgl_naik_bahan = '$tglNaikBahan' where id='$idSample'");
+    mysqli_multi_query($link,$multiquery);
+
 //insert db pengerjaan
 $queryInsertPengerjaan = "INSERT INTO pengerjaan (id_sample,tipe,tgl_mulai,tgl_selesai_sendiri,qty_sendiri,tgl_selesai_makloon,qty_makloon,qty_awal,status,jumlah_orang,jam_kerja,meja,biaya_makloon,nomor_po,tgl_naik_barang) values($idSample,$jenisPengerjaan,'$tglMulai','$tglSelesaiSendiri',$qtySendiri,'$tglSelesaiMakloon',$qtyMakloon,($qtyMakloon+$qtySendiri),0,$jumlahOrang,$jamKerja,$meja,$biayaMakloon,'$nomorPO','$tglNaikBahan')";
 $resultInsertPengerjaan = mysqli_query($link,$queryInsertPengerjaan) or die(mysqli_error($link));
@@ -48,10 +80,10 @@ if(!$resultInsertPengerjaan){
         ";
     }
 
-//update status sample to on-going
-
+// update status sample to production
 $query = $link->query("UPDATE sample set status='3' where id='$idSample'");
 
 
     header("Location: ../../view/pengerjaan.php");
+}
 ?>
