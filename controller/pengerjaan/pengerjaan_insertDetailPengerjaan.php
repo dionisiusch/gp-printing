@@ -23,11 +23,12 @@ else if($jenisPengerjaan==1){
 }
 
 $qtyAkhir = $qtyAkhirMakloon + $qtyAkhirSendiri;
-$queryGetQtyAwal = "SELECT qty_awal from pengerjaan WHERE id='$id' LIMIT 1";
+$queryGetQtyAwal = "SELECT qty_awal,nomor_po from pengerjaan WHERE id='$id' LIMIT 1";
 $resultGetQtyAwal = mysqli_query($link,$queryGetQtyAwal) or die(mysqli_error($link));
 
 while ($row = $resultGetQtyAwal->fetch_assoc()) {
     $qtyAwal = $row["qty_awal"];
+    $nomorPo = $row["nomor_po"];
 }
 // $tenpersen = ceil($qtyAwal*0.1);
 //proses check barang diterima
@@ -56,7 +57,7 @@ $querySelectGudang =  "SELECT * from gudang where id_pengerjaan = '$id'";
 $resultSelectGudang = mysqli_query($link,$querySelectGudang) or die(mysqli_error($link));
 $num_row_gudang = mysqli_num_rows($resultSelectGudang);
 if($num_row_gudang==0){
-    $queryInsertToGudang = "INSERT into gudang (id_pengerjaan,qty_total,qty_sementara,status) values('$id',$qtyAwal,($qtyAkhirSendiri+$qtyAkhirMakloon),0)";
+    $queryInsertToGudang = "INSERT into gudang (id_pengerjaan,,nomor_po,qty_total,qty_sementara,status) values('$id','$nomorPo',$qtyAwal,($qtyAkhirSendiri+$qtyAkhirMakloon),0)";
     $resultInsertToGudang = mysqli_query($link,$queryInsertToGudang) or die(mysqli_error($link));
 }else{
     $queryUpdateGudang = "UPDATE gudang set qty_sementara = qty_sementara+($qtyAkhirSendiri+$qtyAkhirMakloon) WHERE id_pengerjaan='$id'";
