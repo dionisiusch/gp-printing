@@ -30,7 +30,7 @@ if($qtyAwalPengerjaan<=$qtyAkhir){
         $queryUpdateGudang = "UPDATE gudang SET qty_sementara=qty_sementara+$qtyAkhir where id_pengerjaan=$idPengerjaan";
         $resulUpdateGudang= mysqli_query($link,$queryUpdateGudang) or die(mysqli_error($link));
     }else{
-        $queryInsertGudang = "INSERT INTO gudang(id_pengerjaan,qty_total,qty_sementara) SELECT id_pengerjaan,$qtyAwalPengerjaan,$qtyAkhir FROM revisi where id='$id'";
+        $queryInsertGudang = "INSERT INTO gudang(id_pengerjaan,nomor_po,qty_total,qty_sementara) SELECT id_pengerjaan,nomor_po,$qtyAwalPengerjaan,$qtyAkhir FROM revisi where id='$id'";
         $resulInsertGudang= mysqli_query($link,$queryInsertGudang) or die(mysqli_error($link));    
     } 
     //update db revisi

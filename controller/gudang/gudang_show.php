@@ -2,11 +2,11 @@
 	include('../controller/config/linken.php');
 	include('../controller/config/asset.php');
 	
-	$queryGetGudang = "SELECT gudang.id,sample.artikel,gudang.id_pengerjaan,gudang.tgl_pengambilan,gudang.status from gudang join pengerjaan on gudang.id_pengerjaan=pengerjaan.id join sample on pengerjaan.id_sample = sample.id ORDER BY gudang.id ASC";
+	$queryGetGudang = "SELECT gudang.id,gudang.nomor_po,sample.artikel,gudang.id_pengerjaan,gudang.tgl_pengambilan,gudang.status,pengerjaan.status AS PS from gudang join pengerjaan on gudang.id_pengerjaan=pengerjaan.id join sample on pengerjaan.id_sample = sample.id ORDER BY gudang.id ASC";
 	$resultGetGudang = mysqli_query($link,$queryGetGudang) or die(mysqli_error($link));
 	 echo "<table class='table table-hover'><tr>
                         <th class='col-md-1'>Id</th>
-                        <th class='col-md-1'>Id Pengerjaan</th>
+                        <th class='col-md-1'>Nomer PO</th>
                         <th class='col-md-1'>Artikel</th>
                         <th class='col-md-1'>Tanggal Pengambilan</th>
                         <th class='col-md-1'>Status</th>
@@ -19,7 +19,8 @@
         $row['tgl_pengambilan']=null;
     }else{
          $row['tgl_pengambilan'] = date("d F Y",strtotime( $row['tgl_pengambilan']));
-    }  
+    }
+    $idPengerjaan=$row['id_pengerjaan'];    
 	?>
 							
 	<script>
@@ -72,7 +73,7 @@
 	</script>
                             <tr onclick='AjaxGetDetailGudang(<?php echo $row["id"]?>)'>
 								<td><?php echo $row['id']?></td>
-                                <td><?php echo $row['id_pengerjaan']?></td>
+                                <td><?php echo $row['nomor_po']?></td>
                                 <td><?php echo $row['artikel']?></td>
                                 <td><?php echo $row['tgl_pengambilan']?></td>
                                 <td><?php if($row['status']==0){
@@ -83,8 +84,11 @@
 										
 								;?></td>
 								<td>
-                                <?php 
-                                if($row['status']==0){ ?>
+                                <?php
+                                $queryGetCount = "SELECT revisi.status from revisi WHERE id_pengerjaan = $idPengerjaan AND status !=2";
+	                            $resultGetCount = mysqli_query($link,$queryGetCount) or die(mysqli_error($link));
+                                $countrow =  mysqli_num_rows($resultGetCount);
+                                if($row['status']==0 && $row['PS']==1 && $countrow==0){ ?>
                                 <button onclick="ChangeStatusGudang(<?php echo $row["id"];?>)" class="btn btn-success">Ambil</button>   
                                 <?php }; ?>
                                 <a class='btn btn-danger' href='controller/gudang/gudang_delete.php?id="<?php echo $row["id"];?>"'>Hapus</a></td>
