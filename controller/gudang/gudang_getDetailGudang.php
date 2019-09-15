@@ -5,7 +5,7 @@ include('../config/linken.php');
 $id = $_POST['id'];
 $data = array();
 $result = '';
-$queryGudang = $link->query("SELECT gudang.id,sample.artikel,gudang.id_pengerjaan,gudang.qty_total,gudang.qty_sementara,gudang.tgl_pengambilan,gudang.status,gudang.keterangan from gudang join pengerjaan on gudang.id_pengerjaan=pengerjaan.id join sample on pengerjaan.id_sample = sample.id where gudang.id=$id");
+$queryGudang = $link->query("SELECT gudang.id,sample.artikel,gudang.id_pengerjaan,gudang.qty_total,gudang.qty_sementara,gudang.tgl_pengambilan,gudang.status,gudang.keterangan,pengerjaan.tipe from gudang join pengerjaan on gudang.id_pengerjaan=pengerjaan.id join sample on pengerjaan.id_sample = sample.id where gudang.id=$id");
 while ($row = $queryGudang->fetch_assoc()) {
     if($row['tgl_pengambilan']=='0000-00-00'){
         $row['tgl_pengambilan']=null;
@@ -84,16 +84,88 @@ while ($row = $queryGudang->fetch_assoc()) {
 
            <td>'.$row['keterangan'].'</td>
          </tr> 
+          
        </table>
-       
-    </table>
+       <table class="table table-bordered" id="tableHistory">
+       <tr><td><b>Tanggal Masuk</b>
+       </td>
+       ';
+      if($row['tipe']==0||$row['tipe']==2){
+        $result.= '
+        <td><b>Qty Sendiri</b>
+        </td>
+        ';
+      }    
+      if($row['tipe']==1||$row['tipe']==2){
+        $result.= '
+        <td><b>Qty Makloon</b>
+        </td>
+        ';
+      }
+
+      $result.=' </tr>';
+      //get detail dari pengerjaan_gudang
+      $idPengerjaan = $row['id_pengerjaan'];
+      $queryGudang = $link->query("SELECT * from pengerjaan_gudang where id_pengerjaan = '$idPengerjaan'");
+      while ($rowgudang = $queryGudang->fetch_assoc()) {
+        $result.= '
+        <tr>
+        <td align="center">
+        '.$rowgudang['tgl'].'
+        </td>
+        ';
+        if($row['tipe']==0||$row['tipe']==2){
+          $result.='
+          <td align="center">
+          '.$rowgudang['qty_sendiri'].'
+          </td>';
+        }  
+        if($row['tipe']==1||$row['tipe']==2){
+          $result.= '
+          <td align="center">
+          '.$rowgudang['qty_makloon'].'
+          </td>
+          ';
+        }
+
+      }
+        $result.='
+          </tr>
+        ';
+      
+    
+
+        $result.='
+       </table>
+
+       <tr>
+         <td align="center"><button id="history" class="btn-primary">Tampilkan History</button></td>
+         </tr> 
+         <tr>
+         <td align="center"><button id="hideHistory" class="btn-primary">Sembunyikan History</button></td>
+         </tr> 
   
       </div>
       
     </div>
 
   </div>
-  </div>';
+  </div>
+  <script>
+  $("#hideHistory").hide();
+  $("#tableHistory").hide();
+     $("#history").click(function(){
+      $("#tableHistory").show();
+      $("#history").hide();
+      $("#hideHistory").show();
+     });
+     $("#hideHistory").click(function(){
+      $("#tableHistory").hide();
+      $("#history").show();
+      $("#hideHistory").hide();
+     });
+  </script>
+  ';
 }
 
 

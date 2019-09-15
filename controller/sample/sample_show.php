@@ -74,6 +74,9 @@
 									}else if($row['status']==3){
 										echo "<span style='color:orange'>Production</span>";
 									}
+									else if($row['status']==4){
+										echo "<span style='color:black'>Done Production</span>";
+									}
 									else{
 										echo "<span style='color:red'>Idle</span>";
 									}

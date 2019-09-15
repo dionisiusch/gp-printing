@@ -27,7 +27,7 @@ if($status==1){
 		<tr>
          <td align="right"><b>Tgl Naik Bahan : </b></td>
            <td>
-           <input name="tglSelesaiSendiri" type="date" id="tglSelesaiSendiri" value="">
+           <input name="tglNaikBahan" type="date" id="tglNaikBahan" value="">
            <input type="hidden" name="idSample" id="idSample" value="'.$id.'">
 		   </td>
          </tr>   
@@ -142,12 +142,13 @@ if($status==3){
    ';
 
   //get detail obat
-  $queryObat = $link->query("SELECT obat.nama_obat,sample_obat.qty FROM sample_obat join obat on sample_obat.id_obat = obat.id WHERE id_sample='$id'");
+  $queryObat = $link->query("SELECT obat.nama_obat,sample_obat.qty,sample_obat.id_obat FROM sample_obat join obat on sample_obat.id_obat = obat.id WHERE id_sample='$id'");
   $num_row = mysqli_num_rows( $queryObat );
   $result .= '<input type="hidden" id="num_row" value="'.$num_row.'">';
   $i = 1;
   while ($row = $queryObat->fetch_assoc()) {
-    $result .= '<input type="hidden" id="qtyAkhirObatHidden'.$i.'" value="'.$row['qty'].'">';
+    $result .= '<input type="hidden" id="qtyAkhirObatHidden'.$i.'" value="'.$row['qty'].'">
+    <input type="hidden" name="idObat['.$i.']" value="'.$row['id_obat'].'">';
     $result.= '
      <tr >
       <td align="center">

@@ -7,9 +7,11 @@ $data = array();
 $result = '';
 $idPengerjaan = 0;
 $tipe = 0;
+$qtySendiri = 0;
 $querySample = $link->query("SELECT pengerjaan.id,sample.artikel,pengerjaan.nomor_po,pengerjaan.qty_awal,pengerjaan.tipe,pengerjaan.tgl_mulai,pengerjaan.qty_sendiri,pengerjaan.tgl_selesai_sendiri,pengerjaan.qty_makloon,pengerjaan.tgl_selesai_makloon,pengerjaan.status,pengerjaan.keterangan,pengerjaan.qty_akhir_makloon,pengerjaan.qty_akhir_sendiri,pengerjaan.jumlah_orang,pengerjaan.jam_kerja,pengerjaan.biaya_makloon,pengerjaan.meja,pengerjaan.tgl_naik_barang from pengerjaan join sample on pengerjaan.id_sample = sample.id where pengerjaan.id_sample = '$id'");
 while ($row = $querySample->fetch_assoc()) {
   $idPengerjaan = $row["id"];
+  $qtySendiri =  $row['qty_sendiri'];
   $tipe = $row['tipe'];
   $result.= '
 	<div class="modal-dialog">
@@ -79,7 +81,7 @@ while ($row = $querySample->fetch_assoc()) {
                ';
 
        if($row["tipe"]==2){
-         $result.='
+        $result.='
         </table>
         <table class="table table-bordered hovertable" id="crud_table">
         <tr>
@@ -172,7 +174,7 @@ if($tipe==0||$tipe==2){
 while ($row = $query->fetch_assoc()) {
   $result.='<tr>
   <td align="center">'.$row["nama_obat"].'</td>
-  <td align="center">'.$row["qty"].'</td>
+  <td align="center">'.($row["qty"]*$qtySendiri).'</td>
  </tr>';
  
   }
