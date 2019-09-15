@@ -5,6 +5,7 @@ include('../controller/config/asset.php');
 <base href="http://localhost/gp-printing/" />
 <div class="modal-header">
     <h4 class="modal-title">Obat</h4>
+    <button onclick="" class="btn btn-primary" >Kerjakan</button>
 </div>
 <div class="modal-body">
   <?php
@@ -17,8 +18,9 @@ include('../controller/config/asset.php');
    <br>
 <!-- Trigger the modal with a button -->
 
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">+ Tambah Obat</button>
-
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp; Tambah Obat</button>
+<a class="btn btn-default btn-lg" href='controller/obat/obat_print.php'><span class="glyphicon glyphicon-print"></span>&nbsp;&nbsp; Print</a>
+   <br>   <br>
 <?php
 	include '../controller/obat/obat_show.php';
 ?>
