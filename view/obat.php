@@ -90,18 +90,14 @@ $(document).ready(function(){
 		// tambahkan 'Rp.' pada saat form di ketik
 		// gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
 		hargaBeli.value = formatRupiah(this.value, 'Rp. ');
-    var numb = rupiah.value.match(/\d/g);
-    numb = numb.join("");
-    hargaBeli.value = numb;
+  
     hargaBeli.value = formatRupiah(this.value, 'Rp. ');  
 	});
 
     hargaBeli.addEventListener('blur', function(e){
         // tambahkan 'Rp.' pada saat form di ketik
         // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
-    var numb = hargaBeli.value.match(/\d/g);
-    numb = numb.join("");
-    hargaBeli.value = numb;
+ 
     hargaBeli.value = formatRupiah(this.value, 'Rp. ');  
     });
 
@@ -109,18 +105,14 @@ $(document).ready(function(){
 		// tambahkan 'Rp.' pada saat form di ketik
 		// gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
 	hargaJual.value = formatRupiah(this.value, 'Rp. ');
-    var numb = rupiah.value.match(/\d/g);
-    numb = numb.join("");
-    hargaJual.value = numb;
+  
     hargaJual.value = formatRupiah(this.value, 'Rp. ');  
 	});
 
     hargaJual.addEventListener('blur', function(e){
         // tambahkan 'Rp.' pada saat form di ketik
         // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
-    var numb = hargaJual.value.match(/\d/g);
-    numb = numb.join("");
-    hargaJual.value = numb;
+  
     hargaJual.value = formatRupiah(this.value, 'Rp. ');  
     });
     
