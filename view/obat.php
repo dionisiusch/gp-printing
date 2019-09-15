@@ -5,7 +5,7 @@ include('../controller/config/asset.php');
 <base href="http://localhost/gp-printing/" />
 <div class="modal-header">
     <h4 class="modal-title">Obat</h4>
-    <button onclick="" class="btn btn-primary" >Kerjakan</button>
+
 </div>
 <div class="modal-body">
   <?php

@@ -18,6 +18,8 @@ include('../controller/config/asset.php');
 
    <br>
 <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Tambah Revisi</button>
+<a class="btn btn-default btn-lg" href='view/revisi_pickDate.php'><span class="glyphicon glyphicon-print"></span>&nbsp;&nbsp; Print</a>
+        
    <br>
     <br>
 <?php
