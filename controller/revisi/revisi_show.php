@@ -99,7 +99,7 @@ function ChangeStatusRevisiDone(id,status){
                                 if($row['status']==0){ ?>
                                 <button onclick="ChangeStatusRevisiKerjakan(<?php echo $row["id"];?>,<?php echo $row["status"];?>)" class="btn btn-primary">Kerjakan</button>    
                                 <?php }else if($row['status']==1){ ?>
-                                <button onclick="ChangeStatusRevisiDone(<?php echo $row["id"];?>,<?php echo $row["status"];?>)" class="btn btn-warning">Done</button>
+                                <button onclick="ChangeStatusRevisiDone(<?php echo $row["id"];?>,<?php echo $row["status"];?>)" class="btn btn-warning">Terima</button>
                                 <?php }?>
                                 <a class='btn btn-danger' href='controller/revisi/revisi_delete.php?id="<?php echo $row["id"];?>"'>Hapus</a></td>
                             </tr>
