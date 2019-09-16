@@ -15,8 +15,10 @@
 						</tr>";
 
 	while($row = mysqli_fetch_assoc($resultGetRevisi)){
-    if($row['tgl_mulai']=='0000-00-00' && $row['tgl_selesai']=='0000-00-00'){
+    if($row['tgl_mulai']=='0000-00-00' ){
         $row['tgl_mulai']=null;
+    }
+    if($row['tgl_selesai']=='0000-00-00'){
         $row['tgl_selesai']=null;
     }    
 	?>
