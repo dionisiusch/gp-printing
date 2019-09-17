@@ -69,7 +69,7 @@ include('../controller/config/asset.php');
            <td><input type="date" name="tglrevisiPengerjaan"   id="tglrevisiPengerjaan" class="form-control"  autocomplete="off" value="<?php echo $currentDateTime?>"/></td>
          </tr>
         <tr>
-         <td align="right"><b>Tanggal Selesai (Dateline): </b></td>
+         <td align="right"><b>Tanggal Selesai (Deadline): </b></td>
 
            <td><input type="date" name="tglDeadline"   id="tglDeadline" class="form-control"  autocomplete="off" value="<?php echo $twodayDate?>"/></td>
          </tr>        
@@ -110,7 +110,7 @@ include('../controller/config/asset.php');
            <td><input type="date" name="tglrevisiRevisi"   id="tglrevisiRevisi" class="form-control"  autocomplete="off" value="<?php echo $currentDateTime?>"/></td>
          </tr>
         <tr>
-         <td align="right"><b>Tanggal Selesai (Dateline): </b></td>
+         <td align="right"><b>Tanggal Selesai (Deadline): </b></td>
 
            <td><input type="date" name="tglDeadlineRevisi"   id="tglDeadlineRevisi" class="form-control"  autocomplete="off" value="<?php echo $twodayDate?>"/></td>
          </tr>
