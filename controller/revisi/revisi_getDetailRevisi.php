@@ -23,7 +23,7 @@ while ($row = $queryGetRevisi->fetch_assoc()) {
      <table class="table table-bordered">
         
 		<tr>
-         <td align="right"><b>Pelanggan : </b></td>
+         <td align="right"><b>Artikel : </b></td>
 		 
 
            <td>'.$row['artikel'].'</td>
@@ -94,7 +94,7 @@ while ($row = $queryGetRevisi->fetch_assoc()) {
 		 
        </table> <table class="table table-bordered hovertable" id="crud_table">
      <tr>
-      <th width="40%">Lokasi</th>
+      <th width="40%">Posisi</th>
       <th width="60%">Desain</th>
      </tr>';
 }

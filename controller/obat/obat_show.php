@@ -63,7 +63,7 @@
                                 <td><?php echo $row['nama_obat']?></td>                  		
 								<td>
                                 <button onclick="editObat(<?php echo $row["id"];?>)" class="btn btn-warning">Edit</button>    
-                                <a class='btn btn-danger' href='controller/Obat/Obat_delete.php?id="<?php echo $row["id"];?>"'>Hapus</a></td>
+                                <a class='btn btn-danger' href='controller/obat/obat_delete.php?id="<?php echo $row["id"];?>"'>Hapus</a></td>
                             </tr>
                             
 	

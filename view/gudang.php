@@ -16,7 +16,8 @@ include('../controller/config/asset.php');
    <br />
 
    <br>
-
+<a class="btn btn-default btn-lg" href='controller/gudang/gudang_print.php'><span class="glyphicon glyphicon-print"></span>&nbsp;&nbsp; Print</a>
+    <br><br>
 <?php
 	include '../controller/gudang/gudang_show.php';
 ?>

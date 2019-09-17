@@ -16,7 +16,8 @@ include('../controller/config/asset.php');
    <br />
 
    <br>
-
+<a class="btn btn-default btn-lg" href='view/pengerjaan_pickDate.php'><span class="glyphicon glyphicon-print"></span>&nbsp;&nbsp; Print</a>
+    <br><br>
 <?php
 	include '../controller/pengerjaan/pengerjaan_show.php';
 ?>
