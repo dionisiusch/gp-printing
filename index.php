@@ -5,6 +5,11 @@ include('view/header.php');
 <!DOCTYPE html>
 <html>
 <head>
+  <script>
+  $(document).ready(function() {
+    $("#modalEvent").hide();
+});
+  </script>
 	<title>GP Motor| HOMEPAGE</title>
 </head>
 <style>
@@ -91,11 +96,18 @@ h2 {
 	<HEAD>
 	</HEAD>
 	<BODY>
-		<div class="index">
+		<div class="index" style="width:100%">
     <div>
 
-      <span style="padding-left: 15;margin-left: 23%;font-weight:100;font-size: 54px;color: white;text-shadow: 2px 2px 15px #000000;opacity:1"> &nbsp;<img style="width:7%"src='assets/img/logo.jpg'></h2>
+      <span style="padding-left: 15;margin-left: 23%;font-weight:100;font-size: 54px;color: white;text-shadow: 2px 2px 15px #000000;opacity:1"> &nbsp;<img style="width:7%"src='assets/img/logo.jpg'></span>
+     
 			      <span style="margin-top: 22%;border-left: 3px solid white;font-weight: bold;font-size: 64px;color: white;text-shadow: 2px 2px 15px #000000;opacity:0.8">&nbsp;GP PRINTING&nbsp;</span>
+            <div style="width:600;margin-left:30;background-color:white">
+      <?php
+        include('controller/calendar/index.php');
+      ?>
+      <div id="modalEvent" style="max-height: 79%;height: 79%;top: 111;right: 0;background-color: #ffe3e3;overflow-x:hidden;position: absolute;width: 405;"></div>
+      </div>
 						<span style="right: 50%;position:absolute;opacity:0.7;bottom:0;font-size:10px">&nbsp;Copyright&copy;&nbsp;2019 | CODEONTOP - Bandung, Indonesia </span>
 		</div>
 	</div>
