@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 15, 2019 at 10:05 PM
+-- Generation Time: Sep 17, 2019 at 09:19 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.8
 
@@ -71,6 +71,28 @@ INSERT INTO `gudang` (`id`, `id_pengerjaan`, `nomor_po`, `qty_total`, `qty_semen
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `history_obat`
+--
+
+CREATE TABLE `history_obat` (
+  `id` int(11) NOT NULL,
+  `id_obat` int(11) NOT NULL,
+  `nama_obat` varchar(255) NOT NULL,
+  `kilo` decimal(10,3) NOT NULL,
+  `harga_beli` int(11) NOT NULL,
+  `harga_jual` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `history_obat`
+--
+
+INSERT INTO `history_obat` (`id`, `id_obat`, `nama_obat`, `kilo`, `harga_beli`, `harga_jual`) VALUES
+(1, 13, 'OBAT MERAH', '100.000', 70000, 50000);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `obat`
 --
 
@@ -95,7 +117,8 @@ INSERT INTO `obat` (`id`, `nama_obat`, `kilo`, `harga_beli`, `harga_jual`) VALUE
 (9, 'parabelum', '3.000', 40000, 50000),
 (10, 'parabelum', '2.000', 40000, 50000),
 (11, 'parabelum', '2.500', 40000, 37000),
-(12, 'PARABELUM', '2.500', 30000, 37000);
+(12, 'PARABELUM', '2.500', 30000, 37000),
+(13, 'OBAT MERAH', '100.000', 50000, 70000);
 
 -- --------------------------------------------------------
 
@@ -312,6 +335,12 @@ ALTER TABLE `gudang`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `history_obat`
+--
+ALTER TABLE `history_obat`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `obat`
 --
 ALTER TABLE `obat`
@@ -370,10 +399,16 @@ ALTER TABLE `gudang`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `history_obat`
+--
+ALTER TABLE `history_obat`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `obat`
 --
 ALTER TABLE `obat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `pengerjaan`
