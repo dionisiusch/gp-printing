@@ -7,7 +7,7 @@ include($path.'/controller/config/asset.php');
 ?>
 <!DOCTYPE html>
 <html>
-
+<title>GP PRINTING</title>
 <body>
 		<div class="navbar navbar-default">
 		<div class="container-fluid">
