@@ -12,7 +12,7 @@ if($username='kasir' && $pass == 'kasir123'){
 		}
 		else {
       echo "<script>alert('---------------------\\nLOGIN GAGAL!\\nUSERNAME/PASSWORD SALAH!\\n---------------------');
-      location.replace('view/login/login.php');</script>";
+      location.replace('view/login.php');</script>";
 		}
 
 	?>
