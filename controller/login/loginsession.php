@@ -1,6 +1,6 @@
 <?php
 if(!isset($_SESSION['login'])){
-	header("location:view/login.php");
+	header("location:login.php");
 		die();
 	}
 
