@@ -173,7 +173,7 @@ if($tipe==0||$tipe==2){
  </tr>';
 while ($row = $query->fetch_assoc()) {
   $result.='<tr>
-  <td align="center">'.$row["nama_obat"].'</td>
+  <td align="center">'.$row["nama_obat"].'&nbsp;('.$row["qty"].'gram)</td>
   <td align="center">'.($row["qty"]*$qtySendiri).'</td>
  </tr>';
  
