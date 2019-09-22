@@ -28,10 +28,10 @@ if($qtyAwalPengerjaan<=$qtyAkhir){
     $queryInsertToGudang = "INSERT INTO revisi_gudang(id_revisi,qty_naik,tgl_naik) SELECT id_pengerjaan,$qtyAkhir,'$currentDateTime' FROM revisi where id='$id'";
     $resulInsertToGudang= mysqli_query($link,$queryInsertToGudang) or die(mysqli_error($link));
     if($countrow>0){
-        $queryUpdateGudang = "UPDATE gudang SET qty_sementara=qty_sementara+$qtyAkhir where id_pengerjaan=$idPengerjaan";
+        $queryUpdateGudang = "UPDATE gudang SET qty_sementara=qty_sementara+$qtyAkhir,qty_kurang=qty_kurang+$qtyAkhir where id_pengerjaan=$idPengerjaan";
         $resulUpdateGudang= mysqli_query($link,$queryUpdateGudang) or die(mysqli_error($link));
     }else{
-        $queryInsertGudang = "INSERT INTO gudang(id_pengerjaan,nomor_po,qty_total,qty_sementara) SELECT id_pengerjaan,nomor_po,$qtyAwalPengerjaan,$qtyAkhir FROM revisi where id='$id'";
+        $queryInsertGudang = "INSERT INTO gudang(id_pengerjaan,nomor_po,qty_total,qty_sementara,qty_kurang) SELECT id_pengerjaan,nomor_po,$qtyAwalPengerjaan,$qtyAkhir,$qtyAkhir FROM revisi where id='$id'";
         $resulInsertGudang= mysqli_query($link,$queryInsertGudang) or die(mysqli_error($link));    
     } 
     //update db revisi
@@ -49,7 +49,7 @@ if($qtyAwalPengerjaan<=$qtyAkhir){
     $resultUpdateStatusSample = mysqli_query($link,$queryUpdateStatusSample) or die(mysqli_error($link));
 
     //update all revisi db status   
-    $queryAllUpdateRevisi = "UPDATE revisi set status=1 where id_sample=$idSample && id_pengerjaan=$idPengerjaan";
+    $queryAllUpdateRevisi = "UPDATE revisi set status=2 where id_sample=$idSample && id_pengerjaan=$idPengerjaan";
     $resultAllUpdateRevisi = mysqli_query($link,$queryAllUpdateRevisi) or die(mysqli_error($link));
     
         header("Location: ../../view/revisi.php");
@@ -61,10 +61,10 @@ if($qtyAwalPengerjaan<=$qtyAkhir){
     $queryInsertToGudang = "INSERT INTO revisi_gudang(id_revisi,qty_naik,tgl_naik) SELECT id_pengerjaan,$qtyAkhir,'$currentDateTime' FROM revisi where id='$id'";
     $resulInsertToGudang= mysqli_query($link,$queryInsertToGudang) or die(mysqli_error($link));
     if($countrow>0){
-        $queryUpdateGudang = "UPDATE gudang SET qty_sementara=qty_sementara+$qtyAkhir where id_pengerjaan=$idPengerjaan";
+        $queryUpdateGudang = "UPDATE gudang SET qty_sementara=qty_sementara+$qtyAkhir,qty_kurang=qty_kurang+$qtyAkhir where id_pengerjaan=$idPengerjaan";
         $resulUpdateGudang= mysqli_query($link,$queryUpdateGudang) or die(mysqli_error($link));
     }else{
-        $queryInsertGudang = "INSERT INTO gudang(id_pengerjaan,nomor_po,qty_total,qty_sementara) SELECT id_pengerjaan,nomor_po,$qtyAwalPengerjaan,$qtyAkhir FROM revisi where id='$id'";
+        $queryInsertGudang = "INSERT INTO gudang(id_pengerjaan,nomor_po,qty_total,qty_sementara,qty_kurang) SELECT id_pengerjaan,nomor_po,$qtyAwalPengerjaan,$qtyAkhir,$qtyAkhir FROM revisi where id='$id'";
         $resulInsertGudang= mysqli_query($link,$queryInsertGudang) or die(mysqli_error($link));    
     } 
     //update db revisi
@@ -82,7 +82,7 @@ if($qtyAwalPengerjaan<=$qtyAkhir){
     $resultUpdateStatusSample = mysqli_query($link,$queryUpdateStatusSample) or die(mysqli_error($link));
 
     //update all revisi db status   
-    $queryAllUpdateRevisi = "UPDATE revisi set status=1 where id_sample=$idSample && id_pengerjaan=$idPengerjaan";
+    $queryAllUpdateRevisi = "UPDATE revisi set status=2 where id_sample=$idSample && id_pengerjaan=$idPengerjaan";
     $resultAllUpdateRevisi = mysqli_query($link,$queryAllUpdateRevisi) or die(mysqli_error($link));
     
         header("Location: ../../view/revisi.php");
@@ -95,10 +95,10 @@ $resultGetGudang = mysqli_query($link,$queryGetGudang) or die(mysqli_error($link
 $countrow =  mysqli_num_rows($resultGetGudang);
  echo ($countrow);   
 if($countrow>0){
-    $queryUpdateGudang = "UPDATE gudang SET qty_sementara=qty_sementara+$qtyAkhir where id_pengerjaan=$idPengerjaan";
+    $queryUpdateGudang = "UPDATE gudang SET qty_sementara=qty_sementara+$qtyAkhir,qty_kurang=qty_kurang+$qtyAkhir where id_pengerjaan=$idPengerjaan";
     $resulUpdateGudang= mysqli_query($link,$queryUpdateGudang) or die(mysqli_error($link));
 }else{
-    $queryInsertGudang = "INSERT INTO gudang(id_pengerjaan,qty_total,qty_sementara) SELECT id_pengerjaan,$qtyAwalPengerjaan,$qtyAkhir FROM revisi where id='$id'";
+    $queryInsertGudang = "INSERT INTO gudang(id_pengerjaan,qty_total,qty_sementara,qty_kurang) SELECT id_pengerjaan,$qtyAwalPengerjaan,$qtyAkhir,$qtyAkhir FROM revisi where id='$id'";
     $resulInsertGudang= mysqli_query($link,$queryInsertGudang) or die(mysqli_error($link));    
 }       
  

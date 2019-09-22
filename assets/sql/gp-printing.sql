@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 17, 2019 at 09:19 PM
+-- Generation Time: Sep 22, 2019 at 05:11 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.8
 
@@ -54,6 +54,7 @@ CREATE TABLE `gudang` (
   `nomor_po` varchar(255) NOT NULL,
   `qty_total` int(11) NOT NULL,
   `qty_sementara` int(11) NOT NULL,
+  `qty_kurang` int(11) NOT NULL,
   `tgl_pengambilan` date NOT NULL,
   `keterangan` text NOT NULL,
   `status` int(11) NOT NULL
@@ -63,10 +64,38 @@ CREATE TABLE `gudang` (
 -- Dumping data for table `gudang`
 --
 
-INSERT INTO `gudang` (`id`, `id_pengerjaan`, `nomor_po`, `qty_total`, `qty_sementara`, `tgl_pengambilan`, `keterangan`, `status`) VALUES
-(1, 53, '', 200, 200, '2019-09-09', 'masbnfkqwi', 1),
-(2, 62, '', 4, 1, '0000-00-00', '', 0),
-(3, 61, '', 2, 1, '0000-00-00', '', 0);
+INSERT INTO `gudang` (`id`, `id_pengerjaan`, `nomor_po`, `qty_total`, `qty_sementara`, `qty_kurang`, `tgl_pengambilan`, `keterangan`, `status`) VALUES
+(1, 53, '', 200, 200, 0, '2019-09-09', 'masbnfkqwi', 1),
+(2, 62, '', 4, 1, -1, '2019-09-22', '', 2),
+(3, 61, '', 2, 1, -1, '2019-09-22', '', 2),
+(4, 59, '', 2, 500, 100, '2019-09-22', '', 2),
+(5, 61, '9898283', 2, 100, 0, '0000-00-00', '', 0),
+(6, 61, '9898283', 2, 100, 0, '0000-00-00', '', 0),
+(7, 61, '9898283', 2, 100, 0, '0000-00-00', '', 0),
+(8, 61, '9898283', 2, 1000, 0, '0000-00-00', '', 0),
+(9, 61, '9898283', 2, 1000, 0, '0000-00-00', '', 0),
+(10, 61, '9898283', 2, 10000, 0, '0000-00-00', '', 0),
+(11, 59, '1116011', 2, 10, 0, '0000-00-00', '', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `gudang_detail`
+--
+
+CREATE TABLE `gudang_detail` (
+  `id` int(11) NOT NULL,
+  `id_gudang` int(11) NOT NULL,
+  `qty_pengambilan` int(11) NOT NULL,
+  `tgl_pengambilan` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `gudang_detail`
+--
+
+INSERT INTO `gudang_detail` (`id`, `id_gudang`, `qty_pengambilan`, `tgl_pengambilan`) VALUES
+(1, 3, 1, '2019-09-22');
 
 -- --------------------------------------------------------
 
@@ -158,7 +187,7 @@ INSERT INTO `pengerjaan` (`id`, `id_sample`, `nomor_po`, `tipe`, `tgl_mulai`, `q
 (55, 52, '', 0, '2019-09-04', 100, '2019-08-11', 0, '0000-00-00', 1, 100, '', 0, 100, 0, 0, 0, 0, NULL),
 (56, 53, '', 0, '2019-09-04', 1000, '2019-08-11', 0, '0000-00-00', 1, 1000, '', 0, 0, 0, 0, 0, 0, NULL),
 (58, 63, '1116027', 1, '2019-09-11', 0, '0000-00-00', 2, '2019-09-14', 0, 2, '', 0, 0, 0, 0, 12, 0, NULL),
-(59, 65, '1116011', 0, '2019-09-11', 2, '2019-09-18', 0, '0000-00-00', 0, 2, '', 0, 0, 12, 12, 0, 12, NULL),
+(59, 65, '1116011', 0, '2019-09-11', 2, '2019-09-18', 0, '0000-00-00', 1, 2, '', 0, 580, 12, 12, 0, 12, NULL),
 (60, 66, 'www', 0, '2019-09-12', 1, '2019-09-19', 0, '0000-00-00', 0, 1, '', 0, 0, 1, 1, 0, 1, NULL),
 (61, 68, 'awd', 1, '2019-09-12', 0, '0000-00-00', 2, '2019-09-15', 1, 2, 'tes force', 1, 0, 0, 0, 2, 0, '2019-09-13'),
 (62, 67, '11160111', 2, '2019-09-12', 2, '2019-09-19', 2, '2019-09-15', 0, 4, '', 0, 1, 12, 1, 12, 12, '0000-00-00');
@@ -185,7 +214,8 @@ INSERT INTO `pengerjaan_gudang` (`id`, `id_pengerjaan`, `tgl`, `qty_sendiri`, `q
 (1, 69, '2019-09-15', 1, 0),
 (2, 70, '2019-09-15', 1, 1),
 (3, 69, '2019-09-15', 1, 0),
-(4, 69, '2019-09-15', 1, 0);
+(4, 69, '2019-09-15', 1, 0),
+(5, 59, '2019-09-22', 500, 0);
 
 -- --------------------------------------------------------
 
@@ -233,8 +263,9 @@ CREATE TABLE `revisi` (
 --
 
 INSERT INTO `revisi` (`id`, `id_sample`, `id_pengerjaan`, `nomor_po`, `tipe`, `tgl_mulai`, `tgl_deadline`, `tgl_selesai`, `status`, `qty_akhir`, `qty_awal`, `keterangan`) VALUES
-(55, 69, 61, '9898283', 0, '2019-09-13', '2019-09-15', '0000-00-00', 1, 252, 250, ''),
-(56, 69, 61, '9898283', 0, '2019-09-13', '2019-09-15', '0000-00-00', 1, 100, 500, '');
+(55, 69, 61, '9898283', 0, '2019-09-13', '2019-09-15', '0000-00-00', 2, 10000, 250, ''),
+(56, 69, 61, '9898283', 0, '2019-09-13', '2019-09-15', '0000-00-00', 2, 100, 500, ''),
+(57, 65, 59, '1116011', 0, '2019-09-22', '2019-09-24', '0000-00-00', 2, 10, 80, '');
 
 -- --------------------------------------------------------
 
@@ -254,7 +285,14 @@ CREATE TABLE `revisi_gudang` (
 --
 
 INSERT INTO `revisi_gudang` (`id`, `id_revisi`, `qty_naik`, `tgl_naik`) VALUES
-(1, 61, 100, '2019-09-13');
+(1, 61, 100, '2019-09-13'),
+(2, 61, 100, '2019-09-22'),
+(3, 61, 100, '2019-09-22'),
+(4, 61, 100, '2019-09-22'),
+(5, 61, 1000, '2019-09-22'),
+(6, 61, 1000, '2019-09-22'),
+(7, 61, 10000, '2019-09-22'),
+(8, 59, 10, '2019-09-22');
 
 -- --------------------------------------------------------
 
@@ -279,7 +317,7 @@ CREATE TABLE `sample` (
 
 INSERT INTO `sample` (`id`, `artikel`, `nomor_po`, `tgl`, `tgl_selesai`, `tgl_naik_bahan`, `status`, `biaya`) VALUES
 (51, 'Dion Ganteng Artikel', '1116027', '2019-09-10', '2019-09-10', NULL, 3, 2),
-(65, 'dion ahai', '1116011', '2019-09-11', '2019-09-11', NULL, 3, 2),
+(65, 'dion ahai', '1116011', '2019-09-11', '2019-09-11', NULL, 4, 2),
 (67, 'awd', '11160111', '2019-09-12', '2019-09-12', NULL, 3, 2),
 (68, '12awd', 'awd', '2019-09-12', '2019-09-12', '0000-00-00', 3, 2),
 (69, 'awd', 'awd', '2019-09-12', '2019-09-12', '0000-00-00', 2, 2);
@@ -335,6 +373,12 @@ ALTER TABLE `gudang`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `gudang_detail`
+--
+ALTER TABLE `gudang_detail`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `history_obat`
 --
 ALTER TABLE `history_obat`
@@ -356,6 +400,12 @@ ALTER TABLE `pengerjaan`
 -- Indexes for table `pengerjaan_gudang`
 --
 ALTER TABLE `pengerjaan_gudang`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `posisi`
+--
+ALTER TABLE `posisi`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -396,7 +446,13 @@ ALTER TABLE `detail_sample`
 -- AUTO_INCREMENT for table `gudang`
 --
 ALTER TABLE `gudang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `gudang_detail`
+--
+ALTER TABLE `gudang_detail`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `history_obat`
@@ -420,19 +476,25 @@ ALTER TABLE `pengerjaan`
 -- AUTO_INCREMENT for table `pengerjaan_gudang`
 --
 ALTER TABLE `pengerjaan_gudang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `posisi`
+--
+ALTER TABLE `posisi`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `revisi`
 --
 ALTER TABLE `revisi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `revisi_gudang`
 --
 ALTER TABLE `revisi_gudang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `sample`

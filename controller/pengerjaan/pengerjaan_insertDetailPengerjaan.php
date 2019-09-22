@@ -65,10 +65,10 @@ $querySelectGudang =  "SELECT * from gudang where id_pengerjaan = '$id'";
 $resultSelectGudang = mysqli_query($link,$querySelectGudang) or die(mysqli_error($link));
 $num_row_gudang = mysqli_num_rows($resultSelectGudang);
 if($num_row_gudang==0){
-    $queryInsertToGudang = "INSERT into gudang (id_pengerjaan,qty_total,qty_sementara,status) values('$id',$qtyAwal,($qtyAkhirSendiri+$qtyAkhirMakloon),0)";
+    $queryInsertToGudang = "INSERT into gudang (id_pengerjaan,qty_total,qty_sementara,qty_kurang,status) values('$id',$qtyAwal,($qtyAkhirSendiri+$qtyAkhirMakloon),($qtyAkhirSendiri+$qtyAkhirMakloon),0)";
     $resultInsertToGudang = mysqli_query($link,$queryInsertToGudang) or die(mysqli_error($link));
 }else{
-    $queryUpdateGudang = "UPDATE gudang set qty_sementara = qty_sementara+($qtyAkhirSendiri+$qtyAkhirMakloon) WHERE id_pengerjaan='$id'";
+    $queryUpdateGudang = "UPDATE gudang set qty_sementara = qty_sementara+($qtyAkhirSendiri+$qtyAkhirMakloon),qty_kurang = qty_kurang+($qtyAkhirSendiri+$qtyAkhirMakloon) WHERE id_pengerjaan='$id'";
      $resultUpdateGudang = mysqli_query($link,$queryUpdateGudang) or die(mysqli_error($link));
 } 
 

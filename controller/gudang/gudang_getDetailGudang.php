@@ -87,6 +87,7 @@ while ($row = $queryGudang->fetch_assoc()) {
           
        </table>
        <table class="table table-bordered" id="tableHistory">
+        <tr><td align="center" colspan="4" ><h4>HISTORY MASUK GUDANG</h4></td></tr>
        <tr><td><b>Tanggal Masuk</b>
        </td>
        ';
@@ -136,6 +137,32 @@ while ($row = $queryGudang->fetch_assoc()) {
     
 
         $result.='
+                 <table class="table table-bordered" id="historyToogle">
+         <tr><td align="center" colspan="4" ><h4>HISTORY PENGAMBILAN GUDANG</h4></td></tr>
+     <tr>
+     <td  align="center"><b>Tgl Pengambilan</b></td>
+      <td  align="center"><b>Qty Ambil</b></td>
+    </tr>';
+
+$query = $link->query("SELECT * FROM gudang_detail WHERE id_gudang='$id'");
+while ($row2 = $query->fetch_assoc()) {
+	$result.= '
+     <tr >
+      <td align="center">
+        '.date("d-m-Y", strtotime($row2['tgl_pengambilan'])).'
+      </td>
+      <td align="center">
+        '.$row2['qty_pengambilan'].'
+      </td>
+
+      
+     </tr>';
+}	  
+       
+			
+        
+     $result.= '</table>
+        <button type="button" name="historyPengambilan" id="historyPengambilan" style="float:right" class="btn-success">History Pengambilan</button>
        </table>
 
        <tr>
@@ -152,6 +179,10 @@ while ($row = $queryGudang->fetch_assoc()) {
   </div>
   </div>
   <script>
+   $("#historyToogle").hide();
+$("#historyPengambilan").click(function(){
+    $("#historyToogle").toggle();
+ });
   $("#hideHistory").hide();
   $("#tableHistory").hide();
      $("#history").click(function(){
