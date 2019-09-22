@@ -88,7 +88,8 @@
                                 $queryGetCount = "SELECT revisi.status from revisi WHERE id_pengerjaan = $idPengerjaan AND status=2";
 	                            $resultGetCount = mysqli_query($link,$queryGetCount) or die(mysqli_error($link));
                                 $countrow =  mysqli_num_rows($resultGetCount);
-                                if($row['status']==0 && $row['PS']==1 && $countrow!=0){ ?>
+                                if($row['status']==0){ ?>
+<!--                                if($row['status']==0 && $row['PS']==1 && $countrow!=0){ ?>-->
                                 <button onclick="ChangeStatusGudang(<?php echo $row["id"];?>)" class="btn btn-success">Ambil</button>   
                                 <?php }; ?>
                                 <a class='btn btn-danger' href='controller/gudang/gudang_delete.php?id="<?php echo $row["id"];?>"'>Hapus</a></td>
