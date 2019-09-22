@@ -8,7 +8,7 @@
                         <th class='col-md-1'>Id</th>
                         <th class='col-md-1'>Nomer PO</th>
                         <th class='col-md-1'>Artikel</th>
-                        <th class='col-md-1'>Tanggal Pengambilan</th>
+                        <th class='col-md-1'>Tanggal Pengambilan Terakhir</th>
                         <th class='col-md-1'>Status</th>
                         <th class='col-md-1'>Action</th>
                         </tr>";
@@ -85,10 +85,10 @@
 								;?></td>
 								<td>
                                 <?php
-                                $queryGetCount = "SELECT revisi.status from revisi WHERE id_pengerjaan = $idPengerjaan AND status !=2";
+                                $queryGetCount = "SELECT revisi.status from revisi WHERE id_pengerjaan = $idPengerjaan AND status=2";
 	                            $resultGetCount = mysqli_query($link,$queryGetCount) or die(mysqli_error($link));
                                 $countrow =  mysqli_num_rows($resultGetCount);
-                                if($row['status']==0 && $row['PS']==1 && $countrow==0){ ?>
+                                if($row['status']==0 && $row['PS']==1 && $countrow!=0){ ?>
                                 <button onclick="ChangeStatusGudang(<?php echo $row["id"];?>)" class="btn btn-success">Ambil</button>   
                                 <?php }; ?>
                                 <a class='btn btn-danger' href='controller/gudang/gudang_delete.php?id="<?php echo $row["id"];?>"'>Hapus</a></td>

@@ -87,6 +87,7 @@ while ($row = $queryGudang->fetch_assoc()) {
           
        </table>
        <table class="table table-bordered" id="tableHistory">
+        <tr><td align="center" colspan="4" ><h4>HISTORY GUDANG</h4></td></tr>
        <tr><td><b>Tanggal Masuk</b>
        </td>
        ';
@@ -136,6 +137,39 @@ while ($row = $queryGudang->fetch_assoc()) {
     
 
         $result.='
+                 <table class="table table-bordered" id="historyToogle">
+         <tr><td align="center" colspan="4" ><h4>HISTORY PENGAMBILAN GUDANG</h4></td></tr>
+     <tr>
+     <td  align="center" width="15%"><b>Nama Obat</b></td>
+     <td  align="center" width="10%"><b>Qty(kilo)</b></td>
+      <td  align="center" width="10%"><b>Harga Jual</b></td>
+       <td  align="center" width="10%"><b>Harga Beli</b></td>
+    </tr>';
+
+$query = $link->query("SELECT * FROM history_obat WHERE id_obat='$id'");
+while ($row2 = $query->fetch_assoc()) {
+	$result.= '
+     <tr >
+      <td>
+        '.$row2['nama_obat'].'
+      </td>
+      <td>
+        '.number_format($row2['kilo'] ,2,",",".").' Kg
+      </td>
+      <td>
+        Rp. '.number_format($row2['harga_beli'],2,",",".").'
+      </td>
+      <td>
+        Rp. '.number_format($row2['harga_jual'],2,",",".").'
+      </td>
+      
+     </tr>';
+}	  
+       
+			
+        
+     $result.= '</table>
+        <button type="button" name="historyObat" id="historyObat" style="float:right" class="btn-success">Tampilkan History Pengambilan</button>
        </table>
 
        <tr>
@@ -152,6 +186,10 @@ while ($row = $queryGudang->fetch_assoc()) {
   </div>
   </div>
   <script>
+   $("#historyToogle").hide();
+$("#historyObat").click(function(){
+    $("#historyToogle").toggle();
+ });
   $("#hideHistory").hide();
   $("#tableHistory").hide();
      $("#history").click(function(){
