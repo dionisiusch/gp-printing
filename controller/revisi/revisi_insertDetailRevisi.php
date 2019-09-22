@@ -49,7 +49,7 @@ if($qtyAwalPengerjaan<=$qtyAkhir){
     $resultUpdateStatusSample = mysqli_query($link,$queryUpdateStatusSample) or die(mysqli_error($link));
 
     //update all revisi db status   
-    $queryAllUpdateRevisi = "UPDATE revisi set status=1 where id_sample=$idSample && id_pengerjaan=$idPengerjaan";
+    $queryAllUpdateRevisi = "UPDATE revisi set status=2 where id_sample=$idSample && id_pengerjaan=$idPengerjaan";
     $resultAllUpdateRevisi = mysqli_query($link,$queryAllUpdateRevisi) or die(mysqli_error($link));
     
         header("Location: ../../view/revisi.php");
@@ -82,7 +82,7 @@ if($qtyAwalPengerjaan<=$qtyAkhir){
     $resultUpdateStatusSample = mysqli_query($link,$queryUpdateStatusSample) or die(mysqli_error($link));
 
     //update all revisi db status   
-    $queryAllUpdateRevisi = "UPDATE revisi set status=1 where id_sample=$idSample && id_pengerjaan=$idPengerjaan";
+    $queryAllUpdateRevisi = "UPDATE revisi set status=2 where id_sample=$idSample && id_pengerjaan=$idPengerjaan";
     $resultAllUpdateRevisi = mysqli_query($link,$queryAllUpdateRevisi) or die(mysqli_error($link));
     
         header("Location: ../../view/revisi.php");
