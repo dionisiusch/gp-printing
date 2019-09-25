@@ -5,12 +5,27 @@ $idSample = $_POST["idSample"];
 $jenisPengerjaan = $_POST["jenisPengerjaan"];
 $nomorPO = $_POST["nomorPO"];
 $tglMulai = date('Y-m-d');
-$tglNaikBahan = $_POST["tglNaikBahan"];
+$tglNaikBahan = formatTgl($_POST["tglNaikBahan"]);
 $qtyAkhirObatArray = $_POST["qtyAkhirObat"];
 $idObatArray = $_POST["idObat"];
 
+function formatTgl($tgl){
+	if($tgl!=0||$tgl!=null){
+	$tglArray = explode("-",$tgl);
+	return $tglArray[2]."-".$tglArray[1]."-".$tglArray[0]; 
+	}
+	return null;
+}
+
+function ReverseRupiah($biaya){
+	$biaya = str_replace("Rp. ", "", $biaya);
+	$biaya = str_replace(".", "", $biaya);
+	$biaya = (int)$biaya;
+	return $biaya;
+	}
+
 if($jenisPengerjaan==0){
-    $tglSelesaiSendiri = $_POST["tglSelesaiSendiri"];
+    $tglSelesaiSendiri = formatTgl($_POST["tglSelesaiSendiri"]);
     $qtySendiri = $_POST["qtySendiri"];
     $tglSelesaiMakloon = null;
     $qtyMakloon = 0;  
@@ -22,22 +37,23 @@ if($jenisPengerjaan==0){
 if($jenisPengerjaan==1){
     $tglSelesaiSendiri = NULL;
     $qtySendiri = 0;
-    $tglSelesaiMakloon = $_POST["tglSelesaiMakloon"];
+    $tglSelesaiMakloon = formatTgl($_POST["tglSelesaiMakloon"]);
     $qtyMakloon = $_POST["qtyMakloon"];
-    $biayaMakloon = $_POST["biayaMakloon"];
+    $biayaMakloon = ReverseRupiah($_POST["biayaMakloon"]);
     $jumlahOrang = 0;  
     $jamKerja = 0;
     $meja = 0;
 }
 if($jenisPengerjaan==2){
-    $tglSelesaiSendiri = $_POST["tglSelesaiSendiri"];
+    $tglSelesaiSendiri = formatTgl($_POST["tglSelesaiSendiri"]);
     $qtySendiri = $_POST["qtySendiri"];
-    $tglSelesaiMakloon = $_POST["tglSelesaiMakloon"];
+    $tglSelesaiMakloon = formatTgl($_POST["tglSelesaiMakloon"]);
     $qtyMakloon = $_POST["qtyMakloon"];
     $jumlahOrang = $_POST["jumlahOrang"];  
     $jamKerja = $_POST["jamKerja"];
     $meja = $_POST["meja"];
-    $biayaMakloon = $_POST["biayaMakloon"];
+    $biayaMakloon = ReverseRupiah($_POST["biayaMakloon"]);
+
 
 }
 

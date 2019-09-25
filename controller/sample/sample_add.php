@@ -3,7 +3,7 @@
 
 	
 	$uploadPath = "../../assets/uploads/";
-    $biaya=$_POST["perkiraanBiaya"];
+    $biaya=ReverseRupiah($_POST["perkiraanBiaya"]);
 	$tglSample = $_POST["tglSample"];
 	$artikel = $_POST["artikel"];
 	$nomorPO = $_POST["nomorPO"];
@@ -12,8 +12,15 @@
 	$posisiArray = $_POST["posisi"];
 	$i = 1;
 	$j = 1;
+
+	function ReverseRupiah($biaya){
+	$biaya = str_replace("Rp. ", "", $biaya);
+	$biaya = str_replace(".", "", $biaya);
+	$biaya = (int)$biaya;
+	return $biaya;
+	}
  
-	//insert db sample
+	// //insert db sample
 	$queryInsertSample = "INSERT INTO sample (artikel,tgl,biaya,nomor_po) values('$artikel','$tglSample',$biaya,'$nomorPO')";
 	$resultInsertSample = mysqli_query($link,$queryInsertSample) or die(mysqli_error($link));
 	$lastIdInsertSample = mysqli_insert_id($link);	

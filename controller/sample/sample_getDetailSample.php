@@ -71,7 +71,7 @@ $result.='
 <table class="table table-bordered hovertable">
     <tr>
       <th width="40%">Perkiraan Biaya per Sample</th>
-      <th width="60%"><input type="number" name"perkiraanBiaya" id="perkiraanBiaya" value="'.$rowBiaya['biaya'].'" readonly></th>
+      <th width="60%"><input type="text" name"perkiraanBiaya" id="perkiraanBiaya" value="'.rupiah($rowBiaya['biaya']).'" readonly></th>
       </tr>
      </table>';
 }
@@ -140,6 +140,13 @@ function formatTgl($tgl){
   $tglArray = explode("-",$tgl);
   return $tglArray[2]."-".$tglArray[1]."-".$tglArray[0]; 
 }
+
+function rupiah($angka){
+	
+	$hasil_rupiah = "Rp. " . number_format($angka,0,'','.');
+	return $hasil_rupiah;
+ 
+    }
 
 ?>
 
