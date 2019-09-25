@@ -110,7 +110,7 @@ while ($row = $querySample->fetch_assoc()) {
         <tr>
         <td align="center">'.$row['qty_awal'].'</td>';
 
-        if($row['tipe']==0||$row['tipe']==2){
+        if($row['tipe']==0){
           $result.='
         <td align="center">'.($row['qty_awal']-$row['qty_akhir_sendiri']).'</td></tr>
         </table>
@@ -135,12 +135,30 @@ while ($row = $querySample->fetch_assoc()) {
           <table class="table table-bordered hovertable" id="crud_table">
           <tr>
           <td width="50%" align="right"><b>Biaya Produksi Makloon :</b></td>
-          <td>'.$row["biaya_makloon"].'</td></tr>
+          <td>'.rupiah($row["biaya_makloon"]).'</td></tr>
          </table>';
           }else if($row['tipe']==2){
             $result.='
           <td align="center">'.($row['qty_awal']-($row['qty_akhir_sendiri']+$row['qty_akhir_makloon'])).'</td></tr>
-          </table>';
+          </table>
+          <table class="table table-bordered hovertable" id="crud_table">
+          <tr>
+          <td width="35%" align="right"><b>Jumlah Orang :</b></td>
+          <td>'.$row["jumlah_orang"].'</td></tr>
+          <tr>
+          <tr>
+          <td align="right"><b>Meja :</b></td>
+          <td>'.$row["meja"].'</td></tr>
+          <tr><tr>
+          <td align="right"><b>Jam Kerja :</b></td>
+          <td>'.$row["jam_kerja"].'</td></tr>
+          <tr></table>
+          <table class="table table-bordered hovertable" id="crud_table">
+          <tr>
+          <td width="50%" align="right"><b>Biaya Produksi Makloon :</b></td>
+          <td>'.rupiah($row["biaya_makloon"]).'</td></tr>
+         </table>
+          ';
           }
 
      $result.=' </table> <table class="table table-bordered hovertable" id="crud_table">
@@ -199,6 +217,12 @@ function formatTgl($tgl){
 	}
 	return null;
 }
+function rupiah($angka){
+	
+	$hasil_rupiah = "Rp. " . number_format($angka,0,'','.');
+	return $hasil_rupiah;
+ 
+    }
 ?>
 <input type='hidden' id='idPengerjaan' value='<?php echo $idPengerjaan;?>'>
 

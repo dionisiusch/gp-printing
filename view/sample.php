@@ -66,7 +66,7 @@ include('../controller/config/asset.php');
 <table class="table table-bordered hovertable">
     <tr>
     <td align="right"><b>Perkiraan Biaya Per Sample : </b></td>
-      <td><input type="number"  class="form-control" name="perkiraanBiaya" id="perkiraanBiaya" placeholder="0"></td>
+      <td><input type="text"  class="form-control" name="perkiraanBiaya" id="perkiraanBiaya" placeholder="0"></td>
      </tr>
      </table>
 
@@ -107,7 +107,7 @@ include('../controller/config/asset.php');
           <option></option>
           </select>
       </td>
-      <td><input type="number" name="qtyObat[1]" class="form-control" placeholder="Qty Obat"/></td>
+      <td><input type="number" name="qtyObat[1]" id="qtyObat[1]" class="form-control qty" placeholder="Qty Obat"/></td>
     
 
      </tr>
@@ -162,9 +162,10 @@ GetAjaxObat(countObat);
  $('#addObat').click(function(){
   countObat = countObat + 1;
   var html_code = "<tr id='row"+countObat+"'>";
-   html_code += '<td><select name="obat['+countObat+']" id="obat['+countObat+']" class="form-control"><option value="" selected hidden>--Obat--</option></select></td><td><input type="number" name="qtyObat['+countObat+']"  class="form-control"  placeholder="Qty Obat"/></td>';
+   html_code += '<td><select name="obat['+countObat+']" id="obat['+countObat+']" class="form-control"><option value="" selected hidden>--Obat--</option></select></td><td><input type="number" name="qtyObat['+countObat+']" id="qtyObat['+countObat+']"  class="form-control qty"  placeholder="Qty Obat"/></td>';
    html_code += "<td><button type='button' name='remove2' data-row='row"+countObat+"' class='btn btn-danger btn-xs remove'>Hapus</button></td>";
    html_code += "</tr>";
+
    $('#crud_table2').append(html_code);
    $("#crud_table2").find("td").on("focus", function(){
          $(this).closest("tr").addClass("active");
@@ -193,6 +194,10 @@ GetAjaxObat(countObat);
  $('#' + delete_row).remove();
  count--;
   });
+
+ $(document).on('keyup', '.qty', function(){
+ GetBiayaObat();
+ });
 
   $(document).on('click', '.remove2', function(){
  var delete_row = $(this).data("row");
@@ -232,6 +237,49 @@ function GetAjaxObat(countObat){
         });		
 };
 
+
+function GetBiayaObat(){
+  var nama = [];
+  var qty = [];
+
+  for(var i=1;i<=countObat;i++){
+    nama[i]=$("#obat\\["+i+"\\]").val();
+    qty[i]=$("#qtyObat\\["+i+"\\]").val();
+  }
+
+  $.ajax({
+            type: 'POST',
+            url: 'controller/obat/obat_getBiaya.php',
+            data: {obat:nama,qtyObat:qty},
+            success: function(data) {
+              $("#perkiraanBiaya").val(formatRupiah(data));
+            }
+        });		
+}
+
+$('#perkiraanBiaya').on('keyup', function(){
+  var string = $('#perkiraanBiaya').val();
+  $("#perkiraanBiaya").val(formatRupiah(string));
+});
+
+
+
+function formatRupiah(angka){
+			var number_string = angka.replace(/[^,\d]/g, '').toString(),
+			split   		= number_string.split(','),
+			sisa     		= split[0].length % 3,
+			rupiah     		= split[0].substr(0, sisa),
+			ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+ 
+			// tambahkan titik jika yang di input sudah menjadi angka ribuan
+			if(ribuan){
+				separator = sisa ? '.' : '';
+				rupiah += separator + ribuan.join('.');
+			}
+ 
+			rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+			return 'Rp. ' + rupiah;
+		}
 
 });
 

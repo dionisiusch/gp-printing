@@ -86,7 +86,7 @@ if($status==3){
          </tr>
 	   <tr name="tglSendiri_show" id="tglSendiri_show">
          <td align="right"><b>Tgl Selesai Sendiri : </b></td>
-           <td><input name="tglSelesaiSendiri" type="date" id="tglSelesaiSendiri" value=""></td>
+           <td><input name="tglSelesaiSendiri" type="text" class="datepickerSendiri" id="tglSelesaiSendiri" value=""></td>
          </tr>
 
         <tr name="qtyMakloon_show" id="qtyMakloon_show">
@@ -95,11 +95,11 @@ if($status==3){
          </tr>
 	   <tr name="tglMakloon_show" id="tglMakloon_show">
          <td align="right"><b>Tgl Selesai Makloon : </b></td>
-           <td><input name="tglSelesaiMakloon" type="date" id="tglSelesaiMakloon" value=""></td>
+           <td><input name="tglSelesaiMakloon" type="text" class="datepickerMakloon" id="tglSelesaiMakloon" value=""></td>
          </tr>
-         <tr name="tglNaikBahan" id="tglNaikBahan">
+         <tr>
          <td align="right"><b>Tgl Naik Bahan : </b></td>
-           <td><input name="tglNaikBahan" type="date" id="tglNaikBahan" value=""></td>
+           <td><input name="tglNaikBahan" type="text" id="tglNaikBahan"  class="datepickerNaikBahan" value=""></td>
          </tr>
          
   </table>
@@ -107,7 +107,7 @@ if($status==3){
   <tr id="biayaMakloon">
   <td align="right"><b>Biaya Produksi Makloon : </b></td>
 
-    <td><input type="number" name="biayaMakloon"  class="form-control">
+    <td><input type="text" name="biayaMakloon" id="biayaMakloonField"  class="form-control">
 </td>
 
 <tr>  
@@ -172,6 +172,29 @@ $result.='
 	</div>
 	 
 <script>
+$(function(){
+  $(".datepickerSendiri").datepicker({
+      dateFormat: "dd-mm-yy",
+      autoclose: true,
+      todayHighlight: true,
+  });
+ });
+
+ $(function(){
+  $(".datepickerMakloon").datepicker({
+      dateFormat: "dd-mm-yy",
+      autoclose: true,
+      todayHighlight: true,
+  });
+ });
+
+ $(function(){
+  $(".datepickerNaikBahan").datepicker({
+      dateFormat: "dd-mm-yy",
+      autoclose: true,
+      todayHighlight: true,
+  });
+ });
 
 function GetTglSelesaiSendiri(){
 	 var date = new Date();
@@ -187,7 +210,7 @@ function GetTglSelesaiSendiri(){
     if(day.length < 2){
 		day = "0" + day;
 	}
-    var newDate = year+"-"+month+"-"+day;
+    var newDate = day+"-"+month+"-"+year;
 	 $("#tglSelesaiSendiri").val(newDate);
 }
 function GetTglSelesaiMakloon(){
@@ -204,7 +227,7 @@ function GetTglSelesaiMakloon(){
     if(day.length < 2){
 		day = "0" + day;
 	}
-    var newDate = year+"-"+month+"-"+day;
+    var newDate = day+"-"+month+"-"+year;
 	 $("#tglSelesaiMakloon").val(newDate);
 }
 function showRow(rowId) {
@@ -248,6 +271,28 @@ function showHide(){
     $("#biayaMakloon").show();
   }
 
+}
+
+$(document).on("keyup", "#biayaMakloonField", function(){
+  var biaya =  $("#biayaMakloonField").val();
+  $("#biayaMakloonField").val(formatRupiah(biaya));
+  });
+
+function formatRupiah(angka){
+  var number_string = angka.replace(/[^,\d]/g, "").toString(),
+  split   		= number_string.split(","),
+  sisa     		= split[0].length % 3,
+  rupiah     		= split[0].substr(0, sisa),
+  ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+
+  // tambahkan titik jika yang di input sudah menjadi angka ribuan
+  if(ribuan){
+    separator = sisa ? "." : "";
+    rupiah += separator + ribuan.join(".");
+  }
+
+  rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+  return "Rp. " + rupiah;
 }
 
 
