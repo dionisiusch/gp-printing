@@ -9,6 +9,21 @@ $idRevisi = 0;
 $queryGetRevisi = $link->query("SELECT revisi.id,revisi.status,revisi.qty_awal,revisi.qty_akhir,sample.artikel,revisi.tgl_mulai,revisi.tgl_deadline,revisi.tgl_selesai,revisi.tipe from revisi join sample on revisi.id_sample = sample.id where revisi.id = '$id'");
 while ($row = $queryGetRevisi->fetch_assoc()) {
   $idRevisi = $row["id"];
+    if($row['tgl_mulai']=='0000-00-00' ){
+        $row['tgl_mulai']=null;
+    }else{
+        $row['tgl_mulai']=date("d-m-Y",strtotime( $row['tgl_mulai']));
+    }
+    if($row['tgl_deadline']=='0000-00-00' ){
+        $row['tgl_deadline']=null;
+    }else{
+        $row['tgl_deadline']=date("d-m-Y",strtotime( $row['tgl_deadline']));
+    }    
+    if($row['tgl_selesai']=='0000-00-00'){
+        $row['tgl_selesai']=null;
+    }else{
+        $row['tgl_selesai']=date("d-m-Y",strtotime( $row['tgl_selesai']));
+    }    
   $result.= '
 	
 	<div class="modal-dialog">

@@ -27,7 +27,7 @@ if($status==0){
       <div class="modal-header">
 		
 		<button class="btn-danger" style="float:right" data-dismiss="modal" aria-label="close">&times;</button>
-		<h4><b>Detail Pengerjaan</b></h4>
+		<h4><b>Detail Ambil Gudang</b></h4>
 		</div>
 		 <div class="modal-body">
       
@@ -50,7 +50,8 @@ if($status==0){
         <tr>
          <td align="right"><b>Harga Jual: </b></td>
            <td>
-            <input name="hargaJual" type="text" id="hargaJual" value="Rp. '.number_format($biaya,2,",",".").'" readonly >
+             <input type="hidden" name="hargaJual" id="hargaJual" value=" '.$biaya.'">
+            <input name="hargaTotalJual" type="text" id="hargaTotalJual"  value="Rp. '.number_format(($biaya*$qtySementara),2,",",".").'" >
 		   </td>
          </tr> 
 		<tr>
@@ -65,6 +66,24 @@ if($status==0){
 	 </form>
 	<br><br><br><br><br><br><br><br>
 	</div>
+    	<script>
+	 $("#qtyAmbil").keyup(function(){
+        var qty = parseInt($("#qtyAmbil").val());
+        var hargaJual = parseInt($("#hargaJual").val());
+        $("#hargaTotalJual").val("Rp. "+numberWithCommas(getNum(qty*hargaJual).toFixed(2).toString().replace(".", ",")));
+        
+     });
+    function getNum(val) {
+        if (isNaN(val)) {
+            return 0;
+        }
+    return val;
+    }
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+	</script>
 	  ';
 	$resultArr['text'] = $result;
 	$resultArr['validator'] = $status;

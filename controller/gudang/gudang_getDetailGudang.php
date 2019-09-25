@@ -10,7 +10,7 @@ while ($row = $queryGudang->fetch_assoc()) {
     if($row['tgl_pengambilan']=='0000-00-00'){
         $row['tgl_pengambilan']=null;
     }else{
-         $row['tgl_pengambilan'] = date("d F Y",strtotime( $row['tgl_pengambilan']));
+         $row['tgl_pengambilan'] = date("d-m-Y",strtotime( $row['tgl_pengambilan']));
     }  
     $result.= '
 	
