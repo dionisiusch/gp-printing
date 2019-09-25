@@ -5,7 +5,11 @@ $id = $_POST["id"];
 $qty = $_POST["qtyAmbil"];
 $tgl = $_POST["tgl"];
 $tgl = date("Y-m-d",strtotime($tgl));
-$hargaJual = $_POST["hargaJual"];
+    $hargaJualSample =$_POST['hargaJual'];
+    $hargaTotalJual = $_POST["hargaTotalJual"];
+    $hargaTotalJual =str_replace(".","",$hargaTotalJual);
+    $hargaTotalJual =str_replace("Rp ","", $hargaTotalJual);
+    $hargaTotalJual = round($hargaTotalJual, 0);
 $keterangan = $_POST["keterangan"];
 
 $queryGetGudang = "SELECT id_pengerjaan,qty_kurang from gudang WHERE id=$id";
@@ -24,7 +28,7 @@ while ($row = $resultGetGudang->fetch_assoc()) {
 //    echo $countStatusPengerjaan;
 //    echo $countStatusRevisi;  
 //    if($countStatusPengerjaan!=0 && $countStatusRevisi==null){
-        $queryInsertDetailGudang = "INSERT INTO  gudang_detail(id_gudang,qty_pengambilan,tgl_pengambilan) VALUES ($id,$qty,'$tgl')";
+        $queryInsertDetailGudang = "INSERT INTO  gudang_detail(id_gudang,qty_pengambilan,tgl_pengambilan,total_harga) VALUES ($id,$qty,'$tgl',$hargaTotalJual)";
         $resultInsertDetailGudang= mysqli_query($link,$queryInsertDetailGudang) or die(mysqli_error($link));
         if(row['qty_kurang']==0){
         $queryUpdateGudang = "UPDATE gudang set status=2,tgl_pengambilan='$tgl',keterangan='$keterangan',qty_kurang=(qty_kurang-$qty) where id='$id'";

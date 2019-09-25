@@ -17,9 +17,18 @@
 	while($row = mysqli_fetch_assoc($resultGetRevisi)){
     if($row['tgl_mulai']=='0000-00-00' ){
         $row['tgl_mulai']=null;
+    }else{
+        $row['tgl_mulai']=date("d-m-Y",strtotime( $row['tgl_mulai']));
     }
+    if($row['tgl_deadline']=='0000-00-00' ){
+        $row['tgl_deadline']=null;
+    }else{
+        $row['tgl_deadline']=date("d-m-Y",strtotime( $row['tgl_deadline']));
+    }    
     if($row['tgl_selesai']=='0000-00-00'){
         $row['tgl_selesai']=null;
+    }else{
+        $row['tgl_selesai']=date("d-m-Y",strtotime( $row['tgl_selesai']));
     }    
 	?>
 							
