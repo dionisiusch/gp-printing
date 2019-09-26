@@ -19,16 +19,24 @@ else if($jenisPengerjaan==1){
 }else{
     $qtyAkhirSendiri = $_POST["qtyAkhirSendiri"];
     $qtyAkhirMakloon = $_POST["qtyAkhirMakloon"];
+    if($qtyAkhirSendiri==null){
+        $qtyAkhirSendiri=0;
+    }
+    if($qtyAkhirMakloon==null){
+        $qtyAkhirMakloon=0;
+    }
+
     $queryUpdatePengerjaan = "UPDATE pengerjaan set qty_akhir_sendiri=$qtyAkhirSendiri,qty_akhir_makloon=$qtyAkhirMakloon where id='$id'";
 }
 
 $qtyAkhir = $qtyAkhirMakloon + $qtyAkhirSendiri;
-$queryGetQtyAwal = "SELECT qty_awal,nomor_po from pengerjaan WHERE id='$id' LIMIT 1";
+$queryGetQtyAwal = "SELECT qty_awal,nomor_po,qty_akhir_makloon,qty_akhir_sendiri from pengerjaan WHERE id='$id' LIMIT 1";
 $resultGetQtyAwal = mysqli_query($link,$queryGetQtyAwal) or die(mysqli_error($link));
 
 while ($row = $resultGetQtyAwal->fetch_assoc()) {
     $qtyAwal = $row["qty_awal"];
     $nomorPo = $row["nomor_po"];
+    $qtyAkhir+= $row["qty_akhir_sendiri"]+$row["qty_akhir_makloon"];
 }
 
 //proses check barang diterima

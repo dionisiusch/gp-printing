@@ -99,7 +99,7 @@ if($status==3){
          </tr>
          <tr>
          <td align="right"><b>Tgl Naik Bahan : </b></td>
-           <td><input name="tglNaikBahan" type="text" id="tglNaikBahan"  class="datepickerNaikBahan" value=""></td>
+           <td><input name="tglNaikBahan" type="text" id="tglNaikBahan" autocomplete=off class="datepickerNaikBahan" value=""></td>
          </tr>
          
   </table>
