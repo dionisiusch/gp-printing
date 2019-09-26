@@ -30,11 +30,12 @@ while ($row = $resultGetGudang->fetch_assoc()) {
 //    if($countStatusPengerjaan!=0 && $countStatusRevisi==null){
         $queryInsertDetailGudang = "INSERT INTO  gudang_detail(id_gudang,qty_pengambilan,tgl_pengambilan,total_harga) VALUES ($id,$qty,'$tgl',$hargaTotalJual)";
         $resultInsertDetailGudang= mysqli_query($link,$queryInsertDetailGudang) or die(mysqli_error($link));
-        if(row['qty_kurang']==0){
-        $queryUpdateGudang = "UPDATE gudang set status=2,tgl_pengambilan='$tgl',keterangan='$keterangan',qty_kurang=(qty_kurang-$qty) where id='$id'";
-        $resultUpdateGudang = mysqli_query($link,$queryUpdateGudang) or die(mysqli_error($link));    
-        }else{
+        if(($row['qty_kurang']-$qty)<=0){
         $queryUpdateGudang = "UPDATE gudang set status=1,tgl_pengambilan='$tgl',keterangan='$keterangan',qty_kurang=(qty_kurang-$qty) where id='$id'";
+        $resultUpdateGudang = mysqli_query($link,$queryUpdateGudang) or die(mysqli_error($link));
+            echo $row['qty_kurang'];
+        }else{
+        $queryUpdateGudang = "UPDATE gudang set status=0,tgl_pengambilan='$tgl',keterangan='$keterangan',qty_kurang=(qty_kurang-$qty) where id='$id'";
         $resultUpdateGudang = mysqli_query($link,$queryUpdateGudang) or die(mysqli_error($link));            
         }
             header("Location: ../../view/gudang.php");

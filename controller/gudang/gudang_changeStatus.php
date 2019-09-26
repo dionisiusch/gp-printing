@@ -5,10 +5,10 @@ include('../config/linken.php');
 $id = $_POST['id'];
 $status = $_POST['status'];
 $currentDateTime = date('d-m-Y');
-$queryGetDataGudang = "SELECT gudang.qty_sementara,sample.biaya from gudang join pengerjaan on gudang.id_pengerjaan=pengerjaan.id join sample on pengerjaan.id_sample=sample.id WHERE gudang.id='$id'";
+$queryGetDataGudang = "SELECT gudang.qty_sementara,gudang.qty_kurang,sample.biaya from gudang join pengerjaan on gudang.id_pengerjaan=pengerjaan.id join sample on pengerjaan.id_sample=sample.id WHERE gudang.id='$id'";
 $resultGetDataGudang = mysqli_query($link,$queryGetDataGudang) or die(mysqli_error($link));
 while ($row = $resultGetDataGudang->fetch_assoc()) {
-    $qtySementara = $row["qty_sementara"];
+    $qtyKurang = $row["qty_kurang"];
     $biaya = $row["biaya"];
     
 }
@@ -38,7 +38,7 @@ if($status==0){
         <tr>
          <td align="right"><b>Qty Ambil: </b></td>
            <td>
-            <input name="qtyAmbil" type="text" id="qtyAmbil" value="'.$qtySementara.'">
+            <input name="qtyAmbil" type="text" id="qtyAmbil" value="'.$qtyKurang.'">
 		   </td>
          </tr>
 		<tr>
@@ -51,7 +51,7 @@ if($status==0){
          <td align="right"><b>Harga Jual: </b></td>
            <td>
              <input type="hidden" name="hargaJual" id="hargaJual" value=" '.$biaya.'">
-            <input name="hargaTotalJual" type="text" id="hargaTotalJual"  value="Rp. '.number_format(($biaya*$qtySementara),2,",",".").'" >
+            <input name="hargaTotalJual" type="text" id="hargaTotalJual"  value="Rp. '.number_format(($biaya*$qtyKurang),2,",",".").'" >
 		   </td>
          </tr> 
 		<tr>

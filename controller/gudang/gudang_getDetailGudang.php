@@ -5,7 +5,7 @@ include('../config/linken.php');
 $id = $_POST['id'];
 $data = array();
 $result = '';
-$queryGudang = $link->query("SELECT gudang.id,sample.artikel,gudang.id_pengerjaan,gudang.qty_total,gudang.qty_sementara,gudang.tgl_pengambilan,gudang.status,gudang.keterangan,pengerjaan.tipe from gudang join pengerjaan on gudang.id_pengerjaan=pengerjaan.id join sample on pengerjaan.id_sample = sample.id where gudang.id=$id");
+$queryGudang = $link->query("SELECT gudang.id,sample.artikel,gudang.id_pengerjaan,gudang.qty_total,gudang.qty_sementara,gudang.qty_kurang,gudang.tgl_pengambilan,gudang.status,gudang.keterangan,pengerjaan.tipe from gudang join pengerjaan on gudang.id_pengerjaan=pengerjaan.id join sample on pengerjaan.id_sample = sample.id where gudang.id=$id");
 while ($row = $queryGudang->fetch_assoc()) {
     if($row['tgl_pengambilan']=='0000-00-00'){
         $row['tgl_pengambilan']=null;
@@ -51,11 +51,15 @@ while ($row = $queryGudang->fetch_assoc()) {
          </tr>
     	
 	   <tr>
-         <td align="right"><b>Qty di Gudang : </b></td>
+         <td align="right"><b>Qty di Kirim ke Gudang : </b></td>
 
            <td>'.$row['qty_sementara'].'</td>
          </tr>
-        	
+        <tr>
+         <td align="right"><b>Qty Tersisa di Gudang : </b></td>
+
+           <td>'.$row['qty_kurang'].'</td>
+         </tr>	
 	   <tr>
          <td align="right"><b>Tanggal Pengambilan: </b></td>
 
@@ -142,6 +146,7 @@ while ($row = $queryGudang->fetch_assoc()) {
      <tr>
      <td  align="center"><b>Tgl Pengambilan</b></td>
       <td  align="center"><b>Qty Ambil</b></td>
+       <td  align="center"><b>Biaya per Ambil</b></td>
     </tr>';
 
 $query = $link->query("SELECT * FROM gudang_detail WHERE id_gudang='$id'");
@@ -154,7 +159,9 @@ while ($row2 = $query->fetch_assoc()) {
       <td align="center">
         '.$row2['qty_pengambilan'].'
       </td>
-
+      <td align="center">
+        Rp. '.number_format($row2['total_harga'],2,",",".").'
+      </td>
       
      </tr>';
 }	  
