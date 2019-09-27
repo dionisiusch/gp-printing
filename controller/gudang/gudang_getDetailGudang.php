@@ -12,6 +12,10 @@ while ($row = $queryGudang->fetch_assoc()) {
     }else{
          $row['tgl_pengambilan'] = date("d-m-Y",strtotime( $row['tgl_pengambilan']));
     }  
+
+  if($row['tgl_pengambilan']=="01-01-1970"){
+    $row['tgl_pengambilan']= '';
+      }
     $result.= '
 	
 	<div class="modal-dialog">
