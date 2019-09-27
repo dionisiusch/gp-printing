@@ -75,7 +75,12 @@
 								<td><?php echo $row['id']?></td>
                                 <td><?php echo $row['nomor_po']?></td>
                                 <td><?php echo $row['artikel']?></td>
-                                <td><?php echo $row['tgl_pengambilan']?></td>
+                                <td><?php if($row['tgl_pengambilan']=="01-01-1970"){
+                                                 echo '';
+                                                 }
+                                                 else{
+                                                     echo $row['tgl_pengambilan'];
+                                                     };?></td>
                                 <td><?php if($row['status']==0){
 									echo "<span style='color:blue'>On-Storage</span>";
 									}else if($row['status']==1){

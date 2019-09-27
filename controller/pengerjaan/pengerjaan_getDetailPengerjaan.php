@@ -1,18 +1,31 @@
 <?php
 include('../config/linken.php');
 
-//get search term
 $id = $_POST['id'];
 $data = array();
 $result = '';
 $idPengerjaan = 0;
 $tipe = 0;
 $qtySendiri = 0;
+
 $querySample = $link->query("SELECT pengerjaan.id,sample.artikel,pengerjaan.nomor_po,pengerjaan.qty_awal,pengerjaan.tipe,pengerjaan.tgl_mulai,pengerjaan.qty_sendiri,pengerjaan.tgl_selesai_sendiri,pengerjaan.qty_makloon,pengerjaan.tgl_selesai_makloon,pengerjaan.status,pengerjaan.keterangan,pengerjaan.qty_akhir_makloon,pengerjaan.qty_akhir_sendiri,pengerjaan.jumlah_orang,pengerjaan.jam_kerja,pengerjaan.biaya_makloon,pengerjaan.meja,pengerjaan.tgl_naik_barang from pengerjaan join sample on pengerjaan.id_sample = sample.id where pengerjaan.id_sample = '$id'");
 while ($row = $querySample->fetch_assoc()) {
   $idPengerjaan = $row["id"];
   $qtySendiri =  $row['qty_sendiri'];
   $tipe = $row['tipe'];
+  $qtySisaSendiri = $row['qty_awal']-$row['qty_akhir_sendiri'];
+  if($qtySisaSendiri<0){
+    $qtySisaSendiri = 0;
+  }
+  $qtySisaMakloon = $row['qty_awal']-$row['qty_akhir_makloon'];
+  if($qtySisaMakloon<0){
+    $qtySisaMakloon = 0;
+  }
+  $qtySisaSendiriMakloon = $row['qty_awal']-($row['qty_akhir_sendiri']+$row['qty_akhir_makloon']);
+  if($qtySisaSendiriMakloon<0){
+    $qtySisaSendiriMakloon = 0;
+  }
+
   $result.= '
 	<div class="modal-dialog">
     <!-- Modal content-->
@@ -112,7 +125,7 @@ while ($row = $querySample->fetch_assoc()) {
 
         if($row['tipe']==0){
           $result.='
-        <td align="center">'.($row['qty_awal']-$row['qty_akhir_sendiri']).'</td></tr>
+        <td align="center">'.$qtySisaSendiri.'</td></tr>
         </table>
        
         <table class="table table-bordered hovertable" id="crud_table">
@@ -130,7 +143,7 @@ while ($row = $querySample->fetch_assoc()) {
         ;
         }else if($row['tipe']==1){
             $result.='
-          <td align="center">'.($row['qty_awal']-$row['qty_akhir_makloon']).'</td></tr>
+          <td align="center">'.$qtySisaMakloon.'</td></tr>
           </table>
           <table class="table table-bordered hovertable" id="crud_table">
           <tr>
@@ -139,7 +152,7 @@ while ($row = $querySample->fetch_assoc()) {
          </table>';
           }else if($row['tipe']==2){
             $result.='
-          <td align="center">'.($row['qty_awal']-($row['qty_akhir_sendiri']+$row['qty_akhir_makloon'])).'</td></tr>
+          <td align="center">'.$qtySisaSendiriMakloon.'</td></tr>
           </table>
           <table class="table table-bordered hovertable" id="crud_table">
           <tr>

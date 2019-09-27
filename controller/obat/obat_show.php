@@ -2,7 +2,7 @@
 	include('../controller/config/linken.php');
 	include('../controller/config/asset.php');
 	
-	$queryGetObat = "SELECT * from Obat";
+	$queryGetObat = "SELECT * from obat";
 	$resultGetObat = mysqli_query($link,$queryGetObat) or die(mysqli_error($link));
 	 echo "<table class='table table-hover' style='width:100%'><tr>
                         <th class='col-md-1' style='width:2%'>Id</th>
